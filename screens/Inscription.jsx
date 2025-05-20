@@ -1,9 +1,72 @@
 import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
+import { updateEmail } from "../reducers/user";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function StackScreen2({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
+
+  const [email, setEmail] = useState("");
+  const [checkMail, setCheckMail] = useState(false);
+  const [password,setCheckPassword] = useState ('')
+  const [passwordConfirm,setPasswordConfirm] = useState ('')
+
+  const user = useSelector(state => state.user.value.email);
+  const dispatch = useDispatch();
+
+ function handleSubmit() {
+    if (validateEmail(email)) {
+      setCheckMail(false);
+      dispatch(updateEmail(email));
+      
+    } else {
+      setCheckMail(true);
+    }
+  }
+
+  function validateEmail(email) {
+    var emailReg = new RegExp(
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i
+    );
+    return emailReg.test(email);
+  }
+
+    const handleRegister = () => {
+   
+      fetch("http://192.168.100.178:3000/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email  ,
+        password: password,
+        confirmPassword: passwordConfirm,
+      }),
+    })
+    .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        if (data.result) {
+          // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
+          setCheckMail("");
+          setCheckPassword("");
+          setPasswordConfirm("");
+          
+        navigation.navigate("Profil");
+        }
+      });
+  };
+
+
+  
+  console.log(user);
+
+  
+  console.log(checkMail);
+  console.log(email);
+  console.log(password)
+  console.log(passwordConfirm)
+  
 
   return (
     <View style={styles.container}>
@@ -24,7 +87,14 @@ export default function StackScreen2({ navigation }) {
                 keyboardType="email-address"
                 onFocus={() => setFocusedField('email')}
                 onBlur={() => setFocusedField(null)}
+                 onChangeText={(value) => setEmail(value)}
+            value={email}
               />
+                {checkMail && (
+            <Text style={{ color: "red", marginTop: 4 }}>
+              Invalid email address
+            </Text>
+          )}
               <TextInput
                 style={[
                   styles.input,
@@ -35,6 +105,8 @@ export default function StackScreen2({ navigation }) {
                 secureTextEntry
                 onFocus={() => setFocusedField('password')}
                 onBlur={() => setFocusedField(null)}
+                  onChangeText={(value) => setCheckPassword(value)}
+            value={password}
               />
               <TextInput
                 style={[
@@ -46,10 +118,15 @@ export default function StackScreen2({ navigation }) {
                 secureTextEntry
                 onFocus={() => setFocusedField('confirm')}
                 onBlur={() => setFocusedField(null)}
+                    onChangeText={(value) => setPasswordConfirm(value)}
+            value={passwordConfirm}
+                
               />
             </View>
             <View style={styles.buttonAndTextContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate("TabNavigator")} style={styles.button}>
+              <TouchableOpacity onPress={() => {
+              handleRegister();
+            }} style={styles.button}>
                 <Text style={styles.buttonText}>LET'S GO !</Text>
               </TouchableOpacity>
               <View style={styles.textContainer}>
