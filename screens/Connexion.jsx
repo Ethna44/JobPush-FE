@@ -5,7 +5,7 @@ export default function StackScreen2({ navigation }) {
         <View style={styles.container}>
             <Text style={styles.title}>Connexion</Text>
             <Button title="Acceuil" onPress={() => navigation.navigate("Acceuil")} />
-            <Button title="Page principale" onPress={() => navigation.navigate("TabNavigator")} />
+            <Button title="Page principale" onPress={() => navigation.navigate("Profil")} />
         </View>
     );
 }
