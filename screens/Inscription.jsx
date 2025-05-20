@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, Button } from "react-native";
+import AppStyles from "../AppStyles";
 
 export default function StackScreen2({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Inscription</Text>
-      <Button title="accueil" onPress={() => navigation.navigate("accueil")} />
-      <Button
-        title="Page principale"
-        onPress={() => navigation.navigate("TabNavigator")}
+      <Button title="accueil" onPress={() => navigation.navigate("Accueil")} />
+      <Button title="Page principale" onPress={() => navigation.navigate("TabNavigator")}
       />
     </View>
   );

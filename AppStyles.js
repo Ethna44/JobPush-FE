@@ -27,5 +27,22 @@ export default AppStyles = {
         color: '#F9F1F1',
         fontFamily: "Poppins",
         fontSize: 14,
-    }
+    },
+    input: {
+        width: '100%',
+        backgroundColor: '#FFEEEB', // rose très clair pour input inactif
+        // paddingVertical: 12,
+        // paddingHorizontal: 16,
+        borderBottomWidth: 2,
+        borderBottomColor: '#FB9581', // rouge pastel pour input inactif
+        borderRadius: 8,
+        marginBottom: 16,
+        color: '#444',
+        fontSize: 16,
+    },
+    inputFocused: {
+        backgroundColor: '#FEDDD7', //rose légèrement plus foncé pour input actif
+        borderBottomColor: '#F72C03', // rouge vif pour input actif
+        fontWeight: '500',
+  },
 }

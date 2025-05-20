@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
-import accueil from "./screens/Accueil";
+import Accueil from "./screens/Accueil";
 import Inscription from "./screens/Inscription";
 import Connexion from "./screens/Connexion";
 import Offre from "./screens/Offre";
@@ -90,7 +90,7 @@ export default function App() {
         <Header />
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="accueil" component={accueil} />
+            <Stack.Screen name="Accueil" component={Accueil} />
             <Stack.Screen name="Inscription" component={Inscription} />
             <Stack.Screen name="Connexion" component={Connexion} />
 
