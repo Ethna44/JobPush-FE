@@ -10,8 +10,12 @@ export default AppStyles = {
         justifyContent : 'center',
         fontFamily: 'Poppins',
         fontSize: 36,
-        fontWeight: "semi-bold",
-
+        fontWeight: 600,
+    },
+    subtitle: {
+        fontFamily: 'Poppins',
+        fontSize: 32,
+        fontWeight: 400,
     },
     button : {
         alignItems: 'center',

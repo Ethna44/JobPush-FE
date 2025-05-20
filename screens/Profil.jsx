@@ -1,12 +1,6 @@
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, SafeAreaView, ScrollView} from "react-native";
+import AppStyles from "../AppStyles";
 import { useState } from "react";
-import React from "react";
 
 export default function Profil({ navigation }) {
   const [name, setName] = useState("");
@@ -22,6 +16,8 @@ export default function Profil({ navigation }) {
   const [sector, setSector] = useState("");
   const [cityJob, setCityJob] = useState("");
   const [region, setRegion] = useState("");
+
+  const [focusedField, setFocusedField] = useState(null);
 
   const handleSummit = () => {
     fetch("http:///192.168.100.250:3000/user", {
@@ -50,82 +46,118 @@ export default function Profil({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Mon profil</Text>
-      <Text style={styles.subtitle}>Civilité</Text>
-      <TextInput placeholder="Nom" onChangeText={(value) => setName(value)} />
-      <TextInput
-        placeholder="Prenom"
+      <ScrollView style={styles.scrollableContainer}>
+        <Text style={styles.subtitle}>Civilité</Text>
+        <TextInput 
+        style={[styles.input, focusedField === 'Name' && styles.inputFocused]} 
+        placeholder="Nom*" 
+        onChangeText={(value) => setName(value)}
+        onFocus={() => setFocusedField('Name')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'FirstName' && styles.inputFocused]}
+        placeholder="Prenom*" 
         onChangeText={(value) => setFirstName(value)}
-      />
-      <TextInput
-        placeholder="Numéro de téléphone"
+        onFocus={() => setFocusedField('FirstName')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'PhoneNumber' && styles.inputFocused]}
+        placeholder="Numéro de téléphone*" 
         onChangeText={(value) => setPhoneNumber(value)}
-      />
-      <TextInput
-        placeholder="Numéro de rue"
+        onFocus={() => setFocusedField('PhoneNumber')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'StreetNumber' && styles.inputFocused]}
+        placeholder="Numéro de rue" 
         onChangeText={(value) => setStreetNumber(value)}
-      />
-      <TextInput
-        placeholder="Nom de rue"
+        onFocus={() => setFocusedField('StreetNumber')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'Address' && styles.inputFocused]} 
+        placeholder="Nom de rue" 
         onChangeText={(value) => setAddress(value)}
-      />
-      <TextInput placeholder="Ville" onChangeText={(value) => setCity(value)} />
-      <TextInput
-        placeholder="Code Postal"
+        onFocus={() => setFocusedField('Address')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'City' && styles.inputFocused]} 
+        placeholder="Ville" 
+        onChangeText={(value) => setCity(value)}
+        onFocus={() => setFocusedField('City')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput
+        style={[styles.input, focusedField === 'ZipCode' && styles.inputFocused]}  
+        placeholder="Code Postal" 
         onChangeText={(value) => setZipCode(value)}
-      />
-      <Text style={styles.subtitle}>Mes préférences</Text>
-      <TextInput
-        placeholder="Contrat"
+        onFocus={() => setFocusedField('ZipCode')}
+        onBlur={() => setFocusedField(null)}/>
+        <Text style={styles.subtitle}>Mes préférences</Text>
+        <TextInput 
+        style={[styles.input, focusedField === 'Contrat' && styles.inputFocused]} 
+        placeholder="Contrat" 
         onChangeText={(value) => setContratType(value)}
-      />
-      <TextInput
-        placeholder="Ville"
+        onFocus={() => setFocusedField('Contrat')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'CityJob' && styles.inputFocused]} 
+        placeholder="Ville" 
         onChangeText={(value) => setCityJob(value)}
-      />
-      <TextInput
-        placeholder="Region"
+        onFocus={() => setFocusedField('CityJob')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'Region' && styles.inputFocused]} 
+        placeholder="Region" 
         onChangeText={(value) => setRegion(value)}
-      />
-      <TextInput
-        placeholder="Télétravail"
+        onFocus={() => setFocusedField('Region')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'Remote' && styles.inputFocused]} 
+        placeholder="Télétravail" 
         onChangeText={(value) => setRemote(value)}
-      />
-      <TextInput
-        placeholder="Poste"
+        onFocus={() => setFocusedField('Remote')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'JobTitle' && styles.inputFocused]}
+        placeholder="Poste" 
         onChangeText={(value) => setJobTitle(value)}
-      />
-      <TextInput
-        placeholder="Secteur"
+        onFocus={() => setFocusedField('JobTitle')}
+        onBlur={() => setFocusedField(null)}/>
+        <TextInput 
+        style={[styles.input, focusedField === 'Sector' && styles.inputFocused]}
+        placeholder="Secteur" 
         onChangeText={(value) => setSector(value)}
-      />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => handleSummit()}
-      >
-        <Text style={styles.text}>Suivant</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Alerte") }
-      >
-        <Text style={styles.text}>Passer</Text>
-      </TouchableOpacity>
-    </View>
+        onFocus={() => setFocusedField('Sector')}
+        onBlur={() => setFocusedField(null)}/>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+        style={styles.button} 
+        onPress={() => handleSummit()}>
+          <Text style={styles.buttonText}>SUIVANT</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Alerte")}>
+          <Text style={styles.buttonText}>PASSER</Text>
+        </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: AppStyles.color.background,    
   },
-  title: {
-    fontSize: 36,
-    padding: 10,
+  scrollableContainer: {
+    width : "100%"
   },
-  subtitle: {
-    fontSize: 28,
-  },
+  title: AppStyles.title,
+  subtitle: AppStyles.subtitle,
+  input: AppStyles.input,
+  inputFocused : AppStyles.inputFocused,
+  button : AppStyles.button,
+  buttonText : AppStyles.buttonText,
 });

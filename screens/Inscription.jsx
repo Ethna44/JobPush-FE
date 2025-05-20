@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
 
@@ -6,7 +6,7 @@ export default function StackScreen2({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         <Image style={styles.logo} source={require('../assets/logoJobPush-Photoroom.jpg')}></Image>
       </View>
@@ -49,7 +49,7 @@ export default function StackScreen2({ navigation }) {
               />
             </View>
             <View style={styles.buttonAndTextContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate("TabNavigator")} style={styles.button}>
+              <TouchableOpacity onPress={() => navigation.navigate("Profil")} style={styles.button}>
                 <Text style={styles.buttonText}>LET'S GO !</Text>
               </TouchableOpacity>
               <View style={styles.textContainer}>
@@ -59,7 +59,7 @@ export default function StackScreen2({ navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
