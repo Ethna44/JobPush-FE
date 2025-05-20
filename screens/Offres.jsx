@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 export default function TabScreen1({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Candidatures</Text>
+      <Text style={styles.title}>Offres</Text>
       <Button
         title="Go to StackScreen1"
         onPress={() => navigation.navigate("Accueil")}

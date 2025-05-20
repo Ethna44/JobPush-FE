@@ -1,0 +1,78 @@
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from "react-native";
+import AppStyles from "../AppStyles";
+
+export default function StackScreen1({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <Image style={styles.logo} source={require('../assets/logoJobPush-Photoroom.jpg')}></Image>
+      </View>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Bienvenue !</Text>
+      </View>
+      <View style={styles.redButtonContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("Inscription")} style={styles.button}>
+          <Text style={styles.buttonText}>S'INSCRIRE</Text>
+        </TouchableOpacity>
+        <Text>OU</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Connexion")} style={styles.button}>
+          <Text style={styles.buttonText}>SE CONNECTER</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.googleContainer}>
+        <Text>S'identifier avec</Text>
+        <Button title="Google" onPress={() => navigation.navigate("Connexion")}  />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: AppStyles.color.background,
+    // borderColor: "red",
+    // borderWidth: 1,
+  },
+  imageContainer: {
+    width: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+    // borderColor: "black",
+    // borderWidth: 1,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    margin: 10,
+  },
+  titleContainer: {
+    width: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  title: AppStyles.title,
+  redButtonContainer: {
+    width: '100%',
+    height: '30%',
+    justifyContent: "space-between",
+    padding: 40,
+    alignItems: "center",
+    // borderColor: "green",
+    // borderWidth: 1,
+  },
+  button: AppStyles.button,
+  buttonText: AppStyles.buttonText,
+  googleContainer: {
+    width: '100%',
+    justifyContent: "space-between",
+    //padding: 40,
+    alignItems: "center",
+    // borderColor: "orange",
+    // borderWidth: 1,
+  }
+});

@@ -3,10 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
-import Acceuil from "./screens/Acceuil";
+import Accueil from "./screens/Accueil";
 import Inscription from "./screens/Inscription";
 import Connexion from "./screens/Connexion";
-import Offre from "./screens/Offre";
+import Offres from "./screens/Offres";
 import Candidatures from "./screens/Candidatures";
 import Astuces from "./screens/Astuces";
 import Compte from "./screens/Compte";
@@ -31,7 +31,7 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
-            case "Offre":
+            case "Offres":
               return (
                 <FontAwesome
                   name={"location-arrow"}
@@ -51,10 +51,6 @@ const TabNavigator = () => {
               return (
                 <FontAwesome name={"user-circle"} size={size} color={color} />
               );
-            case "Recherche":
-              return (
-                <FontAwesome name={"plus-circle"} size={size} color={color} />
-              );
           }
         },
         tabBarActiveTintColor: "#F72C03",
@@ -62,9 +58,8 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Offre" component={Offre} />
+      <Tab.Screen name="Offres" component={Offres} />
       <Tab.Screen name="Candidatures" component={Candidatures} />
-      <Tab.Screen name="Recherche" component={Recherche} />
       <Tab.Screen name="Astuces" component={Astuces} />
       <Tab.Screen name="Compte" component={Compte} />
     </Tab.Navigator>
@@ -97,11 +92,9 @@ export default function App() {
         <Header />
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Acceuil" component={Acceuil} />
+            <Stack.Screen name="Accueil" component={Accueil} />
             <Stack.Screen name="Inscription" component={Inscription} />
             <Stack.Screen name="Connexion" component={Connexion} />
-            <Stack.Screen name="Profil" component={Profil} />
-            <Stack.Screen name="Alerte" component={Alerte} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
