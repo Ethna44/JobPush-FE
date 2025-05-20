@@ -6,9 +6,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 
 export default function Profil({ navigation }) {
+  const dispatch = useDispatch()
+  const user = useSelector()
   const [name, setName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [phonenumber, setPhoneNumber] = useState(0);
@@ -24,7 +27,7 @@ export default function Profil({ navigation }) {
   const [region, setRegion] = useState("");
 
   const handleSummit = () => {
-    fetch("http:///192.168.100.250:3000/user", {
+    fetch(`http://192.168.100.250:3000/users`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -53,10 +56,11 @@ export default function Profil({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Mon profil</Text>
       <Text style={styles.subtitle}>Civilité</Text>
-      <TextInput placeholder="Nom" onChangeText={(value) => setName(value)} />
+      <TextInput placeholder="Nom" onChangeText={(value) => setName(value)} required />
       <TextInput
         placeholder="Prenom"
         onChangeText={(value) => setFirstName(value)}
+        required
       />
       <TextInput
         placeholder="Numéro de téléphone"
