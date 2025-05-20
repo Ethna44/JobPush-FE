@@ -51,6 +51,10 @@ const TabNavigator = () => {
               return (
                 <FontAwesome name={"user-circle"} size={size} color={color} />
               );
+               case "Recherche":
+              return (
+                <FontAwesome name={"plus-circle"} size={size} color={color} />
+              );
           }
         },
         tabBarActiveTintColor: "#F72C03",
@@ -60,6 +64,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Offres" component={Offres} />
       <Tab.Screen name="Candidatures" component={Candidatures} />
+       <Tab.Screen name="Recherche" component={Recherche} />
       <Tab.Screen name="Astuces" component={Astuces} />
       <Tab.Screen name="Compte" component={Compte} />
     </Tab.Navigator>
@@ -95,6 +100,8 @@ export default function App() {
             <Stack.Screen name="Accueil" component={Accueil} />
             <Stack.Screen name="Inscription" component={Inscription} />
             <Stack.Screen name="Connexion" component={Connexion} />
+             <Stack.Screen name="Profil" component={Profil} />
+             <Stack.Screen name="Alerte" component={Alerte} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
