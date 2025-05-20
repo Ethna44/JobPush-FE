@@ -6,7 +6,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://obla
 import Accueil from "./screens/Accueil";
 import Inscription from "./screens/Inscription";
 import Connexion from "./screens/Connexion";
-import Offre from "./screens/Offre";
+import Offres from "./screens/Offres";
 import Candidatures from "./screens/Candidatures";
 import Astuces from "./screens/Astuces";
 import Compte from "./screens/Compte";
@@ -29,7 +29,7 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
-            case "Offre":
+            case "Offres":
               return (
                 <FontAwesome
                   name={"location-arrow"}
@@ -56,7 +56,7 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Offre" component={Offre} />
+      <Tab.Screen name="Offres" component={Offres} />
       <Tab.Screen name="Candidatures" component={Candidatures} />
       <Tab.Screen name="Astuces" component={Astuces} />
       <Tab.Screen name="Compte" component={Compte} />

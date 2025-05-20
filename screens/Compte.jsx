@@ -6,7 +6,7 @@ export default function TabScreen1({ navigation }) {
       <Text style={styles.title}>Compte</Text>
       <Button
         title="Go to StackScreen1"
-        onPress={() => navigation.navigate("accueil")}
+        onPress={() => navigation.navigate("Accueil")}
       />
     </View>
   );
