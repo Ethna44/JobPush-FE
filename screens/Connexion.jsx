@@ -38,7 +38,7 @@ export default function StackScreen2({ navigation }) {
         />
       </View>
       <View style={styles.buttonAndTextContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Profil")} style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.navigate("TabNavigator")} style={styles.button}>
           <Text style={styles.buttonText}>LET'S GO !</Text>
         </TouchableOpacity>
         <View style={styles.textContainer}>

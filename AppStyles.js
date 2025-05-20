@@ -8,14 +8,16 @@ export default AppStyles = {
     title: {
         alignItems: 'center',
         justifyContent : 'center',
-        fontFamily: 'Poppins',
-        fontSize: 36,
-        fontWeight: 600,
+        fontFamily: 'Poppins_600SemiBold',
+        fontSize: 32,
     },
     subtitle: {
-        fontFamily: 'Poppins',
-        fontSize: 32,
-        fontWeight: 400,
+        fontFamily: 'Poppins_400Regular',
+        fontSize: 26,
+    },
+    important : {
+        fontFamily: 'Poppins_300Light_Italic',
+        fontSize: 13,
     },
     button : {
         alignItems: 'center',
@@ -31,7 +33,7 @@ export default AppStyles = {
         alignItems: 'center',
         justifyContent : 'center' ,
         color: '#F9F1F1',
-        fontFamily: "Poppins",
+        fontFamily: "Poppins_500Medium",
         fontSize: 14,
     },
     input: {
@@ -42,27 +44,27 @@ export default AppStyles = {
         borderRadius: 8,
         marginBottom: 16,
         color: '#444',
-        fontSize: 16,
-        fontFamily: "Poppins",
+        fontSize: 15,
+        fontFamily: "Poppins_400Regular",
     },
     inputFocused: {
         backgroundColor: '#FEDDD7', //rose légèrement plus foncé pour input actif
         borderBottomColor: '#F72C03', // rouge vif pour input actif
         fontWeight: '500',
-        fontFamily: "Poppins",
+        fontFamily: "Poppins_400Regular",
   },
   link: {
     borderBottomColor: '#F72C03',
     borderBottomWidth: 1,
   },
   body : {
-    fontFamily: "Poppins",
+    fontFamily: "Poppins_400Regular",
     color: '#2B3033',
-    fontSize: 16,
+    fontSize: 14,
   },
   linkText : {
-    fontFamily: "Poppins",
+    fontFamily: "Poppins_400Regular",
     color: '#2B3033',
-    fontSize: 16,
+    fontSize: 14,
   }
 }

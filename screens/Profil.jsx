@@ -50,6 +50,7 @@ export default function Profil({ navigation }) {
       <Text style={styles.title}>Mon profil</Text>
       <ScrollView style={styles.scrollableContainer}>
         <Text style={styles.subtitle}>Civilité</Text>
+        <Text style={styles.important}>*obligatoires</Text>
         <TextInput 
         style={[styles.input, focusedField === 'Name' && styles.inputFocused]} 
         placeholder="Nom*" 
@@ -130,11 +131,11 @@ export default function Profil({ navigation }) {
         onFocus={() => setFocusedField('Sector')}
         onBlur={() => setFocusedField(null)}/>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity 
+          {/* <TouchableOpacity 
         style={styles.button} 
         onPress={() => handleSummit()}>
           <Text style={styles.buttonText}>SUIVANT</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Alerte")}>
           <Text style={styles.buttonText}>PASSER</Text>
         </TouchableOpacity>
@@ -152,12 +153,17 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.color.background,    
   },
   scrollableContainer: {
-    width : "100%"
+    width : "100%",
+    paddingLeft : 20,
   },
   title: AppStyles.title,
   subtitle: AppStyles.subtitle,
+  important: AppStyles.important,
   input: AppStyles.input,
   inputFocused : AppStyles.inputFocused,
+  buttonContainer : {
+    alignItems : 'flex-end'
+  },
   button : AppStyles.button,
   buttonText : AppStyles.buttonText,
 });
