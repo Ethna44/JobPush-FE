@@ -12,7 +12,7 @@ export default function StackScreen2({ navigation }) {
   const [password,setCheckPassword] = useState ('')
   const [passwordConfirm,setPasswordConfirm] = useState ('')
 
-  const user = useSelector(state => state.user.value.email);
+  const user = useSelector(state => state.user.profile.email);
   const dispatch = useDispatch();
 
  function handleSubmit() {
@@ -33,6 +33,8 @@ export default function StackScreen2({ navigation }) {
   }
 
     const handleRegister = () => {
+
+       
    
       fetch("http://192.168.100.178:3000/users/signup", {
       method: "POST",
@@ -51,7 +53,6 @@ export default function StackScreen2({ navigation }) {
           setCheckMail("");
           setCheckPassword("");
           setPasswordConfirm("");
-          
         navigation.navigate("Profil");
         }
       });
