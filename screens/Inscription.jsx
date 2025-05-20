@@ -11,6 +11,7 @@ export default function StackScreen2({ navigation }) {
   const [checkMail, setCheckMail] = useState(false);
   const [password,setCheckPassword] = useState ('')
   const [passwordConfirm,setPasswordConfirm] = useState ('')
+  const [errorMessage,setErrorMessage] = useState ('')
 
   const user = useSelector(state => state.user.profile.email);
   const dispatch = useDispatch();
@@ -23,7 +24,10 @@ export default function StackScreen2({ navigation }) {
     } else {
       setCheckMail(true);
     }
+    
   }
+
+  
 
   function validateEmail(email) {
     var emailReg = new RegExp(
@@ -34,9 +38,13 @@ export default function StackScreen2({ navigation }) {
 
     const handleRegister = () => {
 
-       
+        handleSubmit(); // vérifie l'email et fait le dispatch
+
+  if (checkMail) {
+    return; // stoppe ici si l'email est invalide
+  }
    
-      fetch("http://192.168.100.178:3000/users/signup", {
+      fetch("http://192.168.199.218:3000/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -50,11 +58,19 @@ export default function StackScreen2({ navigation }) {
         console.log(data)
         if (data.result) {
           // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
+          console.log(data)
           setCheckMail("");
           setCheckPassword("");
           setPasswordConfirm("");
         navigation.navigate("Profil");
         }
+        if (!data.result){
+          console.log("Erreur reçue :", data.error);
+           setErrorMessage(data.error || "An error occurred. Please try again.");
+           console.log("errorMessage (état local) :", errorMessage);
+            
+        }
+        setErrorMessage('')
       });
   };
 
@@ -121,8 +137,16 @@ export default function StackScreen2({ navigation }) {
                 onBlur={() => setFocusedField(null)}
                     onChangeText={(value) => setPasswordConfirm(value)}
             value={passwordConfirm}
+
+              
                 
               />
+
+            {errorMessage !=="" && (
+            <Text style={{ color: "red", marginTop: 4 }}>
+              {errorMessage}
+            </Text>
+          )}
             </View>
             <View style={styles.buttonAndTextContainer}>
               <TouchableOpacity onPress={() => {

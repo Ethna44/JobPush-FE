@@ -6,7 +6,7 @@ import React from "react";
 
 export default function Profil({ navigation }) {
   const dispatch = useDispatch()
-  const user = useSelector()
+  // const user = useSelector()
   const [name, setName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [phonenumber, setPhoneNumber] = useState(0);

@@ -1,10 +1,41 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function StackScreen2({ navigation }) {
+export default function LogIn({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
+  const [email, setEmail] = useState("");
+  const [checkMail, setCheckMail] = useState(false);
+  const [password,setPassword] = useState ('')
 
+    const handleRegister = () => {
+
+   
+      fetch("http://192.168.199.218:3000/users/signin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email  ,
+        password: password,
+        
+      }),
+    })
+    .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        if(data.result) {
+          // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
+        console.log(data)
+          setCheckMail("");
+          setPassword("");
+          
+        navigation.navigate("Offres");
+        }
+      });
+  };
+console.log(email)
+console.log(password)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -24,6 +55,8 @@ export default function StackScreen2({ navigation }) {
           keyboardType="email-address"
           onFocus={() => setFocusedField('email')}
           onBlur={() => setFocusedField(null)}
+          onChangeText={(value) => setEmail(value)}
+            value={email}
         />
         <TextInput
           style={[
@@ -35,10 +68,14 @@ export default function StackScreen2({ navigation }) {
           secureTextEntry
           onFocus={() => setFocusedField('password')}
           onBlur={() => setFocusedField(null)}
+          onChangeText={(value) => setPassword(value)}
+            value={password}
         />
       </View>
       <View style={styles.buttonAndTextContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("TabNavigator")} style={styles.button}>
+        <TouchableOpacity onPress={() => {
+              handleRegister();
+            }} style={styles.button}>
           <Text style={styles.buttonText}>LET'S GO !</Text>
         </TouchableOpacity>
         <View style={styles.textContainer}>
