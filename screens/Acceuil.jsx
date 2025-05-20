@@ -9,7 +9,7 @@ export default function StackScreen1({ navigation }) {
       </TouchableOpacity>
 
       <Text>OU</Text>
-     <TouchableOpacity onPress={() => navigation.navigate("Inscription")} style={styles.button}>
+     <TouchableOpacity onPress={() => navigation.navigate("Connexion")} style={styles.button}>
         <Text style={styles.text}>Se Connecter</Text>
       </TouchableOpacity>
       <Text>S'identifier avec google</Text>
