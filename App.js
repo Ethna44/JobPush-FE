@@ -1,9 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
-import Acceuil from "./screens/Acceuil";
+import accueil from "./screens/Accueil";
 import Inscription from "./screens/Inscription";
 import Connexion from "./screens/Connexion";
 import Offre from "./screens/Offre";
@@ -30,13 +30,25 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
             case "Offre":
-              return <FontAwesome name={"location-arrow"} size={size} color={color} />;
+              return (
+                <FontAwesome
+                  name={"location-arrow"}
+                  size={size}
+                  color={color}
+                />
+              );
             case "Candidatures":
-              return <FontAwesome name={"file-text-o"} size={size} color={color} />;
+              return (
+                <FontAwesome name={"file-text-o"} size={size} color={color} />
+              );
             case "Astuces":
-              return <FontAwesome name={"lightbulb-o"} size={size} color={color} />;
+              return (
+                <FontAwesome name={"lightbulb-o"} size={size} color={color} />
+              );
             case "Compte":
-              return <FontAwesome name={"user-circle"} size={size} color={color} />;
+              return (
+                <FontAwesome name={"user-circle"} size={size} color={color} />
+              );
           }
         },
         tabBarActiveTintColor: "#F72C03",
@@ -46,7 +58,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen name="Offre" component={Offre} />
       <Tab.Screen name="Candidatures" component={Candidatures} />
-	  <Tab.Screen name="Astuces" component={Astuces} />
+      <Tab.Screen name="Astuces" component={Astuces} />
       <Tab.Screen name="Compte" component={Compte} />
     </Tab.Navigator>
   );
@@ -75,19 +87,18 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Header/>
+        <Header />
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Acceuil" component={Acceuil} />
+            <Stack.Screen name="accueil" component={accueil} />
             <Stack.Screen name="Inscription" component={Inscription} />
             <Stack.Screen name="Connexion" component={Connexion} />
-			
+
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
-          <StatusBar hidden={true} />
+        <StatusBar hidden={true} />
       </PersistGate>
     </Provider>
   );
 }
-
