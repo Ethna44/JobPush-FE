@@ -1,8 +1,12 @@
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, SafeAreaView, ScrollView} from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 
 export default function Profil({ navigation }) {
+  const dispatch = useDispatch()
+  const user = useSelector()
   const [name, setName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [phonenumber, setPhoneNumber] = useState(0);
@@ -20,7 +24,7 @@ export default function Profil({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
 
   const handleSummit = () => {
-    fetch("http:///192.168.100.250:3000/user", {
+    fetch(`http://192.168.100.250:3000/users`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
