@@ -22,6 +22,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // AsyncStorage
 import user from "./reducers/user";
 
+import { useFonts,  
+  Poppins_300Light_Italic, 
+  Poppins_400Regular,  
+  Poppins_500Medium,  
+  Poppins_600SemiBold } from '@expo-google-fonts/poppins';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +97,16 @@ const store = configureStore({
 const persistor = persistStore(store);
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light_Italic, 
+    Poppins_400Regular,  
+    Poppins_500Medium,  
+    Poppins_600SemiBold
+    });
+    if (!fontsLoaded) {
+      return null;
+    }
+  
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

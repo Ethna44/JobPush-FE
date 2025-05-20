@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import AppStyles from "../AppStyles";
 
 export default function StackScreen1({ navigation }) {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         <Image style={styles.logo} source={require('../assets/logoJobPush-Photoroom.jpg')}></Image>
       </View>
@@ -23,7 +23,7 @@ export default function StackScreen1({ navigation }) {
         <Text>S'identifier avec</Text>
         <Button title="Google" onPress={() => navigation.navigate("Connexion")}  />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

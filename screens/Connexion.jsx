@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
 
@@ -6,7 +6,7 @@ export default function StackScreen2({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         <Image style={styles.logo} source={require('../assets/logoJobPush-Photoroom.jpg')}></Image>
       </View>
@@ -36,17 +36,6 @@ export default function StackScreen2({ navigation }) {
           onFocus={() => setFocusedField('password')}
           onBlur={() => setFocusedField(null)}
         />
-        {/* <TextInput
-          style={[
-            styles.input,
-            focusedField === 'confirm' && styles.inputFocused
-          ]}
-          placeholder="confirmer mot de passe"
-          placeholderTextColor="#999"
-          secureTextEntry
-          onFocus={() => setFocusedField('confirm')}
-          onBlur={() => setFocusedField(null)}
-        /> */}
       </View>
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("TabNavigator")} style={styles.button}>
@@ -59,7 +48,7 @@ export default function StackScreen2({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

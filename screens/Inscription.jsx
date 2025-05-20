@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { updateEmail } from "../reducers/user";
@@ -70,7 +70,7 @@ export default function StackScreen2({ navigation }) {
   
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         <Image style={styles.logo} source={require('../assets/logoJobPush-Photoroom.jpg')}></Image>
       </View>
@@ -137,7 +137,7 @@ export default function StackScreen2({ navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
