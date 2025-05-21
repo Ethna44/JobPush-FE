@@ -85,7 +85,8 @@ export default function Profil({ navigation }) {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Mon profil</Text>
       <ScrollView style={styles.scrollableContainer}>
-        <Text style={styles.subtitle}>Civilité</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.subtitle}>Civilité</Text>
         <Text style={styles.important}>*obligatoires</Text>
         <TextInput
           style={[styles.input, focusedField === "Name" && styles.inputFocused]}
@@ -222,7 +223,7 @@ export default function Profil({ navigation }) {
             style={styles.button}
             onPress={() => handleSubmit()}
           >
-            <Text style={styles.buttonText}>PASSER</Text>
+            <Text style={styles.buttonText}>Suivant</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -236,18 +237,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: AppStyles.color.background,
+    // borderColor: "red",
+    // borderWidth: 1,    
   },
   scrollableContainer: {
-    width: "100%",
-    paddingLeft: 20,
+    width : "100%",
+    // borderColor: "blue",
+    // borderWidth: 1,  
+  },
+  textContainer: {
+    marginLeft : 20
   },
   title: AppStyles.title,
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
+  inputContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // borderColor: "green",
+    // borderWidth: 1, 
+  },
   input: AppStyles.input,
-  inputFocused: AppStyles.inputFocused,
-  buttonContainer: {
-    alignItems: "flex-end",
+  inputFocused : AppStyles.inputFocused,
+  buttonContainer : {
+    alignItems : 'flex-end',
+    paddingBottom: 50,
+    paddingRight: 20,
+    paddingTop: 30,
+    // borderColor: "pink",
+    // borderWidth: 1, 
   },
   button: AppStyles.button,
   buttonText: AppStyles.buttonText,

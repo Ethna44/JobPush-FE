@@ -10,6 +10,8 @@ export default function LogIn({ navigation }) {
   const [email, setEmail] = useState("");
   const [checkMail, setCheckMail] = useState(false);
   const [password,setPassword] = useState ('')
+   const [errorMessage, setErrorMessage] = useState("");
+  
 
     const handleRegister = () => {   
       fetch(`${EXPO_IP}/users/signin`, {
@@ -21,16 +23,14 @@ export default function LogIn({ navigation }) {
         
       }),
     })
-    .then((response) => response.json())
+ .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        if(data.result) {
-          // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
-        console.log(data)
-          setCheckMail("");
-          setPassword("");
-        navigation.navigate("TabNavigator");
+        if (!data.result) {
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+          return;
         }
+
+        navigation.navigate("Offres");
       });
   };
 console.log(email)
@@ -70,6 +70,10 @@ console.log(password)
           onChangeText={(value) => setPassword(value)}
             value={password}
         />
+        
+        {errorMessage && (
+          <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
+        )}
       </View>
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity onPress={() => {

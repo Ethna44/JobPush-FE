@@ -35,7 +35,7 @@ export default function StackScreen2({ navigation }) {
     }
   }
 
-  function validateEmail(email) {
+  function validateEmail(email) { 
     var emailReg = new RegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i
     );
@@ -43,6 +43,7 @@ export default function StackScreen2({ navigation }) {
   }
 
   const handleRegister = () => {
+    setErrorMessage("");
     handleSubmit(); // vérifie l'email et fait le dispatch
 
     if (checkMail) {
@@ -79,7 +80,6 @@ export default function StackScreen2({ navigation }) {
   };
 
   console.log(user);
-
   console.log(checkMail);
   console.log(email);
   console.log(password);
@@ -142,7 +142,7 @@ export default function StackScreen2({ navigation }) {
           value={passwordConfirm}
         />
 
-        {errorMessage !== "" && (
+        {errorMessage && (
           <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
         )}
       </View>
