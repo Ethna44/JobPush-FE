@@ -14,13 +14,13 @@ export default function StackScreen1({ navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate("Inscription")} style={styles.button}>
           <Text style={styles.buttonText}>S'INSCRIRE</Text>
         </TouchableOpacity>
-        <Text>OU</Text>
+        <Text style={styles.body}>OU</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Connexion")} style={styles.button}>
           <Text style={styles.buttonText}>SE CONNECTER</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.googleContainer}>
-        <Text>S'identifier avec</Text>
+        <Text style={styles.body}>S'identifier avec</Text>
         <Button title="Google" onPress={() => navigation.navigate("Connexion")}  />
       </View>
     </SafeAreaView>
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     margin: 10,
+    borderRadius: 10,
   },
   titleContainer: {
     width: '100%',
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     // borderColor: "green",
     // borderWidth: 1,
   },
+  body: AppStyles.body,
   button: AppStyles.button,
   buttonText: AppStyles.buttonText,
   googleContainer: {

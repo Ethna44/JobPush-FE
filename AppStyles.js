@@ -28,6 +28,15 @@ export default AppStyles = {
         paddingRight: 20,
         backgroundColor: '#F72C03',
         borderRadius: 10,
+        shadowColor: "#2B3033",
+        shadowOffset: {
+	        width: 0,
+	        height: 3,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4.65,
+        elevation: 3,
+
     },
     buttonText : {
         alignItems: 'center',

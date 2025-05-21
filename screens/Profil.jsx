@@ -92,7 +92,7 @@ export default function Profil({ navigation }) {
               styles.input,
               focusedField === "Name" && styles.inputFocused,
             ]}
-            placeholder="Nom"
+            placeholder="Nom*"
             onChangeText={(value) => setName(value)}
             onFocus={() => setFocusedField("Name")}
             onBlur={() => setFocusedField(null)}
@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: AppStyles.color.background,
+    paddingTop: 20,
     // borderColor: "red",
     // borderWidth: 1,
   },
