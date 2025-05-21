@@ -8,9 +8,8 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-
+import { useRef, useEffect, useState } from "react";
 import AppStyles from "../AppStyles";
-import { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
@@ -34,14 +33,23 @@ export default function Profil({ navigation }) {
   const [cityJob, setCityJob] = useState(null);
   const [region, setRegion] = useState(null);
   const [focusedField, setFocusedField] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-const citiesList = cities.cities
-  .filter(city => city.label) // garde seulement ceux qui ont un label
-  .map(city => ({
-    ...city,
-    label: city.label.charAt(0).toUpperCase() + city.label.slice(1),
-    value: city.label.charAt(0).toUpperCase() + city.label.slice(1)
-  }));
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (errorMessage && scrollRef.current) {
+      scrollRef.current.scrollTo({ y: 0, animated: true });
+    }
+  }, [errorMessage]);
+
+  const citiesList = cities.cities
+    .filter((city) => city.label) // garde seulement ceux qui ont un label
+    .map((city) => ({
+      ...city,
+      label: city.label.charAt(0).toUpperCase() + city.label.slice(1),
+      value: city.label.charAt(0).toUpperCase() + city.label.slice(1),
+    }));
 
   const regionsList = [
     { label: "Île-de-France", value: "Île-de-France" },
@@ -134,27 +142,36 @@ const citiesList = cities.cities
           );
           navigation.navigate("Alerte");
         } else {
-          console.log(data.result);
+          console.log(data);
+          setErrorMessage(
+            data.message || "Une erreur est survenue. Veuillez réessayer."
+          );
         }
       });
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <Text style={styles.title}>Mon profil</Text>
-      <ScrollView style={styles.scrollableContainer}>
+      <ScrollView style={styles.scrollableContainer} ref={scrollRef}>
         <View style={styles.textContainer}>
           <Text style={styles.subtitle}>Civilité</Text>
           <Text style={styles.important}>*obligatoires</Text>
         </View>
         <View style={styles.inputContainer}>
-          
+          {errorMessage && (
+            <Text style={{ color: "red", margin: 10 }}>{errorMessage}</Text>
+          )}
           <TextInput
             style={[
               styles.input,
               focusedField === "Name" && styles.inputFocused,
             ]}
             placeholder="Nom*"
+            placeholderTextColor={errorMessage && "rgba(255, 0, 0, 0.4)"}
             onChangeText={(value) => setName(value)}
             onFocus={() => setFocusedField("Name")}
             onBlur={() => setFocusedField(null)}
@@ -165,6 +182,7 @@ const citiesList = cities.cities
               focusedField === "FirstName" && styles.inputFocused,
             ]}
             placeholder="Prenom*"
+            placeholderTextColor={errorMessage && "rgba(255, 0, 0, 0.4)"}
             onChangeText={(value) => setFirstName(value)}
             onFocus={() => setFocusedField("FirstName")}
             onBlur={() => setFocusedField(null)}
@@ -175,6 +193,7 @@ const citiesList = cities.cities
               focusedField === "PhoneNumber" && styles.inputFocused,
             ]}
             placeholder="Numéro de téléphone*"
+            placeholderTextColor={errorMessage && "rgba(255, 0, 0, 0.4)"}
             onChangeText={(value) => setPhoneNumber(value)}
             onFocus={() => setFocusedField("PhoneNumber")}
             onBlur={() => setFocusedField(null)}
@@ -225,7 +244,7 @@ const citiesList = cities.cities
           <Text style={styles.subtitle}>Mes préférences</Text>
         </View>
         <View style={styles.inputContainer}>
-           <TextInput
+          <TextInput
             style={[
               styles.input,
               focusedField === "JobTitle" && styles.inputFocused,
@@ -255,7 +274,7 @@ const citiesList = cities.cities
             search // Active la barre de recherche
             searchPlaceholder="Type de contrat"
           />
-           <Dropdown
+          <Dropdown
             style={styles.input}
             data={citiesList}
             labelField="label"
