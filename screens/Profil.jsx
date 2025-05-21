@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
+import cities from "../json/cities.json";
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 export default function Profil({ navigation }) {
@@ -33,6 +34,14 @@ export default function Profil({ navigation }) {
   const [cityJob, setCityJob] = useState(null);
   const [region, setRegion] = useState(null);
   const [focusedField, setFocusedField] = useState(null);
+
+const citiesList = cities.cities
+  .filter(city => city.label) // garde seulement ceux qui ont un label
+  .map(city => ({
+    ...city,
+    label: city.label.charAt(0).toUpperCase() + city.label.slice(1),
+    value: city.label.charAt(0).toUpperCase() + city.label.slice(1)
+  }));
 
   const regionsList = [
     { label: "Île-de-France", value: "Île-de-France" },
@@ -246,15 +255,16 @@ export default function Profil({ navigation }) {
             search // Active la barre de recherche
             searchPlaceholder="Type de contrat"
           />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "CityJob" && styles.inputFocused,
-            ]}
+           <Dropdown
+            style={styles.input}
+            data={citiesList}
+            labelField="label"
+            valueField="value"
             placeholder="Ville"
-            onChangeText={(value) => setCityJob(value)}
-            onFocus={() => setFocusedField("CityJob")}
-            onBlur={() => setFocusedField(null)}
+            value={cityJob}
+            onChange={(item) => setCityJob(item.value)}
+            search // Active la barre de recherche
+            searchPlaceholder="Type de contrat"
           />
           <Dropdown
             style={styles.input}
