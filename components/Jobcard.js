@@ -11,44 +11,38 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
-import Jobcard from "../components/Jobcard";
+import AppStyles from "../AppStyles";
 
-export default function TabScreen1({ navigation }) {
-  const [search, setSearch] = useState("");
-
+export default function Header() {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.inputSearchContainer}>
-          <TextInput
-            placeholder="Recherche"
-            style={styles.inputSearch}
-            onChangeText={(value) => setSearch(value)}
-            value={search}
-          />
-          <FontAwesome name={"search"} size={18} color="#F72C03" />
-        </View>
-        <Text style={styles.title}>Offres</Text>
 
-        <Button
-          title="Go to StackScreen1"
-          onPress={() => navigation.navigate("Accueil")}
+    
+    <TouchableOpacity style={styles.card}>
+      <View style={styles.photoContainer}>
+        <Image
+          source={require("../assets/logoJobPush-Photoroom.jpg")}
+          style={styles.logo}
         />
       </View>
-      <View style={styles.jobContainer}>
-        <Jobcard />
-      </View>
+      <View style={styles.info}>
+        <Text style={styles.headline}>Titre poste</Text>
 
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        
-      </ScrollView>
-    </SafeAreaView>
+        <Text style={styles.textInfo}>Entreprise</Text>
+
+        <View style={styles.rating}>
+          {<FontAwesome name="star" color="red" size={16} />}
+        </View>
+        <Text style={styles.textInfo}>Type de contrat</Text>
+        <Text style={styles.textInfo}>Ville</Text>
+        <Text style={styles.source}>Source</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    
+    flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
   },
@@ -90,7 +84,6 @@ const styles = StyleSheet.create({
   inputSearch: {
     flex: 1,
     marginTop: 6,
-
     fontSize: 17,
     paddingRight: 8,
   },
@@ -99,10 +92,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "75%",
-
-    borderBottomColor: "black",
+    borderBottomColor: "#2B3033",
     borderBottomWidth: 1,
-
     marginTop: 5,
   },
   card: {
@@ -111,28 +102,45 @@ const styles = StyleSheet.create({
     width: "85%",
     height: "25%",
     flexDirection: "row",
-    padding: 12,
     alignItems: "center",
+    // borderColor: "yellow",
+    // borderWidth: 1,
+    shadowColor: "#2B3033",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
+    elevation: 3,
   },
   logo: {
-    width: 60,
-    height: 60,
-    resizeMode: "cover",
-    borderRadius: 8,
-    marginRight: 10,
+    width: "100%",
+    height: "100%",
+    borderRadius: 12,
   },
+ 
   source: {
-    fontWeight: "bold",
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 14,
   },
-  textInfo: {
-    fontSize: 16,
-    fontStyle: "italic",
-  },
+  
+  textInfo: AppStyles.body,
+
   info: {
-    flex: 1,
-    gap: 3,
+    width: "65%",
+    height: "100%",
+    // borderColor: "blue",
+    // borderWidth: 1,
+    paddingLeft: 10,
+    justifyContent: "center",
   },
-  jobContainer:{
-    height:"100%"
-  }
+  
+  headline: AppStyles.headline,
+  photoContainer: {
+    width: "35%",
+    height: "100%",
+    // borderColor: "green",
+    // borderWidth: 1,
+  },
 });

@@ -66,5 +66,10 @@ export default AppStyles = {
         fontFamily: "Poppins_400Regular",
         color: '#2B3033',
         fontSize: 14,
+    },
+    headline :{
+        fontFamily : "Poppins_600SemiBold" ,
+        fontSize : 18,
+
     }
 }
