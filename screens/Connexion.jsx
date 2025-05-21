@@ -1,12 +1,43 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function StackScreen2({ navigation }) {
+export default function LogIn({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
+  const [email, setEmail] = useState("");
+  const [checkMail, setCheckMail] = useState(false);
+  const [password,setPassword] = useState ('')
+   const [errorMessage, setErrorMessage] = useState("");
+  
+   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
+    const handleRegister = () => {
+
+   
+      fetch(`${EXPO_IP}/users/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email  ,
+        password: password,
+        
+      }),
+    })
+ .then((response) => response.json())
+      .then((data) => {
+        if (!data.result) {
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+          return;
+        }
+
+        navigation.navigate("Offres");
+      });
+  };
+console.log(email)
+console.log(password)
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         <Image style={styles.logo} source={require('../assets/logoJobPush-Photoroom.jpg')}></Image>
       </View>
@@ -24,6 +55,8 @@ export default function StackScreen2({ navigation }) {
           keyboardType="email-address"
           onFocus={() => setFocusedField('email')}
           onBlur={() => setFocusedField(null)}
+          onChangeText={(value) => setEmail(value)}
+            value={email}
         />
         <TextInput
           style={[
@@ -35,21 +68,18 @@ export default function StackScreen2({ navigation }) {
           secureTextEntry
           onFocus={() => setFocusedField('password')}
           onBlur={() => setFocusedField(null)}
+          onChangeText={(value) => setPassword(value)}
+            value={password}
         />
-        {/* <TextInput
-          style={[
-            styles.input,
-            focusedField === 'confirm' && styles.inputFocused
-          ]}
-          placeholder="confirmer mot de passe"
-          placeholderTextColor="#999"
-          secureTextEntry
-          onFocus={() => setFocusedField('confirm')}
-          onBlur={() => setFocusedField(null)}
-        /> */}
+        
+        {errorMessage && (
+          <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
+        )}
       </View>
       <View style={styles.buttonAndTextContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("TabNavigator")} style={styles.button}>
+        <TouchableOpacity onPress={() => {
+              handleRegister();
+            }} style={styles.button}>
           <Text style={styles.buttonText}>LET'S GO !</Text>
         </TouchableOpacity>
         <View style={styles.textContainer}>
@@ -59,7 +89,7 @@ export default function StackScreen2({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
