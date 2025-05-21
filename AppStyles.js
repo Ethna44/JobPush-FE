@@ -52,19 +52,19 @@ export default AppStyles = {
         borderBottomColor: '#F72C03', // rouge vif pour input actif
         fontWeight: '500',
         fontFamily: "Poppins_400Regular",
-  },
-  link: {
-    borderBottomColor: '#F72C03',
-    borderBottomWidth: 1,
-  },
-  body : {
-    fontFamily: "Poppins_400Regular",
-    color: '#2B3033',
-    fontSize: 14,
-  },
-  linkText : {
-    fontFamily: "Poppins_400Regular",
-    color: '#2B3033',
-    fontSize: 14,
-  }
+    },
+    link: {
+        borderBottomColor: '#F72C03',
+        borderBottomWidth: 1,
+    },
+    body : {
+        fontFamily: "Poppins_400Regular",
+        color: '#2B3033',
+        fontSize: 14,
+    },
+    linkText : {
+        fontFamily: "Poppins_400Regular",
+        color: '#2B3033',
+        fontSize: 14,
+    }
 }

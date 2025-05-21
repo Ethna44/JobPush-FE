@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, SafeAreaVie
 import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
 export default function LogIn({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
@@ -14,7 +15,7 @@ export default function LogIn({ navigation }) {
     const handleRegister = () => {
 
    
-      fetch("http://192.168.100.178:3000/users/signin", {
+      fetch(`${EXPO_IP}/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

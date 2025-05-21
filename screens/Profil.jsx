@@ -3,6 +3,7 @@ import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
+const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
 export default function Profil({ navigation }) {
   const dispatch = useDispatch()
@@ -24,7 +25,7 @@ export default function Profil({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
 
   const handleSubmit = () => {
-    fetch(`http://192.168.100.250:3000/users`, {
+    fetch(`${EXPO_IP}/users`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -44,7 +45,7 @@ export default function Profil({ navigation }) {
       }),
     }).then(response => response.json()).then(data => {
       if(data.result){
-        navigation.navigate("Alerte")
+        //navigation.navigate("Alerte")
       }
     });
   };
@@ -55,7 +56,7 @@ export default function Profil({ navigation }) {
       <ScrollView style={styles.scrollableContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.subtitle}>Civilité</Text>
-        <Text style={styles.important}>*obligatoires</Text>
+          <Text style={styles.important}>*obligatoires</Text>
         </View>
         <View style={styles.inputContainer}>
           <TextInput 
@@ -145,7 +146,7 @@ export default function Profil({ navigation }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+          <TouchableOpacity style={styles.button} onPress={() => /* handleSubmit() */ navigation.navigate("Alerte")}>
             <Text style={styles.buttonText}>SUIVANT</Text>
           </TouchableOpacity>
         </View>

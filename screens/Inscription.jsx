@@ -11,6 +11,8 @@ import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { updateEmail } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
+const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+
 
 export default function StackScreen2({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
@@ -48,7 +50,7 @@ export default function StackScreen2({ navigation }) {
       return; // stoppe ici si l'email est invalide
     }
 
-    fetch("http://192.168.100.178:3000/users/signup", {
+    fetch(`${EXPO_IP}/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -64,7 +66,7 @@ export default function StackScreen2({ navigation }) {
           return;
         }
 
-        navigation.navigate("Profil");
+        //navigation.navigate("Profil");
       });
   };
 
@@ -138,7 +140,7 @@ export default function StackScreen2({ navigation }) {
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-            handleRegister();
+            handleRegister(), navigation.navigate("Profil");
           }}
           style={styles.button}
         >
