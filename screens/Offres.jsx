@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, SafeAreaView, TextInput , TouchableOpacity,ScrollView} from "react-native";
 
 export default function TabScreen1({ navigation }) {
   return (
@@ -13,8 +13,8 @@ export default function TabScreen1({ navigation }) {
     <View style={styles.inputContainer}>
         <TextInput
           placeholder="New city"
-          onChangeText={(value) => setCity(value)}
-          value={city}
+          
+          
           style={styles.input}
         />
         <TouchableOpacity
@@ -26,7 +26,7 @@ export default function TabScreen1({ navigation }) {
         </TouchableOpacity>
       </View>
        <ScrollView contentContainerStyle={styles.scrollView}>
-        {places}
+        
       </ScrollView>
     </SafeAreaView>
   );

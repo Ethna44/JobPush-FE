@@ -31,7 +31,7 @@ export default function LogIn({ navigation }) {
           return;
         }
 
-        navigation.navigate("Offres");
+        navigation.navigate("TabNavigator");
       });
   };
 console.log(email)
