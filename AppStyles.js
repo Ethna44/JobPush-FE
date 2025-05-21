@@ -34,7 +34,7 @@ export default AppStyles = {
 	        height: 3,
         },
         shadowOpacity: 0.5,
-        shadowRadius: 4.65,
+        shadowRadius: 5,
         elevation: 3,
 
     },
