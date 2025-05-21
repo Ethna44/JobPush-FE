@@ -60,7 +60,7 @@ export default function StackScreen2({ navigation }) {
           setCheckMail("");
           setCheckPassword("");
           setPasswordConfirm("");
-        navigation.navigate("Profil");
+        // navigation.navigate("Profil");
         }
         if (!data.result){
           console.log("Erreur reçue :", data.error);
@@ -148,7 +148,8 @@ export default function StackScreen2({ navigation }) {
             </View>
             <View style={styles.buttonAndTextContainer}>
               <TouchableOpacity onPress={() => {
-              handleRegister();
+              handleRegister(),
+              navigation.navigate("Profil");
             }} style={styles.button}>
                 <Text style={styles.buttonText}>LET'S GO !</Text>
               </TouchableOpacity>
