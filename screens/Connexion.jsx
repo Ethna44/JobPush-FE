@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,7 +34,7 @@ export default function LogIn({ navigation }) {
 console.log(email)
 console.log(password)
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <View style={styles.imageContainer}>
         <Image style={styles.logo} source={require('../assets/logoJobPush-Photoroom.jpg')}></Image>
       </View>
@@ -86,7 +86,7 @@ console.log(password)
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

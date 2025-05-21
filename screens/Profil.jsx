@@ -4,7 +4,8 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
 } from "react-native";
 import AppStyles from "../AppStyles";
@@ -79,7 +80,7 @@ export default function Profil({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <Text style={styles.title}>Mon profil</Text>
       <ScrollView style={styles.scrollableContainer}>
         <View style={styles.textContainer}>
@@ -233,7 +234,7 @@ export default function Profil({ navigation }) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

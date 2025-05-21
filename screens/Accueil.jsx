@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TouchableOpacity, Image, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image, SafeAreaView, Platform } from "react-native";
 import AppStyles from "../AppStyles";
 
 export default function StackScreen1({ navigation }) {
