@@ -28,7 +28,7 @@ export default function LogIn({ navigation }) {
           return;
         }
 
-        navigation.navigate("TabNavigator");
+        //navigation.navigate("TabNavigator");
       });
   };
 console.log(email)
@@ -75,7 +75,7 @@ console.log(password)
       </View>
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity onPress={() => {
-              handleRegister();
+              handleRegister(), navigation.navigate("TabNavigator");;
             }} style={styles.button}>
           <Text style={styles.buttonText}>LET'S GO !</Text>
         </TouchableOpacity>

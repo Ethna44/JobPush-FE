@@ -2,6 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
+import { TouchableOpacity, View } from "react-native";
+import { StyleSheet } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
 import Accueil from "./screens/Accueil";
 import Inscription from "./screens/Inscription";
@@ -30,6 +32,21 @@ import { useFonts,
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+// Composant personnalisé pour le bouton central surélevé
+const CustomTabBarButton = (props) => {
+  return (
+    <TouchableOpacity
+      {...props}
+      style={styles.customTabBarButton}
+      activeOpacity={0.8}
+    >
+      <View style={styles.customTabBarButtonInner}>
+        <FontAwesome name="plus" size={35} color="#F9F1F1" />
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const TabNavigator = () => {
   return (
@@ -64,18 +81,52 @@ const TabNavigator = () => {
           }
         },
         tabBarActiveTintColor: "#F72C03",
-        tabBarInactiveTintColor: "F9F1F1",
+        tabBarInactiveTintColor: "#F9F1F1",
+        tabBarStyle: { 
+          backgroundColor: '#2B3033',
+          height: 100,
+          borderTopWidth: 0,
+         },
         headerShown: false,
       })}
     >
       <Tab.Screen name="Offres" component={Offres} />
       <Tab.Screen name="Candidatures" component={Candidatures} />
-       <Tab.Screen name="Recherche" component={Recherche} />
+      <Tab.Screen name="Recherche" component={Recherche}
+       options={{
+        tabBarButton: (props) => <CustomTabBarButton {...props} />,
+        tabBarIcon: ({ color, size }) => null, // On supprime l'icône par défaut car nous utilisons un bouton personnalisé
+       }} />
       <Tab.Screen name="Astuces" component={Astuces} />
       <Tab.Screen name="Compte" component={Compte} />
     </Tab.Navigator>
   );
 };
+
+// Styles pour notre bouton personnalisé
+const styles = StyleSheet.create({
+  customTabBarButton: {
+    top: -25, // Pour surélever le bouton au-dessus de la barre de navigation
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  customTabBarButtonInner: {
+    width: 60,
+    height: 60,
+    borderRadius: '50%',
+    backgroundColor: '#F72C03', // Même couleur que tabBarActiveTintColor
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#F9F1F1",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+});
 
 // Redux Persist Configuration
 const persistedReducers = persistReducer(
