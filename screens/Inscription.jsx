@@ -151,7 +151,7 @@ export default function StackScreen2({ navigation }) {
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-            handleRegister();
+            handleRegister(), navigation.navigate("Profil");
           }}
           style={styles.button}
         >
