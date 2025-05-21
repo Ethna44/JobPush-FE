@@ -7,8 +7,10 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
+
 import AppStyles from "../AppStyles";
 import { useState } from "react";
+import { Dropdown } from "react-native-element-dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
 
@@ -30,6 +32,55 @@ export default function Profil({ navigation }) {
   const [cityJob, setCityJob] = useState(null);
   const [region, setRegion] = useState(null);
   const [focusedField, setFocusedField] = useState(null);
+
+  const regionsList = [
+    { label: "Île-de-France", value: "Île-de-France" },
+    { label: "Auvergne-Rhône-Alpes", value: "Auvergne-Rhône-Alpes" },
+    { label: "Nouvelle-Aquitaine", value: "Nouvelle-Aquitaine" },
+    { label: "Occitanie", value: "Occitanie" },
+    {
+      label: "Provence-Alpes-Côte d'Azur",
+      value: "Provence-Alpes-Côte d'Azur",
+    },
+    { label: "Hauts-de-France", value: "Hauts-de-France" },
+    { label: "Grand Est", value: "Grand Est" },
+    { label: "Bretagne", value: "Bretagne" },
+    { label: "Normandie", value: "Normandie" },
+    { label: "Bourgogne-Franche-Comté", value: "Bourgogne-Franche-Comté" },
+    { label: "Centre-Val de Loire", value: "Centre-Val de Loire" },
+    { label: "Pays de la Loire", value: "Pays de la Loire" },
+    { label: "Corse", value: "Corse" },
+    { label: "Guadeloupe", value: "Guadeloupe" },
+    { label: "Martinique", value: "Martinique" },
+    { label: "Guyane", value: "Guyane" },
+    { label: "La Réunion", value: "La Réunion" },
+    { label: "Mayotte", value: "Mayotte" },
+  ];
+
+  const contrat = [
+    { label: "CDI", value: "CDI" },
+    { label: "CDD", value: "CDD" },
+    { label: "Alternance", value: "Alternance" },
+    { label: "Stage", value: "Stage" },
+  ];
+
+  const teletravail = [
+    { label: "Sur site", value: "Sur site" },
+    { label: "Remote", value: "Remote" },
+    { label: "Hybride", value: "Hybride" },
+    { label: "Sans importance", value: "Sans importance" },
+  ];
+
+  const secteur = [
+    { label: "Informatique", value: "Informatique" },
+    { label: "Ressources humaines", value: "Ressources humaines" },
+    { label: "Marketing", value: "Marketing" },
+    { label: "Finance", value: "Finance" },
+    { label: "Vente", value: "Vente" },
+    { label: "Logistique", value: "Logistique" },
+    { label: "Santé", value: "Santé" },
+    { label: "Éducation", value: "Éducation" },
+  ];
 
   const handleSubmit = () => {
     fetch(`${EXPO_IP}/users`, {
@@ -87,6 +138,7 @@ export default function Profil({ navigation }) {
           <Text style={styles.important}>*obligatoires</Text>
         </View>
         <View style={styles.inputContainer}>
+          
           <TextInput
             style={[
               styles.input,
@@ -163,15 +215,35 @@ export default function Profil({ navigation }) {
           <Text style={styles.subtitle}>Mes préférences</Text>
         </View>
         <View style={styles.inputContainer}>
-          <TextInput
+           <TextInput
             style={[
               styles.input,
-              focusedField === "Contrat" && styles.inputFocused,
+              focusedField === "JobTitle" && styles.inputFocused,
             ]}
-            placeholder="Contrat"
-            onChangeText={(value) => setContractType(value)}
-            onFocus={() => setFocusedField("Contrat")}
+            placeholder="Poste"
+            onChangeText={(value) => setJobTitle(value)}
+            onFocus={() => setFocusedField("JobTitle")}
             onBlur={() => setFocusedField(null)}
+          />
+          <Dropdown
+            style={styles.input}
+            data={secteur}
+            labelField="label"
+            valueField="value"
+            placeholder="Secteur"
+            value={sector}
+            onChange={(item) => setSector(item.value)}
+          />
+          <Dropdown
+            style={styles.input}
+            data={contrat}
+            labelField="label"
+            valueField="value"
+            placeholder="Contrat"
+            value={contractType}
+            onChange={(item) => setContractType(item.value)}
+            search // Active la barre de recherche
+            searchPlaceholder="Type de contrat"
           />
           <TextInput
             style={[
@@ -183,45 +255,26 @@ export default function Profil({ navigation }) {
             onFocus={() => setFocusedField("CityJob")}
             onBlur={() => setFocusedField(null)}
           />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "Region" && styles.inputFocused,
-            ]}
+          <Dropdown
+            style={styles.input}
+            data={regionsList}
+            labelField="label"
+            valueField="value"
             placeholder="Region"
-            onChangeText={(value) => setRegion(value)}
-            onFocus={() => setFocusedField("Region")}
-            onBlur={() => setFocusedField(null)}
+            value={region}
+            onChange={(item) => setRegion(item.value)}
+            search // Active la barre de recherche
+            searchPlaceholder="Rechercher une région"
           />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "Remote" && styles.inputFocused,
-            ]}
-            placeholder="Télétravail"
-            onChangeText={(value) => setRemote(value)}
-            onFocus={() => setFocusedField("Remote")}
-            onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "JobTitle" && styles.inputFocused,
-            ]}
-            placeholder="Poste"
-            onChangeText={(value) => setJobTitle(value)}
-            onFocus={() => setFocusedField("JobTitle")}
-            onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "Sector" && styles.inputFocused,
-            ]}
-            placeholder="Secteur"
-            onChangeText={(value) => setSector(value)}
-            onFocus={() => setFocusedField("Sector")}
-            onBlur={() => setFocusedField(null)}
+
+          <Dropdown
+            style={styles.input}
+            data={teletravail}
+            labelField="label"
+            valueField="value"
+            placeholder="Remote"
+            value={remote}
+            onChange={(item) => setRemote(item.value)}
           />
         </View>
         <View style={styles.buttonContainer}>
