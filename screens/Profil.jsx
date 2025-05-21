@@ -84,7 +84,7 @@ export default function Profil({ navigation }) {
       <ScrollView style={styles.scrollableContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.subtitle}>Civilité</Text>
-          <Text style={styles.important}>obligatoires</Text>
+          <Text style={styles.important}>*obligatoires</Text>
         </View>
         <View style={styles.inputContainer}>
           <TextInput

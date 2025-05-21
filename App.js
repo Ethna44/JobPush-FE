@@ -113,6 +113,7 @@ export default function App() {
         <Header />
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            
             <Stack.Screen name="Accueil" component={Accueil} />
             <Stack.Screen name="Inscription" component={Inscription} />
             <Stack.Screen name="Connexion" component={Connexion} />
