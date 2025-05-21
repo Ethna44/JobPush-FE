@@ -118,7 +118,6 @@ export default function App() {
             <Stack.Screen name="Connexion" component={Connexion} />
              <Stack.Screen name="Profil" component={Profil} />
              <Stack.Screen name="Alerte" component={Alerte} />
-              <Stack.Screen name="Offres" component={Offres} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
