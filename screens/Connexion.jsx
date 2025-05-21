@@ -3,16 +3,16 @@ import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+
 export default function LogIn({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
   const [email, setEmail] = useState("");
   const [checkMail, setCheckMail] = useState(false);
   const [password,setPassword] = useState ('')
 
-    const handleRegister = () => {
-
-   
-      fetch("http://192.168.100.250:3000/users/signin", {
+    const handleRegister = () => {   
+      fetch(`${EXPO_IP}/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -764,12 +764,6 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
-<<<<<<< HEAD
-"@expo-google-fonts/poppins@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/poppins/-/poppins-0.3.1.tgz#f631fe428e065a08a889aaf8b4e8d0ef50e3d620"
-  integrity sha512-EELl5sG+X1pQEvutwESL+H3fM5JZ7iF99KxqABqGWuF/r/WUeYiSdl6sMs9yP9ZJIgtiyqkpp2ZOqIH5oypgdQ==
-=======
 "@callstack/react-theme-provider@^3.0.9":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@callstack/react-theme-provider/-/react-theme-provider-3.0.9.tgz#01035fa1231f1fffc1a806be1b55eb82716e80c1"
@@ -777,7 +771,11 @@
   dependencies:
     deepmerge "^3.2.0"
     hoist-non-react-statics "^3.3.0"
->>>>>>> bf5d3aced9ab05105e418725bda45e8ad3a94ac5
+
+"@expo-google-fonts/poppins@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/poppins/-/poppins-0.3.1.tgz#f631fe428e065a08a889aaf8b4e8d0ef50e3d620"
+  integrity sha512-EELl5sG+X1pQEvutwESL+H3fM5JZ7iF99KxqABqGWuF/r/WUeYiSdl6sMs9yP9ZJIgtiyqkpp2ZOqIH5oypgdQ==
 
 "@expo/cli@0.24.13":
   version "0.24.13"
@@ -2057,11 +2055,7 @@ color-name@^1.0.0, color-name@~1.1.4:
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
-<<<<<<< HEAD
-color-string@^1.9.0:
-=======
 color-string@^1.6.0, color-string@^1.9.0:
->>>>>>> bf5d3aced9ab05105e418725bda45e8ad3a94ac5
   version "1.9.1"
   resolved "https://registry.npmjs.org/color-string/-/color-string-1.9.1.tgz"
   integrity sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==
@@ -3924,8 +3918,6 @@ react-native-is-edge-to-edge@^1.1.6:
   resolved "https://registry.npmjs.org/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.7.tgz"
   integrity sha512-EH6i7E8epJGIcu7KpfXYXiV2JFIYITtq+rVS8uEb+92naMRBdxhTuS8Wn2Q7j9sqyO0B+Xbaaf9VdipIAmGW4w==
 
-<<<<<<< HEAD
-=======
 react-native-paper@^5.14.5:
   version "5.14.5"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.14.5.tgz#7995a2f8171c8355c1cb55c81a6d2074a7dd5abb"
@@ -3940,7 +3932,6 @@ react-native-radio-buttons-group@^3.1.0:
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons-group/-/react-native-radio-buttons-group-3.1.0.tgz#b19d383fc2dece17eba1ce37b9f357c47431aded"
   integrity sha512-DiNM1yI6WfRygUZ+Z/bsjggyLypXsxRNXPNYpPHXSEVbRD6uF5Aei+HMIwyeRbfMKPtHwLq7cGsmUDV01i+rOQ==
 
->>>>>>> bf5d3aced9ab05105e418725bda45e8ad3a94ac5
 react-native-safe-area-context@^5.4.0:
   version "5.4.0"
   resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-5.4.0.tgz"
