@@ -10,11 +10,12 @@ export default function LogIn({ navigation }) {
   const [password,setPassword] = useState ('')
    const [errorMessage, setErrorMessage] = useState("");
   
+   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
     const handleRegister = () => {
 
    
-      fetch("http://192.168.100.178:3000/users/signin", {
+      fetch(`${EXPO_IP}/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

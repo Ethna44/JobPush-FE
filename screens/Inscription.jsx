@@ -21,6 +21,8 @@ export default function StackScreen2({ navigation }) {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+
+  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const user = useSelector((state) => state.user.profile.email);
   const dispatch = useDispatch();
 
@@ -48,7 +50,7 @@ export default function StackScreen2({ navigation }) {
       return; // stoppe ici si l'email est invalide
     }
 
-    fetch("http://192.168.100.178:3000/users/signup", {
+    fetch(`${EXPO_IP}/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
