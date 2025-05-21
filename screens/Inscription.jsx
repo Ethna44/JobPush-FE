@@ -23,6 +23,8 @@ export default function StackScreen2({ navigation }) {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+
+  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const user = useSelector((state) => state.user.profile.email);
   const dispatch = useDispatch();
 
