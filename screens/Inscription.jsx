@@ -55,12 +55,11 @@ export default function StackScreen2({ navigation }) {
       .then((data) => {
         console.log(data)
         if (data.result) {
-          // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
           console.log(data)
           setCheckMail("");
           setCheckPassword("");
           setPasswordConfirm("");
-        // navigation.navigate("Profil");
+        navigation.navigate("Profil");
         }
         if (!data.result){
           console.log("Erreur reçue :", data.error);
@@ -148,8 +147,7 @@ export default function StackScreen2({ navigation }) {
             </View>
             <View style={styles.buttonAndTextContainer}>
               <TouchableOpacity onPress={() => {
-              handleRegister(),
-              navigation.navigate("Profil");
+              handleRegister()
             }} style={styles.button}>
                 <Text style={styles.buttonText}>LET'S GO !</Text>
               </TouchableOpacity>
