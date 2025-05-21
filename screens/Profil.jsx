@@ -4,7 +4,8 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
 } from "react-native";
 
@@ -130,7 +131,7 @@ export default function Profil({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <Text style={styles.title}>Mon profil</Text>
       <ScrollView style={styles.scrollableContainer}>
         <View style={styles.textContainer}>
@@ -144,7 +145,7 @@ export default function Profil({ navigation }) {
               styles.input,
               focusedField === "Name" && styles.inputFocused,
             ]}
-            placeholder="Nom"
+            placeholder="Nom*"
             onChangeText={(value) => setName(value)}
             onFocus={() => setFocusedField("Name")}
             onBlur={() => setFocusedField(null)}
@@ -286,7 +287,7 @@ export default function Profil({ navigation }) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -296,6 +297,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: AppStyles.color.background,
+    paddingTop: 20,
     // borderColor: "red",
     // borderWidth: 1,
   },

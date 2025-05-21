@@ -5,15 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { updateUser, updateToken } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
-
-const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
 export default function StackScreen2({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
@@ -88,7 +87,7 @@ export default function StackScreen2({ navigation }) {
   console.log(passwordConfirm);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           style={styles.logo}
@@ -167,7 +166,7 @@ export default function StackScreen2({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -184,6 +183,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     margin: 10,
+    borderRadius: 10,
   },
   titleContainer: {
     justifyContent: "center",
