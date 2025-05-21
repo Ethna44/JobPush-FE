@@ -5,6 +5,16 @@ export default AppStyles = {
         accent: "#F72C03",
         cards: "#F3E4E5"
     },
+    headerJob : {
+        fontFamily: 'Poppins_400Regular',
+        color:'#F9F1F1',
+        fontSize:24
+    },
+    headerPush : {
+        fontFamily: 'Poppins_400Regular',
+        color:'#F72C03',
+        fontSize : 24
+    },
     title: {
         alignItems: 'center',
         justifyContent : 'center',
