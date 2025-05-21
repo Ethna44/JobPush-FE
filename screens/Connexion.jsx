@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,13 +28,13 @@ export default function LogIn({ navigation }) {
 //           return;
 //         }
 
-//         navigation.navigate("TabNavigator");
-//       });
-//   };
+  //       navigation.navigate("TabNavigator");
+  //     });
+  // };
 console.log(email)
 console.log(password)
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <View style={styles.imageContainer}>
         <Image style={styles.logo} source={require('../assets/logoJobPush-Photoroom.jpg')}></Image>
       </View>
@@ -74,8 +74,8 @@ console.log(password)
         )}
       </View>
       <View style={styles.buttonAndTextContainer}>
-        <TouchableOpacity onPress={() => { navigation.navigate("TabNavigator")
-              // handleRegister();
+        <TouchableOpacity onPress={() => {
+              handleRegister();
             }} style={styles.button}>
           <Text style={styles.buttonText}>LET'S GO !</Text>
         </TouchableOpacity>
@@ -86,7 +86,7 @@ console.log(password)
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     margin: 10,
+    borderRadius: 10,
   },
   titleContainer : {
     justifyContent: "center",

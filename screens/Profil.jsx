@@ -4,13 +4,17 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
 } from "react-native";
+
 import AppStyles from "../AppStyles";
 import { useState } from "react";
+import { Dropdown } from "react-native-element-dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
+import cities from "../json/cities.json";
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 export default function Profil({ navigation }) {
@@ -30,6 +34,63 @@ export default function Profil({ navigation }) {
   const [cityJob, setCityJob] = useState(null);
   const [region, setRegion] = useState(null);
   const [focusedField, setFocusedField] = useState(null);
+
+const citiesList = cities.cities
+  .filter(city => city.label) // garde seulement ceux qui ont un label
+  .map(city => ({
+    ...city,
+    label: city.label.charAt(0).toUpperCase() + city.label.slice(1),
+    value: city.label.charAt(0).toUpperCase() + city.label.slice(1)
+  }));
+
+  const regionsList = [
+    { label: "Île-de-France", value: "Île-de-France" },
+    { label: "Auvergne-Rhône-Alpes", value: "Auvergne-Rhône-Alpes" },
+    { label: "Nouvelle-Aquitaine", value: "Nouvelle-Aquitaine" },
+    { label: "Occitanie", value: "Occitanie" },
+    {
+      label: "Provence-Alpes-Côte d'Azur",
+      value: "Provence-Alpes-Côte d'Azur",
+    },
+    { label: "Hauts-de-France", value: "Hauts-de-France" },
+    { label: "Grand Est", value: "Grand Est" },
+    { label: "Bretagne", value: "Bretagne" },
+    { label: "Normandie", value: "Normandie" },
+    { label: "Bourgogne-Franche-Comté", value: "Bourgogne-Franche-Comté" },
+    { label: "Centre-Val de Loire", value: "Centre-Val de Loire" },
+    { label: "Pays de la Loire", value: "Pays de la Loire" },
+    { label: "Corse", value: "Corse" },
+    { label: "Guadeloupe", value: "Guadeloupe" },
+    { label: "Martinique", value: "Martinique" },
+    { label: "Guyane", value: "Guyane" },
+    { label: "La Réunion", value: "La Réunion" },
+    { label: "Mayotte", value: "Mayotte" },
+  ];
+
+  const contrat = [
+    { label: "CDI", value: "CDI" },
+    { label: "CDD", value: "CDD" },
+    { label: "Alternance", value: "Alternance" },
+    { label: "Stage", value: "Stage" },
+  ];
+
+  const teletravail = [
+    { label: "Sur site", value: "Sur site" },
+    { label: "Remote", value: "Remote" },
+    { label: "Hybride", value: "Hybride" },
+    { label: "Sans importance", value: "Sans importance" },
+  ];
+
+  const secteur = [
+    { label: "Informatique", value: "Informatique" },
+    { label: "Ressources humaines", value: "Ressources humaines" },
+    { label: "Marketing", value: "Marketing" },
+    { label: "Finance", value: "Finance" },
+    { label: "Vente", value: "Vente" },
+    { label: "Logistique", value: "Logistique" },
+    { label: "Santé", value: "Santé" },
+    { label: "Éducation", value: "Éducation" },
+  ];
 
   const handleSubmit = () => {
     fetch(`${EXPO_IP}/users`, {
@@ -79,7 +140,7 @@ export default function Profil({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <Text style={styles.title}>Mon profil</Text>
       <ScrollView style={styles.scrollableContainer}>
         <View style={styles.textContainer}>
@@ -87,12 +148,13 @@ export default function Profil({ navigation }) {
           <Text style={styles.important}>*obligatoires</Text>
         </View>
         <View style={styles.inputContainer}>
+          
           <TextInput
             style={[
               styles.input,
               focusedField === "Name" && styles.inputFocused,
             ]}
-            placeholder="Nom"
+            placeholder="Nom*"
             onChangeText={(value) => setName(value)}
             onFocus={() => setFocusedField("Name")}
             onBlur={() => setFocusedField(null)}
@@ -163,47 +225,7 @@ export default function Profil({ navigation }) {
           <Text style={styles.subtitle}>Mes préférences</Text>
         </View>
         <View style={styles.inputContainer}>
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "Contrat" && styles.inputFocused,
-            ]}
-            placeholder="Contrat"
-            onChangeText={(value) => setContractType(value)}
-            onFocus={() => setFocusedField("Contrat")}
-            onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "CityJob" && styles.inputFocused,
-            ]}
-            placeholder="Ville"
-            onChangeText={(value) => setCityJob(value)}
-            onFocus={() => setFocusedField("CityJob")}
-            onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "Region" && styles.inputFocused,
-            ]}
-            placeholder="Region"
-            onChangeText={(value) => setRegion(value)}
-            onFocus={() => setFocusedField("Region")}
-            onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "Remote" && styles.inputFocused,
-            ]}
-            placeholder="Télétravail"
-            onChangeText={(value) => setRemote(value)}
-            onFocus={() => setFocusedField("Remote")}
-            onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
+           <TextInput
             style={[
               styles.input,
               focusedField === "JobTitle" && styles.inputFocused,
@@ -213,15 +235,57 @@ export default function Profil({ navigation }) {
             onFocus={() => setFocusedField("JobTitle")}
             onBlur={() => setFocusedField(null)}
           />
-          <TextInput
-            style={[
-              styles.input,
-              focusedField === "Sector" && styles.inputFocused,
-            ]}
+          <Dropdown
+            style={styles.input}
+            data={secteur}
+            labelField="label"
+            valueField="value"
             placeholder="Secteur"
-            onChangeText={(value) => setSector(value)}
-            onFocus={() => setFocusedField("Sector")}
-            onBlur={() => setFocusedField(null)}
+            value={sector}
+            onChange={(item) => setSector(item.value)}
+          />
+          <Dropdown
+            style={styles.input}
+            data={contrat}
+            labelField="label"
+            valueField="value"
+            placeholder="Contrat"
+            value={contractType}
+            onChange={(item) => setContractType(item.value)}
+            search // Active la barre de recherche
+            searchPlaceholder="Type de contrat"
+          />
+           <Dropdown
+            style={styles.input}
+            data={citiesList}
+            labelField="label"
+            valueField="value"
+            placeholder="Ville"
+            value={cityJob}
+            onChange={(item) => setCityJob(item.value)}
+            search // Active la barre de recherche
+            searchPlaceholder="Type de contrat"
+          />
+          <Dropdown
+            style={styles.input}
+            data={regionsList}
+            labelField="label"
+            valueField="value"
+            placeholder="Region"
+            value={region}
+            onChange={(item) => setRegion(item.value)}
+            search // Active la barre de recherche
+            searchPlaceholder="Rechercher une région"
+          />
+
+          <Dropdown
+            style={styles.input}
+            data={teletravail}
+            labelField="label"
+            valueField="value"
+            placeholder="Remote"
+            value={remote}
+            onChange={(item) => setRemote(item.value)}
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -233,7 +297,7 @@ export default function Profil({ navigation }) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -243,6 +307,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: AppStyles.color.background,
+    paddingTop: 20,
     // borderColor: "red",
     // borderWidth: 1,
   },
