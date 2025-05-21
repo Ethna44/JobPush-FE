@@ -7,6 +7,7 @@ const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
 export default function Alerte({ navigation }) {
   const [selectedValue, setSelectedValue] = useState("option1");
+  const token = useSelector((state) => state.user.token);
 
   const options = {
     option1: "Notifications en temps réel",
@@ -19,10 +20,14 @@ export default function Alerte({ navigation }) {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        alerts:selectedValue
+        token:token,
+        alerts:options[selectedValue]
       }) }).then(response => response.json()).then(data => {
         if(data.result){
+          console.log("Alertes modifiées avec succès");
            navigation.navigate("TabNavigator");
+        }else{
+          console.log("Erreur lors de la modification des alertes");
         }
       })
   };

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+	token: null, // Valeur initiale du token
 	profile: {
   name: null,
   firstName: null,
@@ -21,17 +22,15 @@ export const userSlice = createSlice({
 	initialState,
 	// Fonctions à importer dans les composants pour agir sur le reducer
 	reducers: {
-		// connectUser: (state, action) => {
-		// 	state.value.uid = action.payload;
-		// },
-		// disconnectUser: (state) => {
-		// 	state.value.user = null;
-		
-		updateEmail: (state,action) => {
-     state.profile.email = action.payload;
-   },
+		updateUser: (state, action) => {
+			state.profile = action.payload;
+		},
+
+		updateToken: (state, action) => {
+			state.token = action.payload;
+		},
 	},
 });
 
-export const {updateEmail } = userSlice.actions;
+export const {updateUser,updateToken } = userSlice.actions;
 export default userSlice.reducer;

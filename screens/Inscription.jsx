@@ -9,27 +9,29 @@ import {
 } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
-import { updateEmail } from "../reducers/user";
+import { updateUser, updateToken } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
-const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+import React, { useEffect } from "react";
 
+const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
 export default function StackScreen2({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
-
   const [email, setEmail] = useState("");
   const [checkMail, setCheckMail] = useState(false);
   const [password, setCheckPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+
+  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const user = useSelector((state) => state.user.profile.email);
   const dispatch = useDispatch();
 
   function handleSubmit() {
     if (validateEmail(email)) {
       setCheckMail(false);
-      dispatch(updateEmail(email));
+      dispatch(updateUser(email));
     } else {
       setCheckMail(true);
     }
@@ -61,12 +63,21 @@ export default function StackScreen2({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (!data.result) {
-          setErrorMessage(data.error || "An error occurred. Please try again.");
-          return;
+        console.log(data);
+        if (data.result) {
+          // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
+          dispatch(updateToken(data.token));
+          setCheckMail("");
+          setCheckPassword("");
+          setPasswordConfirm("");
+          navigation.navigate("Profil");
         }
-
-        //navigation.navigate("Profil");
+        if (!data.result) {
+          console.log("Erreur reçue :", data.error);
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+          console.log("errorMessage (état local) :", errorMessage);
+        }
+        setErrorMessage("");
       });
   };
 
