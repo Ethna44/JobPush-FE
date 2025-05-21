@@ -27,8 +27,6 @@ export default function StackScreen2({ navigation }) {
     
   }
 
-  
-
   function validateEmail(email) {
     var emailReg = new RegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i
@@ -44,7 +42,7 @@ export default function StackScreen2({ navigation }) {
     return; // stoppe ici si l'email est invalide
   }
    
-      fetch("http://192.168.199.218:3000/users/signup", {
+      fetch("http://192.168.100.250:3000/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

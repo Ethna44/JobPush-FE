@@ -12,7 +12,7 @@ export default function LogIn({ navigation }) {
     const handleRegister = () => {
 
    
-      fetch("http://192.168.199.218:3000/users/signin", {
+      fetch("http://192.168.100.250:3000/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -29,8 +29,7 @@ export default function LogIn({ navigation }) {
         console.log(data)
           setCheckMail("");
           setPassword("");
-          
-        navigation.navigate("Offres");
+        navigation.navigate("TabNavigator");
         }
       });
   };
