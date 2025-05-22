@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native";
@@ -16,6 +17,7 @@ import Header from "./components/Header";
 import Profil from "./screens/Profil";
 import Alerte from "./screens/Alerte";
 import Recherche from "./screens/Recherche";
+import { Platform } from "react-native";
 
 import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -49,8 +51,10 @@ const CustomTabBarButton = (props) => {
 };
 
 const TabNavigator = () => {
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
+    safeAreaInsets={{bottom: Platform.OS === "android" ? 40 : insets.bottom}}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
@@ -84,7 +88,7 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: "#F9F1F1",
         tabBarStyle: { 
           backgroundColor: '#2B3033',
-          height: 100,
+          //height: 100,
           borderTopWidth: 0,
          },
         headerShown: false,
@@ -106,7 +110,7 @@ const TabNavigator = () => {
 // Styles pour notre bouton personnalisé
 const styles = StyleSheet.create({
   customTabBarButton: {
-    top: -25, // Pour surélever le bouton au-dessus de la barre de navigation
+    top: -23, // Pour surélever le bouton au-dessus de la barre de navigation
     justifyContent: 'center',
     alignItems: 'center',
   },
