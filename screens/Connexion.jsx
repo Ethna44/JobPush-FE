@@ -20,16 +20,17 @@ export default function LogIn({ navigation }) {
   const [errorMessage, setErrorMessage] = useState("");
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
-  const handleRegister = () => {
-    fetch(`${EXPO_IP}/users/signin`, {
+    const handleRegister = () => {   
+      fetch(`${EXPO_IP}/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: email,
+        email: email  ,
         password: password,
+        
       }),
     })
-      .then((response) => response.json())
+ .then((response) => response.json())
       .then((data) => {
         if (!data.result) {
           setErrorMessage(data.error || "An error occurred. Please try again.");

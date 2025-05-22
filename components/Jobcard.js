@@ -13,7 +13,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 import AppStyles from "../AppStyles";
 
-export default function Header() {
+export default function JobCard(props) {
   return (
 
     
@@ -25,9 +25,9 @@ export default function Header() {
         />
       </View>
       <View style={styles.info}>
-        <Text style={styles.headline}>Titre poste</Text>
+        <Text style={styles.headline}>{props.title}</Text>
 
-        <Text style={styles.textInfo}>Entreprise</Text>
+        <Text style={styles.textInfo}>{props.compagny}</Text>
 
         <View style={styles.rating}>
           {<FontAwesome name="star" color="red" size={16} />}
