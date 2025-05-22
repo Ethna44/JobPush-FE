@@ -75,7 +75,8 @@ console.log(password)
       </View>
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity onPress={() => {
-              handleRegister();
+          navigation.navigate("TabNavigator");
+          // handleRegister();
             }} style={styles.button}>
           <Text style={styles.buttonText}>LET'S GO !</Text>
         </TouchableOpacity>
