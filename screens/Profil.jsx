@@ -241,7 +241,7 @@ export default function Profil({ navigation }) {
           />
           <Dropdown
             style={styles.input}
-            data={regionsList}
+            data={regions}
             labelField="label"
             valueField="value"
             placeholder="Region"
