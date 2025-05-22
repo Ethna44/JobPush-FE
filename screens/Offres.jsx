@@ -1,32 +1,70 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+} from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useState } from "react";
+
+import { useEffect } from "react";
+import JobCard from "../components/Jobcard";
 
 export default function TabScreen1({ navigation }) {
+  const [search, setSearch] = useState("");
+  const [offersData, setOffersData] = useState([]);
+ const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+    
+ useEffect(() => {
+    fetch(`${EXPO_IP}/offers`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setOffersData(data.offers)
+        // if (data.result) {
+        //   dispatch(loadPlace(data.place));
+        // }
+      });
+  }, []);
+  console.log(offersData)
+  
+   const offer = offersData.map((data, i) => {
+    console.log(offer)
+   
+    return <JobCard key={i} {...data}  />;
+  });
+
   return (
-     <SafeAreaView style={styles.container}>
-    <View style={styles.container}>
-      <Text style={styles.title}>Offres</Text>
-      <Button
-        title="Go to StackScreen1"
-        onPress={() => navigation.navigate("Accueil")}
-      />
-    </View>
-    <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="New city"
-          onChangeText={(value) => setCity(value)}
-          value={city}
-          style={styles.input}
+    <SafeAreaView style={styles.container}>
+     <ScrollView contentContainerStyle={styles.scrollView}>
+      <View style={styles.container}>
+        <View style={styles.inputSearchContainer}>
+          <TextInput
+            placeholder="Recherche"
+            style={styles.inputSearch}
+            onChangeText={(value) => setSearch(value)}
+            value={search}
+          />
+          <FontAwesome name={"search"} size={18} color="#F72C03" />
+        </View>
+        <Text style={styles.title}>Offres</Text>
+
+        <Button
+          title="Go to StackScreen1"
+          onPress={() => navigation.navigate("Accueil")}
         />
-        <TouchableOpacity
-       
-          style={styles.button}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.textButton}>Add</Text>
-        </TouchableOpacity>
       </View>
-       <ScrollView contentContainerStyle={styles.scrollView}>
-        {places}
+      <View style={styles.jobContainer}>
+       {offer}
+      </View>
+
+      
+        
       </ScrollView>
     </SafeAreaView>
   );
@@ -34,8 +72,8 @@ export default function TabScreen1({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   title: {
@@ -43,7 +81,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
   },
-   inputContainer: {
+  inputContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -73,4 +111,55 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 15,
   },
+  inputSearch: {
+    flex: 1,
+    marginTop: 6,
+
+    fontSize: 17,
+    paddingRight: 8,
+  },
+  inputSearchContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "75%",
+
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+
+    marginTop: 5,
+  },
+  card: {
+    backgroundColor: "#F3E4E5",
+    borderRadius: 12,
+    width: "85%",
+    height: "25%",
+    flexDirection: "row",
+    padding: 12,
+    alignItems: "center",
+  },
+  logo: {
+    width: 60,
+    height: 60,
+    resizeMode: "cover",
+    borderRadius: 8,
+    marginRight: 10,
+  },
+  source: {
+    fontWeight: "bold",
+  },
+  textInfo: {
+    fontSize: 16,
+    fontStyle: "italic",
+  },
+  info: {
+    flex: 1,
+    gap: 3,
+  },
+  jobContainer:{
+    height:"100%"
+  },
+  scrollView : {
+    border
+  }
 });
