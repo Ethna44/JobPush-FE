@@ -18,6 +18,7 @@ import Profil from "./screens/Profil";
 import Alerte from "./screens/Alerte";
 import Recherche from "./screens/Recherche";
 import { Platform } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -54,7 +55,7 @@ const TabNavigator = () => {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
-    safeAreaInsets={{bottom: Platform.OS === "android" ? 40 : insets.bottom}}
+    safeAreaInsets={{bottom: Platform.OS === "android" ? Math.max(insets.bottom, 20) : insets.bottom}}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
@@ -88,8 +89,9 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: "#F9F1F1",
         tabBarStyle: { 
           backgroundColor: '#2B3033',
-          //height: 100,
           borderTopWidth: 0,
+          paddingBottom: Platform.OS === "android" ? Math.max(insets.bottom, 10) : insets.bottom,
+          paddingTop: 10,
          },
         headerShown: false,
       })}
@@ -110,7 +112,7 @@ const TabNavigator = () => {
 // Styles pour notre bouton personnalisé
 const styles = StyleSheet.create({
   customTabBarButton: {
-    top: -23, // Pour surélever le bouton au-dessus de la barre de navigation
+    top: -26, // Pour surélever le bouton au-dessus de la barre de navigation
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -165,18 +167,20 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Header />
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Accueil" component={Accueil} />
-            <Stack.Screen name="Inscription" component={Inscription} />
-            <Stack.Screen name="Connexion" component={Connexion} />
-             <Stack.Screen name="Profil" component={Profil} />
-             <Stack.Screen name="Alerte" component={Alerte} />
-            <Stack.Screen name="TabNavigator" component={TabNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
-        <StatusBar hidden={true} />
+        <SafeAreaProvider>
+          <Header />
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Accueil" component={Accueil} />
+              <Stack.Screen name="Inscription" component={Inscription} />
+              <Stack.Screen name="Connexion" component={Connexion} />
+              <Stack.Screen name="Profil" component={Profil} />
+              <Stack.Screen name="Alerte" component={Alerte} />
+              <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            </Stack.Navigator>
+          </NavigationContainer>
+          <StatusBar hidden={true} />
+        </SafeAreaProvider>
       </PersistGate>
     </Provider>
   );
