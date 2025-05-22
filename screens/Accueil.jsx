@@ -14,7 +14,9 @@ export default function StackScreen1({ navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate("Inscription")} style={styles.button}>
           <Text style={styles.buttonText}>S'INSCRIRE</Text>
         </TouchableOpacity>
+      </View>
         <Text style={styles.body}>OU</Text>
+      <View style={styles.redButtonContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("Connexion")} style={styles.button}>
           <Text style={styles.buttonText}>SE CONNECTER</Text>
         </TouchableOpacity>
@@ -59,10 +61,10 @@ const styles = StyleSheet.create({
   title: AppStyles.title,
   redButtonContainer: {
     width: '100%',
-    height: '30%',
-    justifyContent: "space-between",
-    padding: 40,
-    alignItems: "center",
+    height: '10%',
+    paddingVertical: 10,
+    paddingHorizontal: 110,
+    justifyContent: 'center',
     // borderColor: "green",
     // borderWidth: 1,
   },
@@ -72,7 +74,6 @@ const styles = StyleSheet.create({
   googleContainer: {
     width: '100%',
     justifyContent: "space-between",
-    //padding: 40,
     alignItems: "center",
     // borderColor: "orange",
     // borderWidth: 1,

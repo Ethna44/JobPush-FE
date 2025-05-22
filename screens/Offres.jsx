@@ -12,12 +12,15 @@ import {
 import { TokenManager } from "../TokenManager";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useRef, useEffect } from "react";
-import Jobcard from "../components/Jobcard";
+import { useEffect } from "react";
+import JobCard from "../components/Jobcard";
+import { off } from "../../JobPush-BE/app";
 
 export default function TabScreen1({ navigation }) {
   const [search, setSearch] = useState("");
+  const [offersData, setOffersData] = useState([]);
   const tokenManagerRef = useRef(null);
-
+  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const clientId = process.env.EXPO_PUBLIC_CLIENT_ID_FT;
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
 
@@ -46,6 +49,20 @@ export default function TabScreen1({ navigation }) {
     callOffresApi();
   }, []);
 
+  useEffect(() => {
+    fetch(`${EXPO_IP}/offers`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setOffersData(data);
+        // if (data.result) {
+        //   dispatch(loadPlace(data.place));
+        // }
+      });
+  }, []);
+  const offer = offersData.map((data, i) => {
+    return <JobCard key={i} {...data} />;
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,9 +83,7 @@ export default function TabScreen1({ navigation }) {
           onPress={() => navigation.navigate("Accueil")}
         />
       </View>
-      <View style={styles.jobContainer}>
-        <Jobcard />
-      </View>
+      <View style={styles.jobContainer}>{offer}</View>
       <ScrollView contentContainerStyle={styles.scrollView}></ScrollView>
     </SafeAreaView>
   );
