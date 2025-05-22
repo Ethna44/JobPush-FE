@@ -32,10 +32,8 @@ export default AppStyles = {
     button : {
         alignItems: 'center',
         justifyContent : 'center' ,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         backgroundColor: '#F72C03',
         borderRadius: 10,
         shadowColor: "#2B3033",

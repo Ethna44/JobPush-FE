@@ -14,6 +14,10 @@ import { Dropdown } from "react-native-element-dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
 import cities from "../json/cities.json";
+import secteur from "../json/sector.json";
+import teletravail from "../json/remote.json";
+import contrat from "../json/contrat.json";
+import regions from "../json/regions.json";
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 export default function Profil({ navigation }) {
@@ -36,7 +40,6 @@ export default function Profil({ navigation }) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const scrollRef = useRef(null);
-
   useEffect(() => {
     if (errorMessage && scrollRef.current) {
       scrollRef.current.scrollTo({ y: 0, animated: true });
@@ -50,55 +53,6 @@ export default function Profil({ navigation }) {
       label: city.label.charAt(0).toUpperCase() + city.label.slice(1),
       value: city.label.charAt(0).toUpperCase() + city.label.slice(1),
     }));
-
-  const regionsList = [
-    { label: "Île-de-France", value: "Île-de-France" },
-    { label: "Auvergne-Rhône-Alpes", value: "Auvergne-Rhône-Alpes" },
-    { label: "Nouvelle-Aquitaine", value: "Nouvelle-Aquitaine" },
-    { label: "Occitanie", value: "Occitanie" },
-    {
-      label: "Provence-Alpes-Côte d'Azur",
-      value: "Provence-Alpes-Côte d'Azur",
-    },
-    { label: "Hauts-de-France", value: "Hauts-de-France" },
-    { label: "Grand Est", value: "Grand Est" },
-    { label: "Bretagne", value: "Bretagne" },
-    { label: "Normandie", value: "Normandie" },
-    { label: "Bourgogne-Franche-Comté", value: "Bourgogne-Franche-Comté" },
-    { label: "Centre-Val de Loire", value: "Centre-Val de Loire" },
-    { label: "Pays de la Loire", value: "Pays de la Loire" },
-    { label: "Corse", value: "Corse" },
-    { label: "Guadeloupe", value: "Guadeloupe" },
-    { label: "Martinique", value: "Martinique" },
-    { label: "Guyane", value: "Guyane" },
-    { label: "La Réunion", value: "La Réunion" },
-    { label: "Mayotte", value: "Mayotte" },
-  ];
-
-  const contrat = [
-    { label: "CDI", value: "CDI" },
-    { label: "CDD", value: "CDD" },
-    { label: "Alternance", value: "Alternance" },
-    { label: "Stage", value: "Stage" },
-  ];
-
-  const teletravail = [
-    { label: "Sur site", value: "Sur site" },
-    { label: "Remote", value: "Remote" },
-    { label: "Hybride", value: "Hybride" },
-    { label: "Sans importance", value: "Sans importance" },
-  ];
-
-  const secteur = [
-    { label: "Informatique", value: "Informatique" },
-    { label: "Ressources humaines", value: "Ressources humaines" },
-    { label: "Marketing", value: "Marketing" },
-    { label: "Finance", value: "Finance" },
-    { label: "Vente", value: "Vente" },
-    { label: "Logistique", value: "Logistique" },
-    { label: "Santé", value: "Santé" },
-    { label: "Éducation", value: "Éducation" },
-  ];
 
   const handleSubmit = () => {
     fetch(`${EXPO_IP}/users`, {
@@ -287,7 +241,7 @@ export default function Profil({ navigation }) {
           />
           <Dropdown
             style={styles.input}
-            data={regionsList}
+            data={regions}
             labelField="label"
             valueField="value"
             placeholder="Region"

@@ -1,0 +1,20 @@
+[
+  { "label": "Île-de-France", "value": "Île-de-France" },
+  { "label": "Auvergne-Rhône-Alpes", "value": "Auvergne-Rhône-Alpes" },
+  { "label": "Nouvelle-Aquitaine", "value": "Nouvelle-Aquitaine" },
+  { "label": "Occitanie", "value": "Occitanie" },
+  { "label": "Provence-Alpes-Côte d'Azur", "value": "Provence-Alpes-Côte d'Azur" },
+  { "label": "Hauts-de-France", "value": "Hauts-de-France" },
+  { "label": "Grand Est", "value": "Grand Est" },
+  { "label": "Bretagne", "value": "Bretagne" },
+  { "label": "Normandie", "value": "Normandie" },
+  { "label": "Bourgogne-Franche-Comté", "value": "Bourgogne-Franche-Comté" },
+  { "label": "Centre-Val de Loire", "value": "Centre-Val de Loire" },
+  { "label": "Pays de la Loire", "value": "Pays de la Loire" },
+  { "label": "Corse", "value": "Corse" },
+  { "label": "Guadeloupe", "value": "Guadeloupe" },
+  { "label": "Martinique", "value": "Martinique" },
+  { "label": "Guyane", "value": "Guyane" },
+  { "label": "La Réunion", "value": "La Réunion" },
+  { "label": "Mayotte", "value": "Mayotte" }
+]

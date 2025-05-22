@@ -1,0 +1,10 @@
+[
+  { "label": "Informatique", "value": "Informatique" },
+  { "label": "Ressources humaines", "value": "Ressources humaines" },
+  { "label": "Marketing", "value": "Marketing" },
+  { "label": "Finance", "value": "Finance" },
+  { "label": "Vente", "value": "Vente" },
+  { "label": "Logistique", "value": "Logistique" },
+  { "label": "Santé", "value": "Santé" },
+  { "label": "Éducation", "value": "Éducation" }
+]
