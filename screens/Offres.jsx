@@ -26,24 +26,27 @@ export default function TabScreen1({ navigation }) {
   if (!tokenManagerRef.current) {
     tokenManagerRef.current = new TokenManager(clientId, clientSecret);
   }
-
-useEffect(() => {
-  callOffresApi(tokenManagerRef.current);
-}, []);
-
-  useEffect(() => {
+    
+ useEffect(() => {
     fetch(`${EXPO_IP}/offers`)
       .then((response) => response.json())
       .then((data) => {
-        setOffersData(data);
-      });
+        console.log(data);
+        setOffersData(data.offers)
+      })
+      .then(() =>   callOffresApi(tokenManagerRef.current))
   }, []);
-  // const offer = offersData.map((data, i) => {
-  //   return <JobCard key={i} {...data} />;
-  // });
+  // console.log(offersData)
+  
+   const offer = offersData.map((data, i) => {
+    // console.log(offer)
+   
+    return <JobCard key={i} {...data}  />;
+  });
 
   return (
     <SafeAreaView style={styles.container}>
+     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.container}>
         <View style={styles.inputSearchContainer}>
           <TextInput
@@ -62,9 +65,12 @@ useEffect(() => {
         />
       </View>
       <View style={styles.jobContainer}>
-        {/* {offer} */}
-        </View>
-      <ScrollView contentContainerStyle={styles.scrollView}></ScrollView>
+       {offer}
+      </View>
+
+      
+        
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -154,7 +160,10 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 3,
   },
-  jobContainer: {
-    height: "100%",
+  jobContainer:{
+    height:"100%"
   },
+  // scrollView : {
+  //   border
+  // }
 });

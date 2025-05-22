@@ -25,16 +25,16 @@ export default function JobCard(props) {
         />
       </View>
       <View style={styles.info}>
-        <Text style={styles.headline}>{props.title}</Text>
+        <Text style={styles.headline}>{props.Title}</Text>
 
-        <Text style={styles.textInfo}>{props.compagny}</Text>
+        <Text style={styles.textInfo}>{props.Compagny}</Text>
 
         <View style={styles.rating}>
           {<FontAwesome name="star" color="red" size={16} />}
         </View>
-        <Text style={styles.textInfo}>Type de contrat</Text>
-        <Text style={styles.textInfo}>Ville</Text>
-        <Text style={styles.source}>Source</Text>
+        <Text style={styles.textInfo}>{props.typeContract }</Text>
+        <Text style={styles.textInfo}>{props.City}</Text>
+        <Text style={styles.source}>{props.Source}</Text>
       </View>
     </TouchableOpacity>
   );
