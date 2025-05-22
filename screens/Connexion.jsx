@@ -11,26 +11,26 @@ export default function LogIn({ navigation }) {
   const [errorMessage, setErrorMessage] = useState("");
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
-//     const handleRegister = () => {   
-//       fetch(`${EXPO_IP}/users/signin`, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({
-//         email: email  ,
-//         password: password,
+    const handleRegister = () => {   
+      fetch(`${EXPO_IP}/users/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email  ,
+        password: password,
         
-//       }),
-//     })
-//  .then((response) => response.json())
-//       .then((data) => {
-//         if (!data.result) {
-//           setErrorMessage(data.error || "An error occurred. Please try again.");
-//           return;
-//         }
+      }),
+    })
+ .then((response) => response.json())
+      .then((data) => {
+        if (!data.result) {
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+          return;
+        }
 
-  //       navigation.navigate("TabNavigator");
-  //     });
-  // };
+        navigation.navigate("TabNavigator");
+      });
+  };
 console.log(email)
 console.log(password)
   return (

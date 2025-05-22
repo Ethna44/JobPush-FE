@@ -12,9 +12,30 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 import Jobcard from "../components/Jobcard";
+import { useEffect } from "react";
+import JobCard from "../components/Jobcard";
+import { off } from "../../JobPush-BE/app";
 
 export default function TabScreen1({ navigation }) {
   const [search, setSearch] = useState("");
+  const [offersData, setOffersData] = useState([]);
+ const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+    
+ useEffect(() => {
+    fetch(`${EXPO_IP}/offers`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setOffersData(data)
+        // if (data.result) {
+        //   dispatch(loadPlace(data.place));
+        // }
+      });
+  }, []);
+   const offer = offersData.map((data, i) => {
+   
+    return <JobCard key={i} {...data}  />;
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,7 +57,7 @@ export default function TabScreen1({ navigation }) {
         />
       </View>
       <View style={styles.jobContainer}>
-        <Jobcard />
+       {offer}
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollView}>
