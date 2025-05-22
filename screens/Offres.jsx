@@ -9,32 +9,59 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { TokenManager } from "../TokenManager";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useState } from "react";
-import Jobcard from "../components/Jobcard";
+import { useState, useRef, useEffect } from "react";
 import { useEffect } from "react";
 import JobCard from "../components/Jobcard";
 
 export default function TabScreen1({ navigation }) {
   const [search, setSearch] = useState("");
   const [offersData, setOffersData] = useState([]);
- const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
-    
- useEffect(() => {
+  const tokenManagerRef = useRef(null);
+  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+  const clientId = process.env.EXPO_PUBLIC_CLIENT_ID_FT;
+  const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
+
+  if (!tokenManagerRef.current) {
+    tokenManagerRef.current = new TokenManager(clientId, clientSecret);
+  }
+  const callOffresApi = async () => {
+    try {
+      const token = await tokenManagerRef.current.getToken();
+      console.log("✅ Token récupéré :", token);
+      const response = await fetch(
+        `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=developpeur&commune=75101`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+    } catch (error) {
+      console.error("❌ Erreur API :", error.message);
+    }
+  };
+
+  useEffect(() => {
+    callOffresApi();
+  }, []);
+
+  useEffect(() => {
     fetch(`${EXPO_IP}/offers`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setOffersData(data)
+        setOffersData(data);
         // if (data.result) {
         //   dispatch(loadPlace(data.place));
         // }
       });
   }, []);
-  //  const offer = offersData.map((data, i) => {
-   
-  //   return <JobCard key={i} {...data}  />;
-  // });
+  const offer = offersData.map((data, i) => {
+    return <JobCard key={i} {...data} />;
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,20 +82,14 @@ export default function TabScreen1({ navigation }) {
           onPress={() => navigation.navigate("Accueil")}
         />
       </View>
-      <View style={styles.jobContainer}>
-       {/* {offer} */}
-      </View>
-
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        
-      </ScrollView>
+      <View style={styles.jobContainer}>{offer}</View>
+      <ScrollView contentContainerStyle={styles.scrollView}></ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    
     justifyContent: "flex-start",
     alignItems: "center",
   },
@@ -152,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 3,
   },
-  jobContainer:{
-    height:"100%"
-  }
+  jobContainer: {
+    height: "100%",
+  },
 });
