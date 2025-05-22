@@ -14,7 +14,6 @@ import { useState } from "react";
 import Jobcard from "../components/Jobcard";
 import { useEffect } from "react";
 import JobCard from "../components/Jobcard";
-import { off } from "../../JobPush-BE/app";
 
 export default function TabScreen1({ navigation }) {
   const [search, setSearch] = useState("");
@@ -32,10 +31,10 @@ export default function TabScreen1({ navigation }) {
         // }
       });
   }, []);
-   const offer = offersData.map((data, i) => {
+  //  const offer = offersData.map((data, i) => {
    
-    return <JobCard key={i} {...data}  />;
-  });
+  //   return <JobCard key={i} {...data}  />;
+  // });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -57,7 +56,7 @@ export default function TabScreen1({ navigation }) {
         />
       </View>
       <View style={styles.jobContainer}>
-       {offer}
+       {/* {offer} */}
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollView}>
