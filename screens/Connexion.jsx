@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
-import { updateUser, updateToken } from "../reducers/user";
+import { updateToken } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function LogIn({ navigation }) {
