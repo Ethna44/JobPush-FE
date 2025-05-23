@@ -14,6 +14,52 @@ import { useState } from "react";
 import AppStyles from "../AppStyles";
 
 export default function JobCard(props) {
+
+  const [isLiked,setIsLiked] = useState(false)
+
+  const formattedDate = new Date(props.PublicationDate).toLocaleDateString("fr-FR", {
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+}); //formatage de Date
+
+
+
+
+
+  
+  const handleLikeOffer = () => {
+    setIsLiked(!isLiked)
+  };
+ const heartIconStyle = {
+  fontSize: 22,
+  color: isLiked ? "#e74c3c" : "#ccc"
+}; fetch(`${EXPO_IP}/users/favorites`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+       offerId : props._id
+       
+        
+      }),
+    })
+ .then((response) => response.json())
+      .then((data) => {
+        if (!data.result) {
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+          return;
+        }
+
+        navigation.navigate("TabNavigator");
+      });
+  };
+
+
+
+
+const favoritePress =   <TouchableOpacity> <FontAwesome name="heart" onPress={() => handleLikeOffer()  } style={heartIconStyle}  /> </TouchableOpacity>
+
+
   return (
 
     
@@ -35,10 +81,11 @@ export default function JobCard(props) {
         <Text style={styles.textInfo}>{props.typeContract }</Text>
         <Text style={styles.textInfo}>{props.City}</Text>
         <Text style={styles.source}>{props.Source}</Text>
-         <Text> {props.publicationDate}</Text>
+              <Text> Publié le : {formattedDate}</Text>
+              {favoritePress}
       </View>
       <View>
-        <Text> {props.publicationDate}</Text>
+   
       </View>
     </TouchableOpacity>
   );

@@ -36,7 +36,7 @@ export default function LogIn({ navigation }) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
         }
-
+dispa
         navigation.navigate("TabNavigator");
       });
   };
