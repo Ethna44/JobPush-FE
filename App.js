@@ -5,8 +5,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native";
-import { TouchableOpacity, View } from "react-native";
-import { StyleSheet } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
 import Accueil from "./screens/Accueil";
 import Inscription from "./screens/Inscription";

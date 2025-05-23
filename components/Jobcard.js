@@ -35,6 +35,10 @@ export default function JobCard(props) {
         <Text style={styles.textInfo}>{props.typeContract }</Text>
         <Text style={styles.textInfo}>{props.City}</Text>
         <Text style={styles.source}>{props.Source}</Text>
+         <Text> {props.publicationDate}</Text>
+      </View>
+      <View>
+        <Text> {props.publicationDate}</Text>
       </View>
     </TouchableOpacity>
   );
