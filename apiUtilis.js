@@ -1,8 +1,27 @@
-export const callOffresApi = async (tokenManager,KeyWord,Sector,contractType,region) => {
+export const callOffresApi = async (
+  tokenManager,
+  KeyWord,
+  Sector,
+  contractType,
+  region
+) => {
   try {
+    //faire une condition pour verifier que les paramètres ne sont pas vides
+    if (!KeyWord || !Sector || !contractType || !region) {
+      KeyWord = " ";
+      Sector = " ";
+      contractType = " ";
+      region = " ";
+    }
+    console.log("✅ Appel de l'API avec les paramètres :", {
+      KeyWord,
+      Sector,
+      contractType,
+      region,
+    });
     const token = await tokenManager.getToken();
     console.log("✅ Token récupéré :", token);
-    console
+    console;
     const response = await fetch(
       `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&typeContrat=${contractType}&region=${region}`,
       {
@@ -19,21 +38,23 @@ export const callOffresApi = async (tokenManager,KeyWord,Sector,contractType,reg
     throw error;
   }
 };
+export async function reverseGeocode(latitude, longitude) {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+    console.log("🌍 URL:", url);
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "YourAppName/1.0 (your@email.com)", // important avec Nominatim
+      },
+    });
 
-export const reverseGeocode = async (lat, lon) => {
-  const url = `https://api-adresse.data.gouv.fr/reverse/?lon=${lon}&lat=${lat}`;
-  const response = await fetch(url, {
-    headers: {
-      'User-Agent': 'JobPushApp/1.0'
-    }
-  });
+    const data = await response.json();
 
-  if (!response.ok) throw new Error('Erreur lors du géocodage inverse');
-  const data = await response.json();
-
-  if (data.features && data.features.length > 0) {
-    return data.features[0].properties.label; // Adresse complète
-  } else {
-    throw new Error('Aucune adresse trouvée');
-  }
-};
+    const address = data.address || {};
+    return {
+      streetNumber: address.house_number || "",
+      streetName: address.road || "",
+      city: address.city || address.town || address.village || "",
+      zipCode: address.postcode || "",
+    };
+  
+}

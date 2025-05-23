@@ -24,13 +24,6 @@ export default function TabScreen1({ navigation }) {
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
   const tokenManagerRef = useRef(null);
 
-  // Job title = motsCles
-  // sector = grandDomaine = code Domaine (json sector)
-  // contractType = contractType
-  // remote= null
-  // city = motsCles
-  // region = region = code region (json regions)
-
   if (!tokenManagerRef.current) {
     tokenManagerRef.current = new TokenManager(clientId, clientSecret);
   }
@@ -42,6 +35,7 @@ export default function TabScreen1({ navigation }) {
         console.log("Data from User");
         const keyword =
           data.preferences[0].jobTitle + " " + data.preferences[0].city;
+
         callOffresApi(
           tokenManagerRef.current,
           keyword,
@@ -50,22 +44,45 @@ export default function TabScreen1({ navigation }) {
           data.preferences[0].region
         )
           .then((data) => {
-            console.log("Data from API:", data[0]);
+            for (let o = 0; o < 2; o++) {
+              const offer = data.resultats[o];
+              console.log(`📍 Lieu travail ${o}:`,   offer.lieuTravail.latitude,
+                offer.lieuTravail.longitude);
+              reverseGeocode(
+                offer.lieuTravail.latitude,
+                offer.lieuTravail.longitude
+              ).then((address) => {
+                const grade = Math.floor(Math.random() * 5) + 1;
+                fetch(`${EXPO_IP}/offers/add`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    title: offer.intitule,
+                    compagny: offer.entreprise.nom,
+                    logoLink: offer.entreprise.logo,
+                    grade: grade,
+                    contractType: offer.typeContrat,
+                    publicationDate: offer.datePublication,
+                    streetNumber: address.streetNumber,
+                    streetName: address.streetName,
+                    city: address.city,
+                    zipCode: address.zipCode,
+                    source: "Pôle Emploi",
+                    offerLink: offer.origineOffre.urlOrigine,
+                    description: offer.description,
+                  }),
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    console.log("Offre mise dans la BDD:", data);
+                  });
+              });
+            }
           })
           .catch((error) => {
             console.error("Error fetching data:", error);
           });
-      })
-
-
-
-    // fetch(`${EXPO_IP}/offers`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     setOffersData(data.offers);
-    //   })
-    //   .then(() =>);
+      });
   }, []);
 
   const offer = offersData.map((data, i) => {
