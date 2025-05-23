@@ -19,7 +19,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logoJobPush-Photoroom.jpg",
-        "backgroundColor": "#2B3033"
+        "backgroundColor": "#2B3033",
       },
       "edgeToEdgeEnabled": true
     },
