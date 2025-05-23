@@ -27,11 +27,13 @@ import { PersistGate } from "redux-persist/integration/react";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // AsyncStorage
 import user from "./reducers/user";
 
-import { useFonts,  
-  Poppins_300Light_Italic, 
-  Poppins_400Regular,  
-  Poppins_500Medium,  
-  Poppins_600SemiBold } from '@expo-google-fonts/poppins';
+import {
+  useFonts,
+  Poppins_300Light_Italic,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+} from "@expo-google-fonts/poppins";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -55,7 +57,12 @@ const TabNavigator = () => {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
-    safeAreaInsets={{bottom: Platform.OS === "android" ? Math.max(insets.bottom, 20) : insets.bottom}}
+      safeAreaInsets={{
+        bottom:
+          Platform.OS === "android"
+            ? Math.max(insets.bottom, 20)
+            : insets.bottom,
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
@@ -79,7 +86,7 @@ const TabNavigator = () => {
               return (
                 <FontAwesome name={"user-circle"} size={size} color={color} />
               );
-               case "Recherche":
+            case "Recherche":
               return (
                 <FontAwesome name={"plus-circle"} size={size} color={color} />
               );
@@ -87,22 +94,28 @@ const TabNavigator = () => {
         },
         tabBarActiveTintColor: "#F72C03",
         tabBarInactiveTintColor: "#F9F1F1",
-        tabBarStyle: { 
-          backgroundColor: '#2B3033',
+        tabBarStyle: {
+          backgroundColor: "#2B3033",
           borderTopWidth: 0,
-          paddingBottom: Platform.OS === "android" ? Math.max(insets.bottom, 10) : insets.bottom,
+          paddingBottom:
+            Platform.OS === "android"
+              ? Math.max(insets.bottom, 10)
+              : insets.bottom,
           paddingTop: 10,
-         },
+        },
         headerShown: false,
       })}
     >
       <Tab.Screen name="Offres" component={Offres} />
       <Tab.Screen name="Candidatures" component={Candidatures} />
-      <Tab.Screen name="Recherche" component={Recherche}
-       options={{
-        tabBarButton: (props) => <CustomTabBarButton {...props} />,
-        tabBarIcon: ({ color, size }) => null, // On supprime l'icône par défaut car nous utilisons un bouton personnalisé
-       }} />
+      <Tab.Screen
+        name="Recherche"
+        component={Recherche}
+        options={{
+          tabBarButton: (props) => <CustomTabBarButton {...props} />,
+          tabBarIcon: ({ color, size }) => null, // On supprime l'icône par défaut car nous utilisons un bouton personnalisé
+        }}
+      />
       <Tab.Screen name="Astuces" component={Astuces} />
       <Tab.Screen name="Compte" component={Compte} />
     </Tab.Navigator>
@@ -113,24 +126,18 @@ const TabNavigator = () => {
 const styles = StyleSheet.create({
   customTabBarButton: {
     top: -26, // Pour surélever le bouton au-dessus de la barre de navigation
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   customTabBarButtonInner: {
-    width: 60,
-    height: 60,
-    borderRadius: '50%',
-    backgroundColor: '#F72C03', // Même couleur que tabBarActiveTintColor
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: "#F9F1F1",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
+    width: 80,
+    height: 80,
+    borderRadius: "50%",
+    backgroundColor: "#F72C03", // Même couleur que tabBarActiveTintColor
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#2B3033",
+    borderWidth: 10,
   },
 });
 
@@ -155,15 +162,15 @@ const persistor = persistStore(store);
 
 export default function App() {
   let [fontsLoaded] = useFonts({
-    Poppins_300Light_Italic, 
-    Poppins_400Regular,  
-    Poppins_500Medium,  
-    Poppins_600SemiBold
-    });
-    if (!fontsLoaded) {
-      return null;
-    }
-  
+    Poppins_300Light_Italic,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
