@@ -14,6 +14,52 @@ import { useState } from "react";
 import AppStyles from "../AppStyles";
 
 export default function JobCard(props) {
+
+  const [isLiked,setIsLiked] = useState(false)
+
+  const formattedDate = new Date(props.PublicationDate).toLocaleDateString("fr-FR", {
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+}); //formatage de Date
+
+
+
+
+
+  
+  const handleLikeOffer = () => {
+    setIsLiked(!isLiked)
+  };
+ const heartIconStyle = {
+  fontSize: 22,
+  color: isLiked ? "#e74c3c" : "#ccc"
+}; fetch(`${EXPO_IP}/users/favorites`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+       offerId : props._id
+       
+        
+      }),
+    })
+ .then((response) => response.json())
+      .then((data) => {
+        if (!data.result) {
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+          return;
+        }
+
+        navigation.navigate("TabNavigator");
+      });
+  };
+
+
+
+
+const favoritePress =   <TouchableOpacity> <FontAwesome name="heart" onPress={() => handleLikeOffer()  } style={heartIconStyle}  /> </TouchableOpacity>
+
+
   return (
 
     
@@ -25,16 +71,21 @@ export default function JobCard(props) {
         />
       </View>
       <View style={styles.info}>
-        <Text style={styles.headline}>{props.title}</Text>
+        <Text style={styles.headline}>{props.Title}</Text>
 
-        <Text style={styles.textInfo}>{props.compagny}</Text>
+        <Text style={styles.textInfo}>{props.Compagny}</Text>
 
         <View style={styles.rating}>
           {<FontAwesome name="star" color="red" size={16} />}
         </View>
-        <Text style={styles.textInfo}>Type de contrat</Text>
-        <Text style={styles.textInfo}>Ville</Text>
-        <Text style={styles.source}>Source</Text>
+        <Text style={styles.textInfo}>{props.typeContract }</Text>
+        <Text style={styles.textInfo}>{props.City}</Text>
+        <Text style={styles.source}>{props.Source}</Text>
+              <Text> Publié le : {formattedDate}</Text>
+              {favoritePress}
+      </View>
+      <View>
+   
       </View>
     </TouchableOpacity>
   );

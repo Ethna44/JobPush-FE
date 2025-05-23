@@ -1,9 +1,10 @@
-export const callOffresApi = async (tokenManager) => {
+export const callOffresApi = async (tokenManager,KeyWord,Sector,contractType,region) => {
   try {
     const token = await tokenManager.getToken();
     console.log("✅ Token récupéré :", token);
+    console
     const response = await fetch(
-      `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=developpeur&commune=75101`,
+      `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&typeContrat=${contractType}&region=${region}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

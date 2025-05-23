@@ -14,8 +14,10 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useRef, useEffect } from "react";
 import JobCard from "../components/Jobcard";
 import { callOffresApi, reverseGeocode } from "../apiUtilis";
+import { useSelector } from "react-redux";
 
 export default function TabScreen1({ navigation }) {
+  const token = useSelector((state) => state.user.token);
   const [search, setSearch] = useState("");
   const [offersData, setOffersData] = useState([]);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
@@ -23,35 +25,59 @@ export default function TabScreen1({ navigation }) {
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
   const tokenManagerRef = useRef(null);
 
-//   Job title = motsCles
-// sector = grandDomaine = code Domaine (json sector)
-// typeContract = typeContrat
-// remote= null
-// city = commune = code insee (json cities)
-// region = region = code region (json regions)
-
+  // Job title = motsCles
+  // sector = grandDomaine = code Domaine (json sector)
+  // contractType = contractType
+  // remote= null
+  // city = motsCles
+  // region = region = code region (json regions)
 
   if (!tokenManagerRef.current) {
     tokenManagerRef.current = new TokenManager(clientId, clientSecret);
   }
 
-useEffect(() => {
-  callOffresApi(tokenManagerRef.current);
-}, []);
-
   useEffect(() => {
+    fetch(`${EXPO_IP}/users/profile/wm9ishyyt9q6dKZNu_bGbglGKJcn4BDu`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Data from User:", data.preferences[0].city);
+        const keyword = data.preferences[0].jobTitle + " " + data.preferences[0].city;
+        callOffresApi(
+          tokenManagerRef.current,
+          keyword,
+          data.preferences[0].sector,
+          data.preferences[0].contractType,
+          data.preferences[0].region
+        )
+          .then((data) => {
+            console.log("Data from API:", data);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      });
+
+    
+ useEffect(() => {
     fetch(`${EXPO_IP}/offers`)
       .then((response) => response.json())
       .then((data) => {
-        setOffersData(data);
-      });
+        console.log(data);
+        setOffersData(data.offers)
+      })
+      .then(() =>   callOffresApi(tokenManagerRef.current))
   }, []);
-  // const offer = offersData.map((data, i) => {
-  //   return <JobCard key={i} {...data} />;
-  // });
+  // console.log(offersData)
+  
+   const offer = offersData.map((data, i) => {
+    // console.log(offer)
+   
+    return <JobCard key={i} {...data}  />;
+  });
 
   return (
     <SafeAreaView style={styles.container}>
+     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.container}>
         <View style={styles.inputSearchContainer}>
           <TextInput
@@ -70,12 +96,15 @@ useEffect(() => {
         />
       </View>
       <View style={styles.jobContainer}>
-        {/* {offer} */}
-        </View>
-      <ScrollView contentContainerStyle={styles.scrollView}></ScrollView>
+       {offer}
+      </View>
+
+      
+        
+      </ScrollView>
     </SafeAreaView>
   );
-}
+})}
 
 const styles = StyleSheet.create({
   container: {
@@ -162,7 +191,10 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 3,
   },
-  jobContainer: {
-    height: "100%",
+  jobContainer:{
+    height:"100%"
   },
+  // scrollView : {
+  //   border
+  // }
 });

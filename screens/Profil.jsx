@@ -33,7 +33,7 @@ export default function Profil({ navigation }) {
   const [streetName, setStreetName] = useState(null);
   const [city, setCity] = useState(null);
   const [zipCode, setZipCode] = useState(null);
-  const [contractType, setContractType] = useState(null);
+  const [contractType, setcontractType] = useState(null);
   const [remote, setRemote] = useState(null);
   const [jobTitle, setJobTitle] = useState(null);
   const [sector, setSector] = useState(null);
@@ -221,10 +221,7 @@ export default function Profil({ navigation }) {
             valueField="code"
             placeholder="Secteur"
             value={sector}
-            onChange={(item) => setSector(item.value)}
-            search // Active la barre de recherche
-            searchPlaceholder="Secteur d'activité"
-            inputSearchStyle={styles.inputSearch}
+            onChange={(item) => setSector(item.code)}
           />
           <Dropdown
             style={styles.dropdown}
@@ -236,7 +233,7 @@ export default function Profil({ navigation }) {
             valueField="value"
             placeholder="Contrat"
             value={contractType}
-            onChange={(item) => setContractType(item.value)}
+            onChange={(item) => setcontractType(item.value)}
             search // Active la barre de recherche
             searchPlaceholder="Type de contrat"
             inputSearchStyle={styles.inputSearch}
@@ -266,7 +263,7 @@ export default function Profil({ navigation }) {
             valueField="code"
             placeholder="Region"
             value={region}
-            onChange={(item) => setRegion(item.value)}
+            onChange={(item) => setRegion(item.code)}
             search // Active la barre de recherche
             searchPlaceholder="Rechercher une région"
             inputSearchStyle={styles.inputSearch}
