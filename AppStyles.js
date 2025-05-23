@@ -58,7 +58,8 @@ export default AppStyles = {
         backgroundColor: '#FFEEEB', // rose très clair pour input inactif
         borderBottomWidth: 2,
         borderBottomColor: '#FB9581', // rouge pastel pour input inactif
-        borderRadius: 8,
+        borderTopRightRadius: 8,
+        borderTopLeftRadius: 8,
         marginBottom: 16,
         color: '#444',
         fontSize: 15,
@@ -67,7 +68,31 @@ export default AppStyles = {
     inputFocused: {
         backgroundColor: '#FEDDD7', //rose légèrement plus foncé pour input actif
         borderBottomColor: '#F72C03', // rouge vif pour input actif
-        fontWeight: '500',
+        fontFamily: "Poppins_400Regular",
+        color: '#2B3033',
+    },
+    dropdown: {
+        width: '70%',
+        height: 50,
+        backgroundColor: '#FFEEEB', // rose très clair comme pour input inactif
+        borderBottomWidth: 2,
+        borderBottomColor: '#FB9581', // rouge pastel comme pour input inactif
+        borderTopRightRadius: 8,
+        borderTopLeftRadius: 8,
+        marginBottom: 16,
+    },
+    placeholderDropdown: {
+        color: '#444',
+        fontSize: 15,
+        fontFamily: "Poppins_400Regular",
+        marginLeft : 4,
+    },
+    containerDropdown: {
+        width: '70%',
+        backgroundColor: '#F3E4E5',
+    },
+    itemContainerDropdown: {
+        fontSize: 15,
         fontFamily: "Poppins_400Regular",
     },
     link: {

@@ -209,7 +209,10 @@ export default function Profil({ navigation }) {
             onBlur={() => setFocusedField(null)}
           />
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdown}
+            itemContainerStyle={styles.itemContainerDropdown}
             data={secteur}
             labelField="label"
             valueField="code"
@@ -218,7 +221,10 @@ export default function Profil({ navigation }) {
             onChange={(item) => setSector(item.value)}
           />
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdown}
+            itemContainerStyle={styles.itemContainerDropdown}
             data={contrat}
             labelField="label"
             valueField="value"
@@ -229,7 +235,10 @@ export default function Profil({ navigation }) {
             searchPlaceholder="Type de contrat"
           />
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdown}
+            itemContainerStyle={styles.itemContainerDropdown}
             data={citiesList}
             labelField="label"
             valueField="value"
@@ -240,7 +249,10 @@ export default function Profil({ navigation }) {
             searchPlaceholder="Type de contrat"
           />
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdown}
+            itemContainerStyle={styles.itemContainerDropdown}
             data={regions}
             labelField="label"
             valueField="code"
@@ -252,7 +264,10 @@ export default function Profil({ navigation }) {
           />
 
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdown}
+            itemContainerStyle={styles.itemContainerDropdown}
             data={teletravail}
             labelField="label"
             valueField="value"
@@ -304,6 +319,10 @@ const styles = StyleSheet.create({
   },
   input: AppStyles.input,
   inputFocused: AppStyles.inputFocused,
+  dropdown: AppStyles.dropdown,
+  placeholderDropdown: AppStyles.placeholderDropdown,
+  containerDropdown: AppStyles.containerDropdown,
+  itemContainerDropdown: AppStyles.itemContainerDropdown,
   buttonContainer: {
     alignItems: "flex-end",
     paddingBottom: 50,
