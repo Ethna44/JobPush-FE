@@ -1,3 +1,7 @@
+//pour contrebalancer le comportement complexe de KeyboardAvoidingView sous Androïd, je force les dimensions selon la taille de ma fenêtre
+import { Dimensions } from 'react-native';
+const { width } = Dimensions.get('window');
+
 export default AppStyles = {
     color: {
         background: '#F9F1F1',
@@ -54,11 +58,12 @@ export default AppStyles = {
         fontSize: 14,
     },
     input: {
-        width: '70%',
+        width: width*0.7,
         backgroundColor: '#FFEEEB', // rose très clair pour input inactif
         borderBottomWidth: 2,
         borderBottomColor: '#FB9581', // rouge pastel pour input inactif
-        borderRadius: 8,
+        borderTopRightRadius: 8,
+        borderTopLeftRadius: 8,
         marginBottom: 16,
         color: '#444',
         fontSize: 15,
@@ -67,7 +72,48 @@ export default AppStyles = {
     inputFocused: {
         backgroundColor: '#FEDDD7', //rose légèrement plus foncé pour input actif
         borderBottomColor: '#F72C03', // rouge vif pour input actif
-        fontWeight: '500',
+        fontFamily: "Poppins_400Regular",
+        color: '#2B3033',
+    },
+    dropdown: {
+        width: width*0.7,
+        height: 50,
+        backgroundColor: '#FFEEEB', // rose très clair comme pour input inactif
+        borderBottomWidth: 2,
+        borderBottomColor: '#FB9581', // rouge pastel comme pour input inactif
+        borderTopRightRadius: 8,
+        borderTopLeftRadius: 8,
+        marginBottom: 16,
+    },
+    placeholderDropdown: {
+        color: '#444',
+        fontSize: 15,
+        fontFamily: "Poppins_400Regular",
+        marginLeft : 4,
+    },
+    containerDropdownBottom: {
+        width: width*0.7,
+        marginTop: -16,
+        backgroundColor: '#F3E4E5',
+        position: 'bottom',
+        backgroundColor: '#F3E4E5', 
+        zIndex: 999,
+    },
+    containerDropdownTop: {
+        width: width*0.7,
+        marginTop: -16,
+        backgroundColor: '#F3E4E5',
+        position: 'top',
+        backgroundColor: '#F3E4E5', 
+        zIndex: 999,
+    },
+    inputSearch: {
+        fontFamily: "Poppins_400Regular",
+        color: '#2B3033',
+        size: 15,
+    },
+    itemTextDropdown: {
+        fontSize: 15,
         fontFamily: "Poppins_400Regular",
     },
     link: {

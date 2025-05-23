@@ -12,11 +12,11 @@ import {
 import { TokenManager } from "../TokenManager";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useRef, useEffect } from "react";
-import JobCard from "../components/Jobcard";
 import { callOffresApi, reverseGeocode } from "../apiUtilis";
 import AppStyles from "../AppStyles";
 
 export default function TabScreen1({ navigation }) {
+  const token = useSelector((state) => state.user.token);
   const [search, setSearch] = useState("");
   const [offersData, setOffersData] = useState([]);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
@@ -36,15 +36,37 @@ export default function TabScreen1({ navigation }) {
   }
 
   useEffect(() => {
-    fetch(`${EXPO_IP}/offers`)
+    fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setOffersData(data.offers);
+        console.log("Data from User");
+        const keyword =
+          data.preferences[0].jobTitle + " " + data.preferences[0].city;
+        callOffresApi(
+          tokenManagerRef.current,
+          keyword,
+          data.preferences[0].sector,
+          data.preferences[0].contractType,
+          data.preferences[0].region
+        )
+          .then((data) => {
+            console.log("Data from API:", data[0]);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
       })
-      .then(() => callOffresApi(tokenManagerRef.current));
+
+
+
+    // fetch(`${EXPO_IP}/offers`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     setOffersData(data.offers);
+    //   })
+    //   .then(() =>);
   }, []);
-  // console.log(offersData)
 
   const offer = offersData.map((data, i) => {
     // console.log(offer)
@@ -63,7 +85,6 @@ export default function TabScreen1({ navigation }) {
             onChangeText={(value) => setSearch(value)}
             value={search}
           />
-          <FontAwesome name={"search"} size={18} color="#F72C03" />
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>

@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Dimensions
 } from "react-native";
 import { useRef, useEffect, useState } from "react";
 import AppStyles from "../AppStyles";
@@ -19,6 +20,8 @@ import teletravail from "../json/remote.json";
 import contrat from "../json/contrat.json";
 import regions from "../json/regions.json";
 
+const { width } = Dimensions.get('window');
+
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 export default function Profil({ navigation }) {
   const dispatch = useDispatch();
@@ -30,7 +33,7 @@ export default function Profil({ navigation }) {
   const [streetName, setStreetName] = useState(null);
   const [city, setCity] = useState(null);
   const [zipCode, setZipCode] = useState(null);
-  const [contractType, setContractType] = useState(null);
+  const [contractType, setcontractType] = useState(null);
   const [remote, setRemote] = useState(null);
   const [jobTitle, setJobTitle] = useState(null);
   const [sector, setSector] = useState(null);
@@ -106,7 +109,7 @@ export default function Profil({ navigation }) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : "position"}
       style={styles.container}
     >
       <Text style={styles.title}>Mon profil</Text>
@@ -209,27 +212,37 @@ export default function Profil({ navigation }) {
             onBlur={() => setFocusedField(null)}
           />
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdownBottom}
+            itemTextStyle={styles.itemTextDropdown}
             data={secteur}
             labelField="label"
             valueField="code"
             placeholder="Secteur"
             value={sector}
-            onChange={(item) => setSector(item.value)}
+            onChange={(item) => setSector(item.code)}
           />
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdownBottom}
+            itemTextStyle={styles.itemTextDropdown}
             data={contrat}
             labelField="label"
             valueField="value"
             placeholder="Contrat"
             value={contractType}
-            onChange={(item) => setContractType(item.value)}
+            onChange={(item) => setcontractType(item.value)}
             search // Active la barre de recherche
             searchPlaceholder="Type de contrat"
+            inputSearchStyle={styles.inputSearch}
           />
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdownBottom}
+            itemTextStyle={styles.itemTextDropdown}
             data={citiesList}
             labelField="label"
             valueField="value"
@@ -238,21 +251,29 @@ export default function Profil({ navigation }) {
             onChange={(item) => setCityJob(item.value)}
             search // Active la barre de recherche
             searchPlaceholder="Type de contrat"
+            inputSearchStyle={styles.inputSearch}
           />
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdownBottom}
+            itemTextStyle={styles.itemTextDropdown}
             data={regions}
             labelField="label"
             valueField="code"
             placeholder="Region"
             value={region}
-            onChange={(item) => setRegion(item.value)}
+            onChange={(item) => setRegion(item.code)}
             search // Active la barre de recherche
             searchPlaceholder="Rechercher une région"
+            inputSearchStyle={styles.inputSearch}
           />
 
           <Dropdown
-            style={styles.input}
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdownTop}
+            itemTextStyle={styles.itemTextDropdown}
             data={teletravail}
             labelField="label"
             valueField="value"
@@ -285,14 +306,14 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
   scrollableContainer: {
-    width: "100%",
+    width: width,
     // borderColor: "blue",
     // borderWidth: 1,
   },
   textContainer: {
     marginLeft: 20,
   },
-  title: AppStyles.title,
+  title: {...AppStyles.title, marginLeft: 20},
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
   inputContainer: {
@@ -304,6 +325,12 @@ const styles = StyleSheet.create({
   },
   input: AppStyles.input,
   inputFocused: AppStyles.inputFocused,
+  dropdown: AppStyles.dropdown,
+  placeholderDropdown: AppStyles.placeholderDropdown,
+  containerDropdownBottom: AppStyles.containerDropdownBottom,
+  containerDropdownTop: AppStyles.containerDropdownTop,
+  itemTextDropdown: AppStyles.itemTextDropdown,
+  inputSearch: AppStyles.inputSearch,
   buttonContainer: {
     alignItems: "flex-end",
     paddingBottom: 50,
