@@ -36,7 +36,7 @@ export default function LogIn({ navigation }) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
         }
-
+dispa
         navigation.navigate("TabNavigator");
       });
   };
@@ -91,7 +91,7 @@ export default function LogIn({ navigation }) {
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("TabNavigator");
+                  
             handleRegister();
           }}
           style={styles.button}

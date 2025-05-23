@@ -57,18 +57,27 @@ export default function TabScreen1({ navigation }) {
           });
       });
 
+    
+ useEffect(() => {
     fetch(`${EXPO_IP}/offers`)
       .then((response) => response.json())
       .then((data) => {
-        setOffersData(data);
-      });
+        console.log(data);
+        setOffersData(data.offers)
+      })
+      .then(() =>   callOffresApi(tokenManagerRef.current))
   }, []);
-  // const offer = offersData.map((data, i) => {
-  //   return <JobCard key={i} {...data} />;
-  // });
+  // console.log(offersData)
+  
+   const offer = offersData.map((data, i) => {
+    // console.log(offer)
+   
+    return <JobCard key={i} {...data}  />;
+  });
 
   return (
     <SafeAreaView style={styles.container}>
+     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.container}>
         <View style={styles.inputSearchContainer}>
           <TextInput
@@ -86,8 +95,18 @@ export default function TabScreen1({ navigation }) {
           onPress={() => navigation.navigate("Accueil")}
         />
       </View>
+<<<<<<< HEAD
       <View style={styles.jobContainer}>{/* {offer} */}</View>
       <ScrollView contentContainerStyle={styles.scrollView}></ScrollView>
+=======
+      <View style={styles.jobContainer}>
+       {offer}
+      </View>
+
+      
+        
+      </ScrollView>
+>>>>>>> 6e674efc9cfdfe0dc3b1b348d5472c27fd210ba6
     </SafeAreaView>
   );
 }
@@ -177,7 +196,10 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 3,
   },
-  jobContainer: {
-    height: "100%",
+  jobContainer:{
+    height:"100%"
   },
+  // scrollView : {
+  //   border
+  // }
 });
