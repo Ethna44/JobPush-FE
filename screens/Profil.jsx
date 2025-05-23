@@ -212,7 +212,7 @@ export default function Profil({ navigation }) {
             style={styles.input}
             data={secteur}
             labelField="label"
-            valueField="value"
+            valueField="code"
             placeholder="Secteur"
             value={sector}
             onChange={(item) => setSector(item.value)}
@@ -243,7 +243,7 @@ export default function Profil({ navigation }) {
             style={styles.input}
             data={regions}
             labelField="label"
-            valueField="value"
+            valueField="code"
             placeholder="Region"
             value={region}
             onChange={(item) => setRegion(item.value)}
