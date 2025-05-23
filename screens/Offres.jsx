@@ -14,8 +14,10 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useRef, useEffect } from "react";
 import JobCard from "../components/Jobcard";
 import { callOffresApi, reverseGeocode } from "../apiUtilis";
+import { useSelector } from "react-redux";
 
 export default function TabScreen1({ navigation }) {
+  const token = useSelector((state) => state.user.token);
   const [search, setSearch] = useState("");
   const [offersData, setOffersData] = useState([]);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
@@ -23,23 +25,38 @@ export default function TabScreen1({ navigation }) {
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
   const tokenManagerRef = useRef(null);
 
-//   Job title = motsCles
-// sector = grandDomaine = code Domaine (json sector)
-// typeContract = typeContrat
-// remote= null
-// city = commune = code insee (json cities)
-// region = region = code region (json regions)
-
+  // Job title = motsCles
+  // sector = grandDomaine = code Domaine (json sector)
+  // contractType = contractType
+  // remote= null
+  // city = motsCles
+  // region = region = code region (json regions)
 
   if (!tokenManagerRef.current) {
     tokenManagerRef.current = new TokenManager(clientId, clientSecret);
   }
 
-useEffect(() => {
-  callOffresApi(tokenManagerRef.current);
-}, []);
-
   useEffect(() => {
+    fetch(`${EXPO_IP}/users/profile/wm9ishyyt9q6dKZNu_bGbglGKJcn4BDu`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Data from User:", data.preferences[0].city);
+        const keyword = data.preferences[0].jobTitle + " " + data.preferences[0].city;
+        callOffresApi(
+          tokenManagerRef.current,
+          keyword,
+          data.preferences[0].sector,
+          data.preferences[0].contractType,
+          data.preferences[0].region
+        )
+          .then((data) => {
+            console.log("Data from API:", data);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      });
+
     fetch(`${EXPO_IP}/offers`)
       .then((response) => response.json())
       .then((data) => {
@@ -69,9 +86,7 @@ useEffect(() => {
           onPress={() => navigation.navigate("Accueil")}
         />
       </View>
-      <View style={styles.jobContainer}>
-        {/* {offer} */}
-        </View>
+      <View style={styles.jobContainer}>{/* {offer} */}</View>
       <ScrollView contentContainerStyle={styles.scrollView}></ScrollView>
     </SafeAreaView>
   );
