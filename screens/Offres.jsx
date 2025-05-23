@@ -95,10 +95,6 @@ export default function TabScreen1({ navigation }) {
           onPress={() => navigation.navigate("Accueil")}
         />
       </View>
-<<<<<<< HEAD
-      <View style={styles.jobContainer}>{/* {offer} */}</View>
-      <ScrollView contentContainerStyle={styles.scrollView}></ScrollView>
-=======
       <View style={styles.jobContainer}>
        {offer}
       </View>
@@ -106,10 +102,9 @@ export default function TabScreen1({ navigation }) {
       
         
       </ScrollView>
->>>>>>> 6e674efc9cfdfe0dc3b1b348d5472c27fd210ba6
     </SafeAreaView>
   );
-}
+})}
 
 const styles = StyleSheet.create({
   container: {
