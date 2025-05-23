@@ -10,9 +10,11 @@ import {
 } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
+import { updateUser, updateToken } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function LogIn({ navigation }) {
+  const dispatch = useDispatch();
   const [focusedField, setFocusedField] = useState(null);
   const [email, setEmail] = useState("");
   const [checkMail, setCheckMail] = useState(false);
@@ -20,23 +22,22 @@ export default function LogIn({ navigation }) {
   const [errorMessage, setErrorMessage] = useState("");
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
-    const handleRegister = () => {   
-      fetch(`${EXPO_IP}/users/signin`, {
+  const handleRegister = () => {
+    fetch(`${EXPO_IP}/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: email  ,
+        email: email,
         password: password,
-        
       }),
     })
- .then((response) => response.json())
+      .then((response) => response.json())
       .then((data) => {
         if (!data.result) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
         }
-dispa
+        dispatch(updateToken(data.token));
         navigation.navigate("TabNavigator");
       });
   };
@@ -91,7 +92,6 @@ dispa
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-                  
             handleRegister();
           }}
           style={styles.button}

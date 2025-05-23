@@ -12,7 +12,6 @@ import {
 import { TokenManager } from "../TokenManager";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useRef, useEffect } from "react";
-import JobCard from "../components/Jobcard";
 import { callOffresApi, reverseGeocode } from "../apiUtilis";
 import { useSelector } from "react-redux";
 
@@ -37,11 +36,12 @@ export default function TabScreen1({ navigation }) {
   }
 
   useEffect(() => {
-    fetch(`${EXPO_IP}/users/profile/wm9ishyyt9q6dKZNu_bGbglGKJcn4BDu`)
+    fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data from User:", data.preferences[0].city);
-        const keyword = data.preferences[0].jobTitle + " " + data.preferences[0].city;
+        console.log("Data from User");
+        const keyword =
+          data.preferences[0].jobTitle + " " + data.preferences[0].city;
         callOffresApi(
           tokenManagerRef.current,
           keyword,
@@ -50,61 +50,55 @@ export default function TabScreen1({ navigation }) {
           data.preferences[0].region
         )
           .then((data) => {
-            console.log("Data from API:", data);
+            console.log("Data from API:", data[0]);
           })
           .catch((error) => {
             console.error("Error fetching data:", error);
           });
-      });
-
-    
- useEffect(() => {
-    fetch(`${EXPO_IP}/offers`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setOffersData(data.offers)
       })
-      .then(() =>   callOffresApi(tokenManagerRef.current))
+
+
+
+    // fetch(`${EXPO_IP}/offers`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     setOffersData(data.offers);
+    //   })
+    //   .then(() =>);
   }, []);
-  // console.log(offersData)
-  
-   const offer = offersData.map((data, i) => {
+
+  const offer = offersData.map((data, i) => {
     // console.log(offer)
-   
-    return <JobCard key={i} {...data}  />;
+
+    return <JobCard key={i} {...data} />;
   });
 
   return (
     <SafeAreaView style={styles.container}>
-     <ScrollView contentContainerStyle={styles.scrollView}>
-      <View style={styles.container}>
-        <View style={styles.inputSearchContainer}>
-          <TextInput
-            placeholder="Recherche"
-            style={styles.inputSearch}
-            onChangeText={(value) => setSearch(value)}
-            value={search}
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.container}>
+          <View style={styles.inputSearchContainer}>
+            <TextInput
+              placeholder="Recherche"
+              style={styles.inputSearch}
+              onChangeText={(value) => setSearch(value)}
+              value={search}
+            />
+            <FontAwesome name={"search"} size={18} color="#F72C03" />
+          </View>
+          <Text style={styles.title}>Offres</Text>
+
+          <Button
+            title="Go to StackScreen1"
+            onPress={() => navigation.navigate("Accueil")}
           />
-          <FontAwesome name={"search"} size={18} color="#F72C03" />
         </View>
-        <Text style={styles.title}>Offres</Text>
-
-        <Button
-          title="Go to StackScreen1"
-          onPress={() => navigation.navigate("Accueil")}
-        />
-      </View>
-      <View style={styles.jobContainer}>
-       {offer}
-      </View>
-
-      
-        
+        {/* <View style={styles.jobContainer}>{offer}</View> */}
       </ScrollView>
     </SafeAreaView>
   );
-})}
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -191,8 +185,8 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 3,
   },
-  jobContainer:{
-    height:"100%"
+  jobContainer: {
+    height: "100%",
   },
   // scrollView : {
   //   border
