@@ -13,13 +13,13 @@ import { TokenManager } from "../TokenManager";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { callOffresApi, reverseGeocode } from "../apiUtilis";
+import { callOffresApi, reverseGeocode, fusionWord } from "../apiUtilis";
 import AppStyles from "../AppStyles";
 
 export default function TabScreen1({ navigation }) {
   const token = useSelector((state) => state.user.token);
   const [search, setSearch] = useState("");
-  const [offersData, setOffersData] = useState([]);
+  const [offersData, setOffersData] = useState([])
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const clientId = process.env.EXPO_PUBLIC_CLIENT_ID_FT;
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
@@ -40,8 +40,9 @@ export default function TabScreen1({ navigation }) {
     fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
-        const keyword =
-          data.preferences[0].jobTitle + " " + data.preferences[0].city;
+        const job = fusionWord(data.preferences[0].jobTitle);
+        const keyword = data.preferences[0].city + " " + job;
+        console.log("🔍 Recherche pour :", keyword);
         callOffresApi(
           tokenManagerRef.current,
           keyword,
@@ -50,9 +51,14 @@ export default function TabScreen1({ navigation }) {
           data.preferences[0].region
         )
           .then((data) => {
-            for (let o = 0; o < 1; o++) {
+            for (let o = 0; o < 5; o++) {
               const offer = data.resultats[o];
-              console.log(`Lieu travail ${o}:`,offer.lieuTravail.latitude, offer.lieuTravail.longitude);
+              console.log("Date de création:", offer.dateCreation);
+              console.log(
+                `Lieu travail ${o}:`,
+                offer.lieuTravail.latitude,
+                offer.lieuTravail.longitude
+              );
               reverseGeocode(
                 offer.lieuTravail.latitude,
                 offer.lieuTravail.longitude
@@ -69,7 +75,7 @@ export default function TabScreen1({ navigation }) {
                     grade: grade,
                     contractType: offer.typeContrat,
                     publicationDate: offer.dateCreation,
-                    streetNumber: address.streetNumber|| "",
+                    streetNumber: address.streetNumber || "",
                     streetName: address.streetName,
                     city: address.city,
                     zipCode: address.zipCode,
@@ -152,7 +158,7 @@ const styles = StyleSheet.create({
     // borderColor: "blue",
     // borderWidth: 1,
     width: "100%",
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: 20,
   },
 });
