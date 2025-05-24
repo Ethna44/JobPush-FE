@@ -12,6 +12,7 @@ import {
 import { TokenManager } from "../TokenManager";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { callOffresApi, reverseGeocode } from "../apiUtilis";
 import AppStyles from "../AppStyles";
 
@@ -39,10 +40,8 @@ export default function TabScreen1({ navigation }) {
     fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data from User");
         const keyword =
           data.preferences[0].jobTitle + " " + data.preferences[0].city;
-
         callOffresApi(
           tokenManagerRef.current,
           keyword,
@@ -51,14 +50,14 @@ export default function TabScreen1({ navigation }) {
           data.preferences[0].region
         )
           .then((data) => {
-            for (let o = 0; o < 2; o++) {
+            for (let o = 0; o < 1; o++) {
               const offer = data.resultats[o];
-              console.log(`📍 Lieu travail ${o}:`,   offer.lieuTravail.latitude,
-                offer.lieuTravail.longitude);
+              console.log(`Lieu travail ${o}:`,offer.lieuTravail.latitude, offer.lieuTravail.longitude);
               reverseGeocode(
                 offer.lieuTravail.latitude,
                 offer.lieuTravail.longitude
               ).then((address) => {
+                console.log("Adresse récupérée:", address);
                 const grade = Math.floor(Math.random() * 5) + 1;
                 fetch(`${EXPO_IP}/offers/add`, {
                   method: "POST",
@@ -66,11 +65,11 @@ export default function TabScreen1({ navigation }) {
                   body: JSON.stringify({
                     title: offer.intitule,
                     compagny: offer.entreprise.nom,
-                    logoLink: offer.entreprise.logo,
+                    logoLink: offer.entreprise.logo || "",
                     grade: grade,
                     contractType: offer.typeContrat,
-                    publicationDate: offer.datePublication,
-                    streetNumber: address.streetNumber,
+                    publicationDate: offer.dateCreation,
+                    streetNumber: address.streetNumber|| "",
                     streetName: address.streetName,
                     city: address.city,
                     zipCode: address.zipCode,

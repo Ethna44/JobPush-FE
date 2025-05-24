@@ -6,6 +6,7 @@ export const callOffresApi = async (
   region
 ) => {
   try {
+    
     //faire une condition pour verifier que les paramètres ne sont pas vides
     if (!KeyWord || !Sector || !contractType || !region) {
       KeyWord = " ";
@@ -13,12 +14,6 @@ export const callOffresApi = async (
       contractType = " ";
       region = " ";
     }
-    console.log("✅ Appel de l'API avec les paramètres :", {
-      KeyWord,
-      Sector,
-      contractType,
-      region,
-    });
     const token = await tokenManager.getToken();
     console.log("✅ Token récupéré :", token);
     console;
@@ -50,6 +45,7 @@ export async function reverseGeocode(latitude, longitude) {
     const data = await response.json();
 
     const address = data.address || {};
+    console.log("🏠 Adresse récupérée :", address.house_number);
     return {
       streetNumber: address.house_number || "",
       streetName: address.road || "",

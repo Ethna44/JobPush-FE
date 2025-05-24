@@ -14,7 +14,7 @@ import AppStyles from "../AppStyles";
 import { Dropdown } from "react-native-element-dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
-import cities from "../json/cities.json";
+import citie from "../json/citie.json";
 import secteur from "../json/sector.json";
 import teletravail from "../json/remote.json";
 import contrat from "../json/contrat.json";
@@ -49,13 +49,14 @@ export default function Profil({ navigation }) {
     }
   }, [errorMessage]);
 
-  const citiesList = cities.cities
-    .filter((city) => city.label) // garde seulement ceux qui ont un label
-    .map((city) => ({
-      ...city,
-      label: city.label.charAt(0).toUpperCase() + city.label.slice(1),
-      value: city.label.charAt(0).toUpperCase() + city.label.slice(1),
-    }));
+  console.log("Ville Selectionner", cityJob);
+  // const citiesList = cities.cities
+  //   .filter((city) => city.label) // garde seulement ceux qui ont un label
+  //   .map((city) => ({
+  //     ...city,
+  //     label: city.label.charAt(0).toUpperCase() + city.label.slice(1),
+  //     value: city.label.charAt(0).toUpperCase() + city.label.slice(1),
+  //   }));
 
   const handleSubmit = () => {
     fetch(`${EXPO_IP}/users`, {
@@ -234,23 +235,20 @@ export default function Profil({ navigation }) {
             placeholder="Contrat"
             value={contractType}
             onChange={(item) => setcontractType(item.value)}
-            search // Active la barre de recherche
-            searchPlaceholder="Type de contrat"
-            inputSearchStyle={styles.inputSearch}
           />
           <Dropdown
             style={styles.dropdown}
             placeholderStyle={styles.placeholderDropdown}
             containerStyle={styles.containerDropdownBottom}
             itemTextStyle={styles.itemTextDropdown}
-            data={citiesList}
-            labelField="label"
-            valueField="value"
+            data={citie}
+            labelField="name"
+            valueField="name"
             placeholder="Ville"
             value={cityJob}
-            onChange={(item) => setCityJob(item.value)}
+            onChange={(item) => setCityJob(item.name)}
             search // Active la barre de recherche
-            searchPlaceholder="Type de contrat"
+            searchPlaceholder="Ville"
             inputSearchStyle={styles.inputSearch}
           />
           <Dropdown
