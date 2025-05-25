@@ -7,7 +7,6 @@
     "icon": "./assets/logoJobPush-Photoroom.jpg",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
-   
     "splash": {
       "image": "./assets/logoJobPush-Photoroom.jpg",
       "resizeMode": "contain",
@@ -19,7 +18,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logoJobPush-Photoroom.jpg",
-        "backgroundColor": "#2B3033",
+        "backgroundColor": "#2B3033"
       },
       "edgeToEdgeEnabled": true
     },
@@ -27,7 +26,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-web-browser"
     ]
   }
 }

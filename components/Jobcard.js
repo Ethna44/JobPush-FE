@@ -21,20 +21,15 @@ export default function JobCard(props) {
   year: "numeric",
   month: "long",
   day: "numeric"
-}); //formatage de Date
+  }); //formatage de Date
 
-
-
-
-
-  
   const handleLikeOffer = () => {
     setIsLiked(!isLiked)
   };
  const heartIconStyle = {
   fontSize: 22,
   color: isLiked ? "#e74c3c" : "#ccc"
-}; fetch(`${EXPO_IP}/users/favorites`, {
+ }; fetch(`${EXPO_IP}/users/favorites`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -52,12 +47,7 @@ export default function JobCard(props) {
 
         navigation.navigate("TabNavigator");
       });
-  };
-
-
-
-
-const favoritePress =   <TouchableOpacity> <FontAwesome name="heart" onPress={() => handleLikeOffer()  } style={heartIconStyle}  /> </TouchableOpacity>
+  const favoritePress =   <TouchableOpacity> <FontAwesome name="heart" onPress={() => handleLikeOffer()  } style={heartIconStyle}  /> </TouchableOpacity>
 
 
   return (
@@ -89,7 +79,12 @@ const favoritePress =   <TouchableOpacity> <FontAwesome name="heart" onPress={()
       </View>
     </TouchableOpacity>
   );
-}
+    };
+
+
+
+
+  
 
 const styles = StyleSheet.create({
   container: {

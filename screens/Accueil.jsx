@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image, SafeAreaView, Platform } from "react-native";
+import GoogleLoginButton from "../components/GoogleLoginButton" ;
 import AppStyles from "../AppStyles";
 
 export default function StackScreen1({ navigation }) {
@@ -23,7 +24,7 @@ export default function StackScreen1({ navigation }) {
       </View>
       <View style={styles.googleContainer}>
         <Text style={styles.body}>S'identifier avec</Text>
-        <Button title="Google" onPress={() => navigation.navigate("Connexion")}  />
+        <GoogleLoginButton title="Google" onPress={() => navigation.navigate("Profil")}  />
       </View>
     </SafeAreaView>
   );
