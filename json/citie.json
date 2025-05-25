@@ -1,5 +1,5 @@
 [
-  { "name": "Paris", "insee": "75056", "postalCode": "75000", "region": "Île-de-France" },
+  { "name": "Paris", "insee": "75101", "postalCode": "75000", "region": "Île-de-France" },
   { "name": "Marseille", "insee": "13055", "postalCode": "13000", "region": "Provence-Alpes-Côte d'Azur" },
   { "name": "Lyon", "insee": "69385", "postalCode": "69000", "region": "Auvergne-Rhône-Alpes" },
   { "name": "Toulouse", "insee": "31555", "postalCode": "31000", "region": "Occitanie" },

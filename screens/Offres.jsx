@@ -19,7 +19,7 @@ import AppStyles from "../AppStyles";
 export default function TabScreen1({ navigation }) {
   const token = useSelector((state) => state.user.token);
   const [search, setSearch] = useState("");
-  const [offersData, setOffersData] = useState([])
+  const [offersData, setOffersData] = useState([]);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const clientId = process.env.EXPO_PUBLIC_CLIENT_ID_FT;
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
@@ -40,25 +40,28 @@ export default function TabScreen1({ navigation }) {
     fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log("🔑 Token récupéré :", token);
         const job = fusionWord(data.preferences[0].jobTitle);
-        const keyword = data.preferences[0].city + " " + job;
-        console.log("🔍 Recherche pour :", keyword);
+        console.log("🔍 Recherche pour :", job);
         callOffresApi(
           tokenManagerRef.current,
-          keyword,
+          job,
           data.preferences[0].sector,
           data.preferences[0].contractType,
-          data.preferences[0].region
+          data.preferences[0].region,
+          data.preferences[0].city
         )
           .then((data) => {
             for (let o = 0; o < 5; o++) {
               const offer = data.resultats[o];
+              const dateCreation = new Date(offer.dateCreation);
+              offer.dateCreation = dateCreation
+                .toLocaleDateString("fr-FR", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })
               console.log("Date de création:", offer.dateCreation);
-              console.log(
-                `Lieu travail ${o}:`,
-                offer.lieuTravail.latitude,
-                offer.lieuTravail.longitude
-              );
               reverseGeocode(
                 offer.lieuTravail.latitude,
                 offer.lieuTravail.longitude
@@ -126,6 +129,7 @@ export default function TabScreen1({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#F9F1F1",
     // borderColor: "green",
     // borderWidth: 1,
   },

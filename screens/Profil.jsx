@@ -243,10 +243,10 @@ export default function Profil({ navigation }) {
             itemTextStyle={styles.itemTextDropdown}
             data={citie}
             labelField="name"
-            valueField="name"
+            valueField="insee"
             placeholder="Ville"
             value={cityJob}
-            onChange={(item) => setCityJob(item.name)}
+            onChange={(item) => setCityJob(item.insee)}
             search // Active la barre de recherche
             searchPlaceholder="Ville"
             inputSearchStyle={styles.inputSearch}

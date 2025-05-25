@@ -1,21 +1,23 @@
-const callOffresApi = async (
+const callOffresApi = async(
   tokenManager,
   KeyWord,
   Sector,
   contractType,
-  region
+  region,
+  commune
 ) => {
   try {
     KeyWord = KeyWord || "";
     Sector = Sector || "";
     contractType = contractType || "";
     region = region || "";
+    commune = commune || "";
 
     const token = await tokenManager.getToken();
     console.log("🔑 Token récupéré :", token);
 
     const response = await fetch(
-      `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&typeContrat=${contractType}&region=${region}`,
+      `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&typeContrat=${contractType}&region=${region}&commune=${commune}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,7 +54,7 @@ async function reverseGeocode(latitude, longitude) {
 }
 
 function fusionWord(str) {
-  return str.trim().split(/\s+/).join("&");
+  return str.trim().split(/\s+/).join(",");
 }
 
 module.exports = {

@@ -150,7 +150,7 @@ export default function StackScreen2({ navigation }) {
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
+           // navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
             handleRegister();
           }}
           style={styles.button}
