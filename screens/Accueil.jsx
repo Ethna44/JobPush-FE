@@ -23,7 +23,6 @@ export default function StackScreen1({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.googleContainer}>
-        <Text style={styles.body}>S'identifier avec</Text>
         <GoogleLoginButton title="Google" onPress={() => navigation.navigate("Profil")}  />
       </View>
     </SafeAreaView>
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
   buttonText: AppStyles.buttonText,
   googleContainer: {
     width: '100%',
-    justifyContent: "space-between",
+    marginTop: 40,
     alignItems: "center",
     // borderColor: "orange",
     // borderWidth: 1,

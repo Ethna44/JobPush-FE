@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
-import { Button, Alert } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text, Alert } from 'react-native';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -46,10 +46,40 @@ export default function GoogleLoginButton() {
   }, [response]);
 
   return (
-    <Button
-      title="Se connecter avec Google"
-      disabled={!request}
-      onPress={() => promptAsync()}
-    />
+    <TouchableOpacity style={styles.button} onPress={()=>promptAsync()} disabled={!request}>
+      <View style={styles.content}>
+        <Image source={require('../assets/google.png')} style={styles.icon} />
+        <Text style={styles.text}>Sign in with Google</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderColor: '#DDD',
+    borderWidth: 1,
+    shadowColor: '#2B3033',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 2,
+  },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    marginRight: 14,
+  },
+  text: {
+    color: '#7E7E7E',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+});
