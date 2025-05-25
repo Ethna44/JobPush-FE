@@ -1,10 +1,23 @@
-export const callOffresApi = async (tokenManager,KeyWord,Sector,contractType,region) => {
+const callOffresApi = async(
+  tokenManager,
+  KeyWord,
+  Sector,
+  contractType,
+  region,
+  commune
+) => {
   try {
+    KeyWord = KeyWord || "";
+    Sector = Sector || "";
+    contractType = contractType || "";
+    region = region || "";
+    commune = commune || "";
+
     const token = await tokenManager.getToken();
-    console.log("✅ Token récupéré :", token);
-    console
+    console.log("🔑 Token récupéré :", token);
+
     const response = await fetch(
-      `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&typeContrat=${contractType}&region=${region}`,
+      `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&typeContrat=${contractType}&region=${region}&commune=${commune}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -19,21 +32,33 @@ export const callOffresApi = async (tokenManager,KeyWord,Sector,contractType,reg
     throw error;
   }
 };
-
-export const reverseGeocode = async (lat, lon) => {
-  const url = `https://api-adresse.data.gouv.fr/reverse/?lon=${lon}&lat=${lat}`;
+async function reverseGeocode(latitude, longitude) {
+  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+  console.log("🌍 URL:", url);
   const response = await fetch(url, {
     headers: {
-      'User-Agent': 'JobPushApp/1.0'
-    }
+      "User-Agent": "YourAppName/1.0 (your@email.com)", // important avec Nominatim
+    },
   });
 
-  if (!response.ok) throw new Error('Erreur lors du géocodage inverse');
   const data = await response.json();
 
-  if (data.features && data.features.length > 0) {
-    return data.features[0].properties.label; // Adresse complète
-  } else {
-    throw new Error('Aucune adresse trouvée');
-  }
+  const address = data.address || {};
+  console.log("🏠 Adresse récupérée :", address.house_number);
+  return {
+    streetNumber: address.house_number || " ",
+    streetName: address.road || "",
+    city: address.city || address.town || address.village || "",
+    zipCode: address.postcode || "",
+  };
+}
+
+function fusionWord(str) {
+  return str.trim().split(/\s+/).join(",");
+}
+
+module.exports = {
+  callOffresApi,
+  reverseGeocode,
+  fusionWord,
 };

@@ -1,26 +1,21 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Text } from "react-native";
+import EnCours from "./CandidaturesEnCours";
+import Favoris from "./Favoris";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function TabScreen1({ navigation }) {
+const TopTab = createMaterialTopTabNavigator();
+
+export default function Candidatures() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Candidatures</Text>
-      <Button
-        title="Go to StackScreen1"
-        onPress={() => navigation.navigate("Accueil")}
-      />
-    </View>
+    <TopTab.Navigator
+      screenOptions={{
+        tabBarStyle: { backgroundColor: "#2B3033" , height: 20 },
+        tabBarIndicatorStyle: { backgroundColor: "#F72C03", height: 5 },
+      }}
+    >
+      <TopTab.Screen name="En cours" component={EnCours} />
+      <TopTab.Screen name="Favoris" component={Favoris} />
+    </TopTab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-});

@@ -12,9 +12,9 @@ import {
 import { TokenManager } from "../TokenManager";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useRef, useEffect } from "react";
-import JobCard from "../components/Jobcard";
-import { callOffresApi, reverseGeocode } from "../apiUtilis";
 import { useSelector } from "react-redux";
+import { callOffresApi, reverseGeocode, fusionWord } from "../apiUtilis";
+import AppStyles from "../AppStyles";
 
 export default function TabScreen1({ navigation }) {
   const token = useSelector((state) => state.user.token);
@@ -25,11 +25,11 @@ export default function TabScreen1({ navigation }) {
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
   const tokenManagerRef = useRef(null);
 
-  // Job title = motsCles
+  //   Job title = motsCles
   // sector = grandDomaine = code Domaine (json sector)
-  // contractType = contractType
+  // typeContract = typeContrat
   // remote= null
-  // city = motsCles
+  // city = commune = code insee (json cities)
   // region = region = code region (json regions)
 
   if (!tokenManagerRef.current) {
@@ -37,48 +37,79 @@ export default function TabScreen1({ navigation }) {
   }
 
   useEffect(() => {
-    fetch(`${EXPO_IP}/users/profile/wm9ishyyt9q6dKZNu_bGbglGKJcn4BDu`)
+    fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data from User:", data.preferences[0].city);
-        const keyword = data.preferences[0].jobTitle + " " + data.preferences[0].city;
+        console.log("🔑 Token récupéré :", token);
+        const job = fusionWord(data.preferences[0].jobTitle);
+        console.log("🔍 Recherche pour :", job);
         callOffresApi(
           tokenManagerRef.current,
-          keyword,
+          job,
           data.preferences[0].sector,
           data.preferences[0].contractType,
-          data.preferences[0].region
+          data.preferences[0].region,
+          data.preferences[0].city
         )
           .then((data) => {
-            console.log("Data from API:", data);
+            for (let o = 0; o < 5; o++) {
+              const offer = data.resultats[o];
+              const dateCreation = new Date(offer.dateCreation);
+              offer.dateCreation = dateCreation
+                .toLocaleDateString("fr-FR", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })
+              console.log("Date de création:", offer.dateCreation);
+              reverseGeocode(
+                offer.lieuTravail.latitude,
+                offer.lieuTravail.longitude
+              ).then((address) => {
+                console.log("Adresse récupérée:", address);
+                const grade = Math.floor(Math.random() * 5) + 1;
+                fetch(`${EXPO_IP}/offers/add`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    title: offer.intitule,
+                    compagny: offer.entreprise.nom,
+                    logoLink: offer.entreprise.logo || "",
+                    grade: grade,
+                    contractType: offer.typeContrat,
+                    publicationDate: offer.dateCreation,
+                    streetNumber: address.streetNumber || "",
+                    streetName: address.streetName,
+                    city: address.city,
+                    zipCode: address.zipCode,
+                    source: "Pôle Emploi",
+                    offerLink: offer.origineOffre.urlOrigine,
+                    description: offer.description,
+                  }),
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    console.log("Offre mise dans la BDD:", data);
+                  });
+              });
+            }
           })
           .catch((error) => {
             console.error("Error fetching data:", error);
           });
       });
-
-    
- useEffect(() => {
-    fetch(`${EXPO_IP}/offers`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setOffersData(data.offers)
-      })
-      .then(() =>   callOffresApi(tokenManagerRef.current))
   }, []);
-  // console.log(offersData)
-  
-   const offer = offersData.map((data, i) => {
+
+  const offer = offersData.map((data, i) => {
     // console.log(offer)
-   
-    return <JobCard key={i} {...data}  />;
+
+    return <JobCard key={i} {...data} />;
   });
 
   return (
     <SafeAreaView style={styles.container}>
-     <ScrollView contentContainerStyle={styles.scrollView}>
-      <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <Text style={styles.title}>Offres d'emploi</Text>
         <View style={styles.inputSearchContainer}>
           <TextInput
             placeholder="Recherche"
@@ -86,115 +117,52 @@ export default function TabScreen1({ navigation }) {
             onChangeText={(value) => setSearch(value)}
             value={search}
           />
-          <FontAwesome name={"search"} size={18} color="#F72C03" />
         </View>
-        <Text style={styles.title}>Offres</Text>
-
-        <Button
-          title="Go to StackScreen1"
-          onPress={() => navigation.navigate("Accueil")}
-        />
       </View>
-      <View style={styles.jobContainer}>
-       {offer}
-      </View>
-
-      
-        
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.card}>{offer}</View>
       </ScrollView>
     </SafeAreaView>
   );
-})}
+}
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "flex-start",
+    flex: 1,
+    backgroundColor: "#F9F1F1",
+    // borderColor: "green",
+    // borderWidth: 1,
+  },
+
+  title: AppStyles.title,
+
+  topContainer: {
+    justifyContent: "center",
     alignItems: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "80%",
-    backgroundColor: "#ffffff",
-    padding: 20,
-    marginTop: 20,
-    borderRadius: 10,
-  },
-  input: {
-    width: "65%",
-    marginTop: 6,
-    borderBottomColor: "#ec6e5b",
-    borderBottomWidth: 1,
-    fontSize: 16,
-  },
-  button: {
-    width: "30%",
-    alignItems: "center",
-    paddingTop: 8,
-    backgroundColor: "#ec6e5b",
-    borderRadius: 10,
-  },
-  textButton: {
-    color: "#ffffff",
-    height: 24,
-    fontWeight: "600",
-    fontSize: 15,
+    width: "100%",
+    // borderColor: "pink",
+    // borderWidth: 1,
   },
   inputSearch: {
     flex: 1,
     marginTop: 6,
-
     fontSize: 17,
-    paddingRight: 8,
+    paddingBottom: 8,
   },
   inputSearchContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "75%",
-
-    borderBottomColor: "black",
+    width: "80%",
+    borderBottomColor: "#2B3033",
     borderBottomWidth: 1,
-
     marginTop: 5,
   },
-  card: {
-    backgroundColor: "#F3E4E5",
-    borderRadius: 12,
-    width: "85%",
-    height: "25%",
-    flexDirection: "row",
-    padding: 12,
+  scrollView: {
+    // borderColor: "blue",
+    // borderWidth: 1,
+    width: "100%",
     alignItems: "center",
+    paddingVertical: 20,
   },
-  logo: {
-    width: 60,
-    height: 60,
-    resizeMode: "cover",
-    borderRadius: 8,
-    marginRight: 10,
-  },
-  source: {
-    fontWeight: "bold",
-  },
-  textInfo: {
-    fontSize: 16,
-    fontStyle: "italic",
-  },
-  info: {
-    flex: 1,
-    gap: 3,
-  },
-  jobContainer:{
-    height:"100%"
-  },
-  // scrollView : {
-  //   border
-  // }
 });
