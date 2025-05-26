@@ -35,23 +35,45 @@ export default function JobCard(props) {
     description,
   } = props;
 
- const handleLikeOffer = () => {
-  const url = `${EXPO_IP}/users/favorites${isLiked ? "/remove" : ""}`;
-  const method = isLiked ? "PUT" : "POST";
-
-  fetch(url, {
-    method,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ offerId: _id, token }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (!data.result) {
-        setErrorMessage(data.error || "Une erreur est survenue.");
-      } else {
-        setIsLiked(!isLiked);
-      }
-    });
+  const handleLikeOffer = () => {
+  if (!isLiked) {
+    fetch(`${EXPO_IP}/users/favorites`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        offerId: props._id,
+        token: token,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (!data.result) {
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+          setIsLiked(!isLiked);
+          return;
+        }
+        setIsLiked(true); // tu avais oublié de le mettre ici
+      });
+  } else {
+    fetch(`${EXPO_IP}/users/favorites/remove`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        offerId: props._id,
+        token: token,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (!data.result) {
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+          return;
+        }
+        setIsLiked(false); // ici aussi, tu mettais `setIsLiked(isLiked)` = inutile
+      });
+  }
 };
 
   const heartIconStyle = {
