@@ -82,12 +82,11 @@ const handleLikeOffer = () => {
 
   const favoritePress = (
     <TouchableOpacity>
-      {" "}
       <FontAwesome
         name="heart"
         onPress={() => handleLikeOffer()}
         style={heartIconStyle}
-      />{" "}
+      />
     </TouchableOpacity>
   );
 

@@ -1,22 +1,61 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import AppStyles from "../AppStyles";
+import { useState } from "react";
+import { Modal } from "react-native";
 
 export default function Applications() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleTodoList = () => {
+    setShowModal(true);
+  };
+
+  const modal = (
+    <Modal visible={showModal} transparent={true}>
+      <View style={styles.modal}>
+        <View style={styles.todo}>
+          <View style={AppStyles.inputContainer}>
+            <Text style={AppStyles.subtitle}>Todo List</Text>
+            <Text>Date de rappel </Text>
+            <Text>Date d'entretien</Text>
+            <Text>Reponse</Text>
+            <Text>Lettre de remerciement</Text>
+          </View>
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={AppStyles.button}
+              onPress={() => setShowModal(false)}
+            >
+              <Text style={AppStyles.buttonText}>Fermer</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={AppStyles.button}
+              onPress={() => setShowModal(false)}
+            >
+              <Text style={AppStyles.buttonText}>Confirmer</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.candidature}>
         <View>
-          <Text>Develloppeur JavaScript</Text>
-          <Text>Entreprise: JobPush</Text>
+          <Text style={AppStyles.inputSearch}>
+            Develloppeur JavaScript FrontEnd
+          </Text>
+          <Text style={AppStyles.important}>Entreprise: JobPush </Text>
         </View>
-        <Text>Candidaté</Text>
+        <Text style={AppStyles.body}>Candidaté le : 14 novembre 2025 </Text>
       </View>
-      <TouchableOpacity style={styles.todo}>
-        <View style={AppStyles.button}>
-          <Text>To Do List</Text>
-        </View>
+      <TouchableOpacity style={AppStyles.button} onPress={handleTodoList}>
+        <Text style={AppStyles.buttonText}>Todo List</Text>
       </TouchableOpacity>
+      {modal}
     </TouchableOpacity>
   );
 }
@@ -24,7 +63,7 @@ export default function Applications() {
 const styles = StyleSheet.create({
   container: {
     width: "90%",
-    height: "15%",
+    height: "16%",
     borderRadius: 10,
     flexDirection: "row",
     alignItems: "center",
@@ -42,17 +81,25 @@ const styles = StyleSheet.create({
   },
   candidature: {
     height: "100%",
-    width: "75%",
+    width: "70%",
     justifyContent: "space-between",
-    borderColor: "#2B3033",
-    borderWidth: 1,
   },
   todo: {
-    height: "60%",
-    width: "25%",
+    height: "50%",
+    width: "80%",
+    justifyContent: "space-between",
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+  },
+  modal: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: "#2B3033",
-    borderWidth: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  button: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

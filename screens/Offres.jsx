@@ -152,7 +152,7 @@ export default function TabScreen1({ navigation }) {
         <View>
           {!checkEnd && (
             <TouchableOpacity onPress={() => fetchOffers()} style={styles.load}>
-              <Text style={styles.buttonText}>CHARGEZ PLUS </Text>{" "}
+              <Text style={styles.buttonText}>CHARGEZ PLUS </Text>
             </TouchableOpacity>
           )}
         </View>
