@@ -16,6 +16,7 @@ import Compte from "./screens/Compte";
 import Header from "./components/Header";
 import Profil from "./screens/Profil";
 import Alerte from "./screens/Alerte";
+import OfferDetails from "./screens/OfferDetails";
 import Recherche from "./screens/Recherche";
 import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -183,6 +184,7 @@ export default function App() {
               <Stack.Screen name="Connexion" component={Connexion} />
               <Stack.Screen name="Profil" component={Profil} />
               <Stack.Screen name="Alerte" component={Alerte} />
+              <Stack.Screen name ="Annonce" component={OfferDetails}/>
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
             </Stack.Navigator>
           </NavigationContainer>
