@@ -25,13 +25,6 @@ export default function TabScreen1({ navigation }) {
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
   const tokenManagerRef = useRef(null);
 
-  //   Job title = motsCles
-  // sector = grandDomaine = code Domaine (json sector)
-  // typeContract = typeContrat
-  // remote= null
-  // city = commune = code insee (json cities)
-  // region = region = code region (json regions)
-
   if (!tokenManagerRef.current) {
     tokenManagerRef.current = new TokenManager(clientId, clientSecret);
   }
