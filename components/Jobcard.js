@@ -80,10 +80,18 @@ const handleLikeOffer = () => {
     position: 'absolute',
     bottom: 10, //positionner l'élément
     right: 10, //positionner l'élément
-    backgroundColor : "white",
+    backgroundColor : "#F9F1F1",
     borderRadius: 50,
     padding : 4,
     zIndex: 2, //place l'élément au dessus du reste comme sur un système de calque
+    shadowColor: "#2B3033",
+        shadowOffset: {
+	        width: 0,
+	        height: 3,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        elevation: 3,
   };
 
   const favoritePress = (
