@@ -126,7 +126,7 @@ export default function TabScreen1({ navigation }) {
             onChangeText={(value) => setSearch(value)}
             value={search}
           />
-          <FontAwesome name="search" color="red" size={16} />
+          <FontAwesome name="search" color="#F72C03" size={16} />
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -152,7 +152,7 @@ export default function TabScreen1({ navigation }) {
         <View>
           {!checkEnd && (
             <TouchableOpacity onPress={() => fetchOffers()} style={styles.load}>
-              <Text style={styles.buttonText}>CHARGEZ PLUS </Text>{" "}
+              <Text style={styles.buttonText}>CHARGER PLUS</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -180,8 +180,8 @@ const styles = StyleSheet.create({
   },
   inputSearch: {
     flex: 1,
-    marginTop: 6,
-    fontSize: 17,
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 16,
     paddingBottom: 8,
   },
   inputSearchContainer: {
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     width: "80%",
     borderBottomColor: "#2B3033",
     borderBottomWidth: 1,
-    marginTop: 5,
+    marginVertical: 10,
   },
   scrollView: {
     // borderColor: "blue",
