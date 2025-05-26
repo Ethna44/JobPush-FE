@@ -10,8 +10,9 @@ export default function Candidatures() {
   return (
     <TopTab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: "#2B3033" , height: 20 },
-        tabBarIndicatorStyle: { backgroundColor: "#F72C03", height: 5 },
+        tabBarStyle: { backgroundColor: "#2B3033" , height: 10 },
+        tabBarIndicatorStyle: { backgroundColor: "#F72C03", height: 10 },
+        
       }}
     >
       <TopTab.Screen name="En cours" component={EnCours} />

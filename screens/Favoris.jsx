@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import AppStyles from "../AppStyles";
+import Favorite from "../components/Favorite";
 
 export default function CandidaturesEnCours() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Favoris</Text>
+      <Favorite/>
     </View>
   );
 }

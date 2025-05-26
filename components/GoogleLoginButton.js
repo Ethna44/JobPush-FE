@@ -49,7 +49,7 @@ export default function GoogleLoginButton() {
     <TouchableOpacity style={styles.button} onPress={()=>promptAsync()} disabled={!request}>
       <View style={styles.content}>
         <Image source={require('../assets/google.png')} style={styles.icon} />
-        <Text style={styles.text}>Sign in with Google</Text>
+        <Text style={styles.text}>Se connecter avec Google</Text>
       </View>
     </TouchableOpacity>
   );

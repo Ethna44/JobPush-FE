@@ -35,29 +35,65 @@ export default function JobCard(props) {
     description,
   } = props;
 
-  const handleLikeOffer = () => {
-    const url = `${EXPO_IP}/users/favorites${isLiked ? "/remove" : ""}`;
-    const method = isLiked ? "PUT" : "POST";
+ const handleLikeOffer = () => {
+  const url = `${EXPO_IP}/users/favorites${isLiked ? "/remove" : ""}`;
+  const method = isLiked ? "PUT" : "POST";
 
-    fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ offerId: _id, token }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.result) {
-          setErrorMessage(data.error || "Une erreur est survenue.");
-        } else {
-          setIsLiked(!isLiked);
-        }
-      });
-  };
+  fetch(url, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ offerId: _id, token }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.result) {
+        setErrorMessage(data.error || "Une erreur est survenue.");
+      } else {
+        setIsLiked(!isLiked);
+      }
+    });
+};
 
   const heartIconStyle = {
-    fontSize: 22,
+    fontSize: 24,
     color: isLiked ? "#e74c3c" : "#ccc",
+    position: 'absolute',
+    bottom: 10, //positionner l'élément
+    right: 10, //positionner l'élément
+    backgroundColor : "#F9F1F1",
+    borderRadius: 50,
+    padding : 4,
+    zIndex: 2, //place l'élément au dessus du reste comme sur un système de calque
+    shadowColor: "#2B3033",
+        shadowOffset: {
+	        width: 0,
+	        height: 3,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        elevation: 3,
   };
+
+  const favoritePress = (
+    <TouchableOpacity>
+      <FontAwesome
+        name="heart"
+        onPress={() => handleLikeOffer()}
+        style={heartIconStyle}
+      />
+    </TouchableOpacity>
+  );
+
+  const stars = [];
+  for (let i=0; i<5; i++) {
+    if (props.grade > i) {
+      stars.push(<FontAwesome key={i} name="star" color="#F72C03" size={16}/>)
+    } else {
+      stars.push(<FontAwesome key={i} name="star" size={16}/>)
+    }
+  }
+
+
 
   return (
     <TouchableOpacity
@@ -81,31 +117,23 @@ export default function JobCard(props) {
       style={styles.card}
     >
       <View style={styles.photoContainer}>
-        <Image
-          source={require("../assets/logoJobPush-Photoroom.jpg")}
-          style={styles.logo}
-        />
+        <Image source={require("../assets/logoJobPush-Photoroom.jpg")}
+          style={styles.logo}>
+        </Image>
+        {favoritePress}
       </View>
 
       <View style={styles.info}>
-        <Text style={styles.headline}>{title}</Text>
-
+        <Text style={styles.headline}>{props.title} | {props.contractType}</Text>
         <View style={styles.inlineInfos}>
-          <Text style={styles.textInfo}>{compagny} - </Text>
-          <Text style={styles.textInfo}>{city}</Text>
+          <Text style={styles.textInfo}>{props.compagny} | {props.city}</Text>
         </View>
 
         <View style={styles.rating}>
-          <FontAwesome name="star" color="#F72C03" size={16} />
+          {stars}
         </View>
-
-        <Text style={styles.textInfo}>{contractType}</Text>
-        <Text style={styles.source}>{source}</Text>
-        <Text style={styles.textInfo}>Publié le : {publicationDate}</Text>
-
-        <TouchableOpacity onPress={handleLikeOffer}>
-          <FontAwesome name="heart" style={heartIconStyle} />
-        </TouchableOpacity>
+        <Text style={styles.source}>{props.source}</Text>
+        <Text style={styles.textInfo}>Publié le : {props.publicationDate}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -122,15 +150,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 12,
     elevation: 3,
-    width: "85%",
-    height: 200,
+    width: "90%",
+    height: 180,
     marginBottom: 20,
-  },
-  inlineInfos: {
-    flexDirection: "row",
+    // borderColor: "yellow",
+    // borderWidth: 1,
   },
   photoContainer: {
-    width: "45%",
+    width: "35%",
     height: "100%",
   },
   logo: {
@@ -138,18 +165,31 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 12,
   },
-  headline: AppStyles.headline,
+  headline: {
+    ...AppStyles.headline,
+    fontSize: 13,
+  },
   info: {
-    width: "55%",
+    width: "65%",
     height: "100%",
+    padding: 10,
+    // borderColor: "blue",
+    // borderWidth: 1,
+
     paddingLeft: 10,
     justifyContent: "center",
   },
   textInfo: {
-    ...AppStyles.body,
+    ...AppStyles.body, 
+    fontSize: 13,
+    // borderColor: "red",
+    // borderWidth: 1,
+  },
+  rating: {
+    flexDirection : 'row'
   },
   source: {
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 14,
+    fontSize: 13,
   },
 });
