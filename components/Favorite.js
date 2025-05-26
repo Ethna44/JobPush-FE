@@ -4,8 +4,16 @@ import AppStyles from "../AppStyles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function Favorite() {
+  const heartIconStyle = {
+    fontSize: 30,
+    backgroundColor: "#F9F1F1",
+    right:5,
+    borderRadius: 50,
+    padding: 5,
+  };
+
   return (
-    <TouchableOpacity style={styles.container} >
+    <TouchableOpacity style={styles.container}>
       <View style={styles.candidature}>
         <View>
           <Text style={AppStyles.headline}>Developpeur TypeScript</Text>
@@ -14,7 +22,12 @@ export default function Favorite() {
         <Text style={AppStyles.body}>Candidaté le : 14 novembre 2025 </Text>
       </View>
       <TouchableOpacity style={styles.cross}>
-        <FontAwesome name="times" size={35} color="#F72C03" />
+        <FontAwesome
+          name="heart"
+          style={heartIconStyle}
+          size={35}
+          color="#F72C03"
+        />
       </TouchableOpacity>
     </TouchableOpacity>
   );
