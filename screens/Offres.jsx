@@ -34,7 +34,6 @@ export default function TabScreen1({ navigation }) {
     fetch(`${EXPO_IP}/offers`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setOffersData(data.offers);
       })
       .catch((error) => {
@@ -101,8 +100,6 @@ export default function TabScreen1({ navigation }) {
     return <JobCard key={i} {...data} />;
   });
 
-  console.log("offersData", offersData);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -114,6 +111,7 @@ export default function TabScreen1({ navigation }) {
             onChangeText={(value) => setSearch(value)}
             value={search}
           />
+          <FontAwesome name="search" color="red" size={16} />
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
