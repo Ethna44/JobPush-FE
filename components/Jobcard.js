@@ -106,7 +106,7 @@ const handleLikeOffer = () => {
           <Text style={styles.textInfo}>{props.city}</Text>
         </View>
         <View style={styles.rating}>
-          {<FontAwesome name="star" color="red" size={16} />}
+          {<FontAwesome name="star" color="#F72C03" size={16} />}
         </View>
         <Text style={styles.textInfo}>{props.typeContract}</Text>
         <Text style={styles.source}>{props.Source}</Text>
