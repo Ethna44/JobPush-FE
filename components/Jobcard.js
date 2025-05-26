@@ -82,12 +82,11 @@ const handleLikeOffer = () => {
 
   const favoritePress = (
     <TouchableOpacity>
-      {" "}
       <FontAwesome
         name="heart"
         onPress={() => handleLikeOffer()}
         style={heartIconStyle}
-      />{" "}
+      />
     </TouchableOpacity>
   );
 
@@ -106,7 +105,7 @@ const handleLikeOffer = () => {
           <Text style={styles.textInfo}>{props.city}</Text>
         </View>
         <View style={styles.rating}>
-          {<FontAwesome name="star" color="red" size={16} />}
+          {<FontAwesome name="star" color="#F72C03" size={16} />}
         </View>
         <Text style={styles.textInfo}>{props.contractType}</Text>
         <Text style={styles.source}>{props.source}</Text>
@@ -160,8 +159,8 @@ const styles = StyleSheet.create({
 info: {
     width: "55%",
     height: "100%",
-    // borderColor: "blue",
-    // borderWidth: 1,
+    borderColor: "blue",
+    borderWidth: 1,
     paddingLeft: 10,
     justifyContent: "center",
   },
