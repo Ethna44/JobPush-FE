@@ -20,21 +20,6 @@ export default function JobCard(props) {
 
   const token = useSelector((state) => state.user.token);
 
-<<<<<<< HEAD
-  const formattedDate = new Date(props.PublicationDate).toLocaleDateString("fr-FR", {
-  year: "numeric",
-  month: "long",
-  day: "numeric"
-  }); //formatage de Date
-
-  const handleLikeOffer = () => {
-    setIsLiked(!isLiked)
-  };
- const heartIconStyle = {
-  fontSize: 22,
-  color: isLiked ? "#e74c3c" : "#ccc"
- }; fetch(`${EXPO_IP}/users/favorites`, {
-=======
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
   const formattedDate = new Date(props.PublicationDate).toLocaleDateString(
@@ -51,7 +36,6 @@ export default function JobCard(props) {
 const handleLikeOffer = () => {
   if (!isLiked) {
     fetch(`${EXPO_IP}/users/favorites`, {
->>>>>>> c731e3f30ad607052012e5c804e6f8be97f59c2d
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -87,10 +71,6 @@ const handleLikeOffer = () => {
         }
         setIsLiked(false); // ici aussi, tu mettais `setIsLiked(isLiked)` = inutile
       });
-<<<<<<< HEAD
-  const favoritePress =   <TouchableOpacity> <FontAwesome name="heart" onPress={() => handleLikeOffer()  } style={heartIconStyle}  /> </TouchableOpacity>
-
-=======
   }
 };
 
@@ -110,7 +90,6 @@ const handleLikeOffer = () => {
       />{" "}
     </TouchableOpacity>
   );
->>>>>>> c731e3f30ad607052012e5c804e6f8be97f59c2d
 
   return (
     <TouchableOpacity style={styles.card}>
