@@ -7,8 +7,9 @@ export default function Articles({ props }) {
   return (
     <TouchableOpacity style={styles.container}>
       <View>
-        <Text style={styles.subtitle}>{props.title}</Text>
-        <Text style={AppStyles.important}>{props.description}</Text>
+        <Text style={styles.title}>{props.title}</Text>
+        <Text style={styles.description}>{props.description}</Text>
+        <View style={styles.icon}>{props.icon}</View>
       </View>
     </TouchableOpacity>
   );
@@ -24,14 +25,33 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 5,
     shadowColor: "#2B3033",
-    shadowOffset: {
-      width: 30,
-      height: 0,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-    elevation: 15,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
+    elevation: 3,
   },
-  title: AppStyles.title,
-  subtitle: AppStyles.headline,
+  title: {
+    ...AppStyles.headline,
+    borderBottomColor : '#F72C03',
+    borderBottomWidth : 1,
+    fontSize: 13,
+  },
+  description: AppStyles.important,
+  icon : {
+    position: 'absolute',
+    top: -10, //positionner l'élément
+    right: -10, //positionner l'élément
+    backgroundColor : "#F9F1F1",
+    borderRadius: 50,
+    padding : 8,
+    zIndex: 1, //place l'élément au dessus du reste comme sur un système de calque
+    shadowColor: "#2B3033",
+    shadowOffset: {
+	    width: 0,
+	    height: 3,
+      },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
+  },
 });
