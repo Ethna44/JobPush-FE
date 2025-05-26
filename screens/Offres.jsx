@@ -17,9 +17,13 @@ import { callOffresApi, reverseGeocode, fusionWord } from "../apiUtilis";
 import JobCard from "../components/Jobcard";
 import AppStyles from "../AppStyles";
 
+const LIMIT_OFFER = 10;
+
 export default function TabScreen1({ navigation }) {
   const token = useSelector((state) => state.user.token);
   const [search, setSearch] = useState("");
+  const [startIndex, setStartIndex] = useState(0);
+  const [checkEnd, setCheckEnd] = useState(false);
   const [offersData, setOffersData] = useState([]);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const clientId = process.env.EXPO_PUBLIC_CLIENT_ID_FT;
@@ -31,10 +35,21 @@ export default function TabScreen1({ navigation }) {
   }
 
   const fetchOffers = async () => {
-    fetch(`${EXPO_IP}/offers`)
+    if (checkEnd) return;
+
+    fetch(`${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}`)
       .then((response) => response.json())
       .then((data) => {
-        setOffersData(data.offers);
+        // console.log(data);
+        setOffersData([...offersData, ...data.offers]);
+        setStartIndex(startIndex + data.offers.length);
+        console.log("data length =>", data.offers.length);
+
+        if (data.offers.length < LIMIT_OFFER) {
+          console.log("is ended");
+          setCheckEnd(true);
+        }
+        // setOffersNumber(offersNumber + offersNumber);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -58,9 +73,9 @@ export default function TabScreen1({ navigation }) {
             const offer = data.resultats[o];
             const dateCreation = new Date(offer.dateCreation);
             offer.dateCreation = dateCreation.toLocaleDateString("fr-FR", {
-              day: "2-digit",
-              month: "long",
               year: "numeric",
+              month: "long",
+              day: "numeric",
             });
             reverseGeocode(
               offer.lieuTravail.latitude,
@@ -117,19 +132,29 @@ export default function TabScreen1({ navigation }) {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.card}>
           {offersData
-          .filter((offer) => {
-            if (!search) return true;
-            const searchLower = search.toLowerCase();
-            return (
-              (offer.title && offer.title.toLowerCase().includes(searchLower)) ||
-              (offer.compagny && offer.compagny.toLowerCase().includes(searchLower)) ||
-              (offer.source && offer.source.toLowerCase().includes(searchLower)) ||
-              (offer.city && offer.city.toLowerCase().includes(searchLower)) 
-            );
-          })
-          .map((data, i) => (
-            <JobCard key={i} {...data} />
-          ))}
+            .filter((offer) => {
+              if (!search) return true;
+              const searchLower = search.toLowerCase();
+              return (
+                (offer.title &&
+                  offer.title.toLowerCase().includes(searchLower)) ||
+                (offer.compagny &&
+                  offer.compagny.toLowerCase().includes(searchLower)) ||
+                (offer.source &&
+                  offer.source.toLowerCase().includes(searchLower)) ||
+                (offer.city && offer.city.toLowerCase().includes(searchLower))
+              );
+            })
+            .map((data, i) => (
+              <JobCard key={i} {...data} />
+            ))}
+        </View>
+        <View>
+          {!checkEnd && (
+            <TouchableOpacity onPress={() => fetchOffers()} style={styles.load}>
+              <Text style={styles.buttonText}>CHARGEZ PLUS </Text>{" "}
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -174,5 +199,29 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     paddingVertical: 20,
+  },
+  load: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#F72C03",
+    borderRadius: 10,
+    shadowColor: "#2B3033",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
+    marginBottom: 50,
+  },
+  buttonText: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#F9F1F1",
+    fontFamily: "Poppins_500Medium",
+    fontSize: 14,
   },
 });

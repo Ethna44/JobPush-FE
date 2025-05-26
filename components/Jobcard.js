@@ -100,17 +100,17 @@ const handleLikeOffer = () => {
         />
       </View>
       <View style={styles.info}>
-        <Text style={styles.headline}>{props.Title}</Text>
+        <Text style={styles.headline}>{props.title}</Text>
         <View style={styles.inlineInfos}>
-          <Text style={styles.textInfo}>{props.Compagny} - </Text>
+          <Text style={styles.textInfo}>{props.compagny} - </Text>
           <Text style={styles.textInfo}>{props.city}</Text>
         </View>
         <View style={styles.rating}>
           {<FontAwesome name="star" color="#F72C03" size={16} />}
         </View>
-        <Text style={styles.textInfo}>{props.typeContract}</Text>
-        <Text style={styles.source}>{props.Source}</Text>
-        <Text style={styles.textInfo}>Publié le : {formattedDate}</Text>
+        <Text style={styles.textInfo}>{props.contractType}</Text>
+        <Text style={styles.source}>{props.source}</Text>
+        <Text style={styles.textInfo}>Publié le : {props.publicationDate}</Text>
         {favoritePress}
       </View>
     </TouchableOpacity>
