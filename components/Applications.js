@@ -46,7 +46,7 @@ export default function Applications() {
       <View style={styles.candidature}>
         <View>
           <Text style={AppStyles.inputSearch}>
-            Develloppeur JavaScript FrontEnd
+            Developpeur JavaScript FrontEnd
           </Text>
           <Text style={AppStyles.important}>Entreprise: JobPush </Text>
         </View>
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
     padding: 5,
     shadowColor: "#2B3033",
     shadowOffset: {
-      width: 30,
-      height: 0,
+      width: 0,
+      height: 3,
     },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-    elevation: 15,
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
+    elevation: 3,
   },
   candidature: {
     height: "100%",
