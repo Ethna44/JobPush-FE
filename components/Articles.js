@@ -1,24 +1,22 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import AppStyles from "../AppStyles";
 
-export default function Articles({props}) {
+
+export default function Articles({ props }) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View>
-        <Text style={styles.subtitle}>Comment rédiger un CV efficace ?</Text>
-        <Text style={AppStyles.important}>
-          Découvrez nos conseils pour créer un CV qui attire l'attention des
-          recruteurs.
-        </Text>
+        <Text style={styles.subtitle}>{props.title}</Text>
+        <Text style={AppStyles.important}>{props.description}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: "80%",
+    width: "90%",
     height: "15%",
     alignItems: "center",
     borderRadius: 10,
