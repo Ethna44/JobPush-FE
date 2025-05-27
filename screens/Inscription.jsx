@@ -47,9 +47,9 @@ export default function StackScreen2({ navigation }) {
     setErrorMessage("");
     handleSubmit(); // vérifie l'email et fait le dispatch
 
-    if (checkMail) {
-      return; // stoppe ici si l'email est invalide
-    }
+    // if (checkMail) {
+    //   return; // stoppe ici si l'email est invalide
+    // }
 
     fetch(`${EXPO_IP}/users/signup`, {
       method: "POST",
@@ -75,11 +75,13 @@ export default function StackScreen2({ navigation }) {
           console.log("Erreur reçue :", data.error);
           setErrorMessage(data.error || "An error occurred. Please try again.");
           console.log("errorMessage (état local) :", errorMessage);
+          return;
         }
-        setErrorMessage("");
+       
       });
+  
   };
-
+   
   console.log(user);
   console.log(checkMail);
   console.log(email);
@@ -111,11 +113,9 @@ export default function StackScreen2({ navigation }) {
           onChangeText={(value) => setEmail(value)}
           value={email}
         />
-        {checkMail && (
-          <Text style={{ color: "red", marginTop: 4 }}>
-            Invalid email address
-          </Text>
-        )}
+        {/* {checkMail && (
+        <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
+        )} */}
         <TextInput
           style={[
             styles.input,

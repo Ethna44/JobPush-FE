@@ -37,7 +37,7 @@ export default function TabScreen1({ navigation }) {
   const fetchOffers = async () => {
     if (checkEnd) return;
 
-    fetch(`${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}`)
+    fetch(`${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);
