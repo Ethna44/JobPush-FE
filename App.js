@@ -18,9 +18,9 @@ import Profil from "./screens/Profil";
 import Alerte from "./screens/Alerte";
 import OfferDetails from "./screens/OfferDetails";
 import Recherche from "./screens/Recherche";
+import AccountSettings from "./components/AccountSettings";
 import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
 import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist"; // Persistor
@@ -185,6 +185,7 @@ export default function App() {
               <Stack.Screen name="Profil" component={Profil} />
               <Stack.Screen name="Alerte" component={Alerte} />
               <Stack.Screen name ="Annonce" component={OfferDetails}/>
+              <Stack.Screen name="ParametresCompte" component={AccountSettings} />
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
             </Stack.Navigator>
           </NavigationContainer>

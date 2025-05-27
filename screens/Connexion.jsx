@@ -10,8 +10,10 @@ import {
 } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
-import { updateToken } from "../reducers/user";
+import { updateToken,updateUser } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
+import Favorite from "../components/Favorite";
+
 
 export default function LogIn({ navigation }) {
   const dispatch = useDispatch();
@@ -33,16 +35,34 @@ export default function LogIn({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
+        // console.log(data);
         if (!data.result) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
         }
+          // console.log('check:', data.phoneNumber, data.address)
+
         dispatch(updateToken(data.token));
+        dispatch(
+          updateUser({
+            email: data.email,
+            firstName: data.firstName,
+            name: data.name,
+            phoneNumber: data.phoneNumber,
+            address: data.address,
+            preferences: data.preferences,
+            alerts: data.alerts,
+            favorites: data.favorites,
+            applications: data.applications,
+          })
+        );
+      
         navigation.navigate("TabNavigator");
       });
   };
   console.log(email);
   console.log(password);
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -92,7 +112,7 @@ export default function LogIn({ navigation }) {
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-               // navigation.navigate("TabNavigator");
+            // navigation.navigate("TabNavigator");
             handleRegister();
           }}
           style={styles.button}

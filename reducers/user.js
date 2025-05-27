@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Applications from "../components/Applications";
 
 const initialState = {
 	token: null, // Valeur initiale du token
@@ -11,10 +12,22 @@ const initialState = {
 	streetName: null,
 	city: null,
 	zipCode: null
-  }
+    }],
+  preferences: [{
+	 contractType: null,
+    remote:null,
+    jobTitle:null,
+    sector:null,
+    cityJob:null,
+    region:null,
+  }],
+  alerts: null,
+  favorites: [],
+  applications: [],
 
-  ],
-} // Valeur initiale du reducer
+
+  
+}
 };
 
 export const userSlice = createSlice({

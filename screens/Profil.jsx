@@ -107,6 +107,7 @@ export default function Profil({ navigation }) {
         }
       });
   };
+  
 
   return (
     <KeyboardAvoidingView
