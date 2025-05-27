@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  Linking
 } from "react-native";
 import AppStyles from "../AppStyles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -14,7 +15,7 @@ import { useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function OfferDetails() {
+export default function OfferDetails({ navigation }) {
   const route = useRoute();
   const [isLiked, setIsLiked] = useState(false);
   const token = useSelector((state) => state.user.token);
@@ -81,9 +82,22 @@ export default function OfferDetails() {
   };
 
   const heartIconStyle = {
-    fontSize: 28,
-    color: isLiked ? "#e74c3c" : "#ccc",
-    marginRight: 12, // décale le coeur vers la gauche
+    fontSize: 24,
+    height: 32,
+    width: 32,
+    color: isLiked ? "#F72C03" : "#ccc",
+    backgroundColor : "#F9F1F1",
+    borderRadius: 50,
+    padding : 4,
+    zIndex: 2, //place l'élément au dessus du reste comme sur un système de calque
+    shadowColor: "#2B3033",
+        shadowOffset: {
+	        width: 0,
+	        height: 3,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        elevation: 3,
   };
 
   const favoritePress = (
@@ -108,38 +122,33 @@ export default function OfferDetails() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-       <View style={styles.photoContainer}>
-         <Image source={require("../assets/logoJobPush-Photoroom.jpg")}
-                  style={styles.logo}>
-                </Image>
-                </View>
-        <View>
+        <View style={styles.photoContainer}>
+          <Image source={require("../assets/logoJobPush-Photoroom.jpg")} style={styles.logo}/>
+        </View>
+        <View style={styles.textHeader}>
           <Text style={styles.title}>{title}</Text>
-          <View style={styles.companyRow}>
-            <Text>{compagny}</Text>
-            {favoritePress}
-          </View>
+          <Text style={styles.compagny}>{compagny}</Text>
+        </View>
+        <View style={styles.heartContainer}>
+          {favoritePress}
         </View>
       </View>
-
-      <View style={styles.infoOffer}>
-        <Text style={styles.source}>{stars} sur Glassdoor</Text>
-        <View style={styles.infoDetails}>
-          <Text>Publiée le : {publicationDate}</Text>
-          <Text style={styles.source}>{source}</Text>
-        </View>
+      <View style={styles.infos}>
+        <Text style={styles.textInfo}>{stars} sur Glassdoor</Text>
+        <Text style={styles.textInfo}>Publiée le : {publicationDate}</Text>
+        <Text style={styles.source}>{source}</Text>
       </View>
-
-      <ScrollView style={styles.floatingBox}>
-        <Text>{description}</Text>
-      </ScrollView>
-
-      <View style={styles.bottomButtons}>
-        <TouchableOpacity style={styles.ApplyButton}>
+      <View style={styles.card}>
+        <ScrollView style={{maxHeight: 350}}>
+          <Text style={styles.body}>{description}</Text>
+        </ScrollView>
+      </View>
+      <View style={styles.buttons}>
+        <TouchableOpacity style={styles.applyButton} onPress={() => Linking.openURL(offerLink)}>
           <Text style={styles.buttonText}>CANDIDATER</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.ApplyButton}>
-          <FontAwesome name="arrow-left" size={20} color="#fff" />
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Offres")}>
+          <FontAwesome name="arrow-left" size={20} color="#F9F1F1" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -149,66 +158,105 @@ export default function OfferDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingTop: 24,
-  },
-  floatingBox: {
-    maxWidth: "85%",
-    maxHeight: "55%",
-    backgroundColor: "#F3E4E5",
-    borderRadius: 16,
-    padding: 16,
-    shadowColor: "#2B3033",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 12,
-    elevation: 6,
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
-    marginVertical: 12,
+    backgroundColor: "#F9F1F1",
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    // bordercolor : "blue",
+    // borderWidth :1,
   },
    photoContainer: {
-    width: "15%",
-    height: "25%",
-    borderRadius : 50,
+    width: "20%",
+    height: "70%",
+    borderRadius : 10,
   },
   logo: {
     width: "100%",
     height: "100%",
-    borderRadius: 12,
+    borderRadius: 10
   },
   header: {
-    width: "90%",
-    maxWidth: 400,
+    width: "100%",
+    height: 120,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     // borderColor: "red",
     // borderWidth: 1,
     marginBottom: 8,
+    paddingHorizontal: 10,
   },
-  title: AppStyles.subtitle,
-  infoOffer: {
-    width: "90%",
-    maxWidth: 400,
-    marginBottom: 4,
+  textHeader: {
+    maxWidth: "70%",
+    // borderColor: "grey",
+    // borderWidth: 1,
+  },
+  title: {
+    ...AppStyles.headline,
+    maxWidth: "100%",
+    fontSize: 13,
+    // borderColor: "pink",
+    // borderWidth: 1,
+  },
+  compagny : {
+    ...AppStyles.body,
+    fontSize: 13,
+    maxWidth: "100%",
+    // borderColor: "orange",
+    // borderWidth: 1,
+  },
+  heartContainer: {
+    width: 35,
+    // borderColor: "orange",
+    // borderWidth: 1,
+  },
+  textInfo: {
+    ...AppStyles.body,
+    fontSize: 13,
+    width: "100%", 
+    // borderColor: "orange",
+    // borderWidth: 1,
+  },
+  infos: {
+    width: '100%',
+    paddingLeft: 10,
+    // borderColor: "green",
+    // borderWidth: 1,
   },
   infoDetails: AppStyles.body,
-
   source: {
     fontFamily: "Poppins_600SemiBold",
     fontSize: 13,
+    // borderColor: "red",
+    // borderWidth: 1,
   },
-
-  ApplyButton: {
+  card: {
+    backgroundColor: "#F3E4E5",
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: 'center',
+    shadowColor: "#2B3033",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
+    elevation: 3,
+    margin: 20,
+    padding: 10,
+  },
+  body: AppStyles.body,
+  buttons: {
+    width: '100%',
+    // borderColor: "red",
+    // borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  applyButton: {
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: "#F72C03",
-    borderRadius: 18,
+    borderRadius: 10,
     shadowColor: "#2B3033",
     shadowOffset: {
       width: 0,
@@ -219,33 +267,31 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginBottom: 7,
     marginTop: 4,
-    borderColor: "blue",
-    borderWidth: 1,
-    maxWidth: " 35%",
+    // borderColor: "blue",
+    // borderWidth: 1,
+    width: "40%",
   },
-
-  buttonText: {
+  backButton: {
     alignItems: "center",
     justifyContent: "center",
-    color: "#F9F1F1",
-    fontFamily: "Poppins_500Medium",
-    fontSize: 14,
+    paddingVertical: 10,
+    //paddingHorizontal: 20,
+    backgroundColor: "#F72C03",
+    borderRadius: 50,
+    shadowColor: "#2B3033",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
+    marginBottom: 7,
+    marginTop: 4,
+    // borderColor: "blue",
+    // borderWidth: 1,
+    width: 45,
+    height: 45,
   },
-
-  bottomButtons: {
-    marginTop: 10,
-    marginBottom: 10,
-    borderColor: "red",
-    borderWidth: 1,
-    alignSelf: "center",
-  },
-  companyRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: 180, 
-    marginTop: 2,
-    marginBottom: 2,
-    width: "100%",
-  },
+  buttonText: AppStyles.buttonText,
 });

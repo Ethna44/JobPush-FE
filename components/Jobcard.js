@@ -143,13 +143,11 @@ export default function JobCard(props) {
         </Image>
         {favoritePress}
       </View>
-
       <View style={styles.info}>
         <Text style={styles.headline}>{props.title} | {props.contractType}</Text>
         <View style={styles.inlineInfos}>
           <Text style={styles.textInfo}>{props.compagny} | {props.city}</Text>
         </View>
-
         <View style={styles.rating}>
           {stars}
         </View>
