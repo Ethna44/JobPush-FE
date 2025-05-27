@@ -53,7 +53,7 @@ export default function Recherche({navigation }) {
     if (response.ok) {
       const data = await response.json();
       if (data.result) {
-        navigation.navigate("Offres");
+        navigation.navigate("TabNavigator");
       console.log("Préférence mise à jour avec succès");
     } else {
       console.error("Erreur lors de la mise à jour des préférences");
