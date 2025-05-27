@@ -40,7 +40,7 @@ export default function TabScreen1({ navigation }) {
     fetch(`${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`)
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         setOffersData([...offersData, ...data.offers]);
         setStartIndex(startIndex + data.offers.length);
         console.log("data length =>", data.offers.length);
@@ -61,6 +61,7 @@ export default function TabScreen1({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         const job = fusionWord(data.preferences[0].jobTitle);
+        console.log("job =>", job);
         callOffresApi(
           tokenManagerRef.current,
           job,
