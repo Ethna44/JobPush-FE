@@ -1,18 +1,82 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../reducers/user";
+import  { useState } from "react";
 
 export default function ParametresCompte({ navigation }) {
+  const dispatch = useDispatch();
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const userToken = useSelector((state) => state.user.token);
   console.log(userToken);
   const user = useSelector((state) => state.user.profile);
   console.log(user);
   //  console.log('Test: ', user.email)
+  const [name, setName] = useState(user.name || "");
+  const [firstName, setFirstName] = useState(user.firstName || "");
+  const [email, setEmail] = useState(user.email || "");
+  const [phoneNumber, setPhoneNumber] = useState(
+    user.phoneNumber ? String(user.phoneNumber) : ""
+  );
+  const [city, setCity] = useState(user.address[0]?.city || "");
+  const [zipCode, setZipCode] = useState(user.address[0]?.zipCode || "");
+  const [streetNumber, setStreetNumber] = useState(
+    user.address[0]?.streetNumber ? String(user.address[0]?.streetNumber) : ""
+  );
+  const [streetName, setStreetName] = useState(
+    user.address[0]?.streetName || ""
+  );
 
-  // Remplace ces valeurs par les vraies infos utilisateur (props, redux, etc.)
+  const handleEdit = () => {
+    fetch(`${EXPO_IP}/users`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: userToken,
+        name,
+        firstName,
+        phoneNumber,
+        streetNumber,
+        streetName,
+        city,
+        zipCode,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.result) {
+          alert(data.message || "Erreur lors de la modification");
+          return;
+        }
+        // Met à jour le store Redux
+        dispatch(
+          updateUser({
+            name,
+            firstName,
+            email,
+            phoneNumber,
+            address: [
+              {
+                streetNumber,
+                streetName,
+                city,
+                zipCode,
+              },
+            ],
+          })
+        );
+        alert("Informations mises à jour !");
+      });
+  };
 
   const handleDelete = () => {
     Alert.alert(
@@ -51,40 +115,61 @@ export default function ParametresCompte({ navigation }) {
       <View style={styles.infoTable}>
         <View style={styles.row}>
           <Text style={styles.label}>Nom</Text>
-          <Text style={styles.value}>{user.name}</Text>
+          <TextInput style={styles.value} value={name} onChangeText={setName} />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Prenom</Text>
-          <Text style={styles.value}>{user.firstName}</Text>
+          <TextInput
+            style={styles.value}
+            value={firstName}
+            onChangeText={setFirstName}
+          />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>E-mail</Text>
-          <Text style={styles.value}>{user.email}</Text>
+          <TextInput style={styles.value} value={email} editable={false} />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Tél.</Text>
-          <Text style={styles.value}>{user.phoneNumber}</Text>
+          <TextInput
+            style={styles.value}
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            keyboardType="phone-pad"
+          />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Ville</Text>
-          <Text style={styles.value}>
-            {user.address[0].city} {user.address[0].zipCode}
-          </Text>
+          <TextInput style={styles.value} value={city} onChangeText={setCity} />
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Code Postal</Text>
+          <TextInput
+            style={styles.value}
+            value={zipCode}
+            onChangeText={setZipCode}
+            keyboardType="numeric"
+          />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Adresse</Text>
-          <Text style={styles.value}>
-            {user.address[0].streetNumber} {user.address[0].streetName}
-          </Text>
+          <TextInput
+            style={styles.value}
+            value={streetNumber}
+            onChangeText={setStreetNumber}
+            keyboardType="numeric"
+            placeholder="N°"
+          />
+          <TextInput
+            style={styles.value}
+            value={streetName}
+            onChangeText={setStreetName}
+            placeholder="Rue"
+          />
         </View>
       </View>
 
-      <TouchableOpacity
-        style={styles.editButton}
-        onPress={() => {
-          /* Ajoute la logique de modification ici */
-        }}
-      >
+      <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
         <Text style={styles.editButtonText}>Modifiez informations</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -93,10 +178,12 @@ export default function ParametresCompte({ navigation }) {
       >
         <Text style={styles.deleteButtonText}>Supprimer compte</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.ApplyButton}  onPress={() => {
-          
+      <TouchableOpacity
+        style={styles.ApplyButton}
+        onPress={() => {
           navigation.navigate("Compte");
-        }}>
+        }}
+      >
         <FontAwesome name="arrow-left" size={20} color="#fff" />
       </TouchableOpacity>
     </View>
