@@ -14,6 +14,7 @@ import { updateToken,updateUser } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
 
 
+
 export default function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const [focusedField, setFocusedField] = useState(null);

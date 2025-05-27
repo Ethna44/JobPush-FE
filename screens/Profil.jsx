@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { useRef, useEffect, useState } from "react";
 import AppStyles from "../AppStyles";
@@ -20,7 +20,7 @@ import teletravail from "../json/remote.json";
 import contrat from "../json/contrat.json";
 import regions from "../json/regions.json";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 export default function Profil({ navigation }) {
@@ -98,7 +98,7 @@ export default function Profil({ navigation }) {
               ],
             })
           );
-          navigation.navigate("Alerte");
+          navigation.navigate("Alerte", { origin: "signup" });
         } else {
           console.log(data);
           setErrorMessage(
@@ -107,7 +107,6 @@ export default function Profil({ navigation }) {
         }
       });
   };
-  
 
   return (
     <KeyboardAvoidingView
@@ -312,7 +311,7 @@ const styles = StyleSheet.create({
   textContainer: {
     marginLeft: 20,
   },
-  title: {...AppStyles.title, marginLeft: 20},
+  title: { ...AppStyles.title, marginLeft: 20 },
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
   inputContainer: {
