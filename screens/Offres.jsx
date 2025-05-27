@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { callOffresApi, reverseGeocode, fusionWord } from "../apiUtilis";
 import JobCard from "../components/Jobcard";
 import AppStyles from "../AppStyles";
+import { Dropdown } from "react-native-element-dropdown";
 
 const LIMIT_OFFER = 10;
 
@@ -25,6 +26,7 @@ export default function TabScreen1({ navigation }) {
   const [startIndex, setStartIndex] = useState(0);
   const [checkEnd, setCheckEnd] = useState(false);
   const [offersData, setOffersData] = useState([]);
+  const [preferences, setPreferences] = useState([]);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const clientId = process.env.EXPO_PUBLIC_CLIENT_ID_FT;
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
@@ -34,13 +36,14 @@ export default function TabScreen1({ navigation }) {
     tokenManagerRef.current = new TokenManager(clientId, clientSecret);
   }
 
+
+
   const fetchOffers = async () => {
     if (checkEnd) return;
 
     fetch(`${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setOffersData([...offersData, ...data.offers]);
         setStartIndex(startIndex + data.offers.length);
         console.log("data length =>", data.offers.length);
@@ -61,7 +64,6 @@ export default function TabScreen1({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         const job = fusionWord(data.preferences[0].jobTitle);
-        console.log("job =>", job);
         callOffresApi(
           tokenManagerRef.current,
           job,
@@ -70,7 +72,7 @@ export default function TabScreen1({ navigation }) {
           data.preferences[0].region,
           data.preferences[0].city
         ).then((data) => {
-          for (let o = 0; o < 5; o++) {
+          for (let o = 0; o < data.resultats.length; o++) {
             const offer = data.resultats[o];
             const dateCreation = new Date(offer.dateCreation);
             offer.dateCreation = dateCreation.toLocaleDateString("fr-FR", {
@@ -110,11 +112,8 @@ export default function TabScreen1({ navigation }) {
 
   useEffect(() => {
     fetchOffers().then(() => token && updateProfile());
-  }, [token]);
+  }, []);
 
-  const offer = offersData.map((data, i) => {
-    return <JobCard key={i} {...data} />;
-  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -129,6 +128,20 @@ export default function TabScreen1({ navigation }) {
           />
           <FontAwesome name="search" color="#F72C03" size={16} />
         </View>
+        {/* <View style={styles.inputContainer}>
+           <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderDropdown}
+            containerStyle={styles.containerDropdownBottom}
+            itemTextStyle={styles.itemTextDropdown}
+            data={preferencesList}
+            labelField="label"
+            valueField="preferences"
+            placeholder="Vos préférences"
+            value={preferences}
+            onChange={(item) => setPreferences(item)}
+          />
+        </View> */}
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.card}>
@@ -225,4 +238,15 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
     fontSize: 14,
   },
+  inputContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    // borderColor: "green",
+    // borderWidth: 1,
+  },
+  placeholderDropdown: AppStyles.placeholderDropdown,
+    containerDropdownBottom: AppStyles.containerDropdownBottom,
+    itemTextDropdown: AppStyles.itemTextDropdown,
+    dropdown: AppStyles.dropdown,
 });

@@ -25,7 +25,6 @@ const callOffresApi = async(
       }
     );
     const data = await response.json();
-    console.log("✅ Données récupérées :");
     return data;
   } catch (error) {
     console.error("❌ Erreur API :", error.message);
@@ -34,7 +33,6 @@ const callOffresApi = async(
 };
 async function reverseGeocode(latitude, longitude) {
   const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-  console.log("🌍 URL:", url);
   const response = await fetch(url, {
     headers: {
       "User-Agent": "YourAppName/1.0 (your@email.com)", // important avec Nominatim
@@ -44,7 +42,6 @@ async function reverseGeocode(latitude, longitude) {
   const data = await response.json();
 
   const address = data.address || {};
-  console.log("🏠 Adresse récupérée :", address.house_number);
   return {
     streetNumber: address.house_number || " ",
     streetName: address.road || "",
