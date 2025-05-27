@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import AppStyles from "../AppStyles";
+import PreferencesCard from "../components/PreferencesCard";
 
 export default function TabScreen1({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mon Compte</Text>
       <View style={styles.separator} />
+      <Text style={AppStyles.subtitle}>Mes Préférences</Text>
+      <PreferencesCard/>
+         <View style={styles.separator} />
       <View style={styles.addSearchRow}>
         <Text style={styles.addSearch}>Ajoutez nouvelle recherche</Text>
         <TouchableOpacity
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
   title: {
     ...AppStyles.title,
     marginTop: 1,
-    marginBottom: 30,
+    marginBottom: 10,
   },
   separator: {
     width: "90%",
@@ -55,17 +59,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "flex-start",
-    marginLeft: 25,
-    marginBottom: 280,
-    marginTop: 10,
+    marginLeft: 20,
+    marginBottom: 50,
+    marginTop: 20,
   },
   addSearch: {
-    fontSize: 16,
-    color: "#333",
+    fontSize: 20,
+    color: AppStyles.color.text,
   },
   plusButton: {
     marginLeft: 10,
-    backgroundColor: "#1CCFC1",
+    backgroundColor: AppStyles.color.accent,
     borderRadius: 15,
     width: 30,
     height: 30,
@@ -73,22 +77,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   plusText: {
-    color: "#fff",
-    fontSize: 22,
+    color: AppStyles.color.background,
+    fontSize: 35,
     fontWeight: "bold",
     lineHeight: 24,
   },
-  button: {
-    backgroundColor: "#1CCFC1",
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 8,
-    marginVertical: 10,
-    width: "55%",
-    alignItems: "center",
-    marginBottom: 10,
-    marginTop: 10,
-  },
+  button: { ...AppStyles.button, marginBottom: 20, width: "60%", height: 50 },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
