@@ -36,12 +36,12 @@ export default function TabScreen1({ navigation }) {
     tokenManagerRef.current = new TokenManager(clientId, clientSecret);
   }
 
-
-
   const fetchOffers = async () => {
     if (checkEnd) return;
 
-    fetch(`${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`)
+    fetch(
+      `${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setOffersData([...offersData, ...data.offers]);
@@ -113,7 +113,6 @@ export default function TabScreen1({ navigation }) {
   useEffect(() => {
     fetchOffers().then(() => token && updateProfile());
   }, []);
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
   },
   inputSearch: {
     flex: 1,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
     fontSize: 16,
     paddingBottom: 8,
   },
@@ -246,7 +245,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
   placeholderDropdown: AppStyles.placeholderDropdown,
-    containerDropdownBottom: AppStyles.containerDropdownBottom,
-    itemTextDropdown: AppStyles.itemTextDropdown,
-    dropdown: AppStyles.dropdown,
+  containerDropdownBottom: AppStyles.containerDropdownBottom,
+  itemTextDropdown: AppStyles.itemTextDropdown,
+  dropdown: AppStyles.dropdown,
 });
