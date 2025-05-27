@@ -46,13 +46,11 @@ export default function TabScreen1({ navigation }) {
       .then((data) => {
         setOffersData([...offersData, ...data.offers]);
         setStartIndex(startIndex + data.offers.length);
-        console.log("data length =>", data.offers.length);
 
         if (data.offers.length < LIMIT_OFFER) {
           console.log("is ended");
           setCheckEnd(true);
         }
-        // setOffersNumber(offersNumber + offersNumber);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -111,7 +109,7 @@ export default function TabScreen1({ navigation }) {
   };
 
   useEffect(() => {
-    fetchOffers().then(() => token && updateProfile());
+    fetchOffers()
   }, []);
 
   return (
@@ -127,20 +125,7 @@ export default function TabScreen1({ navigation }) {
           />
           <FontAwesome name="search" color="#F72C03" size={16} />
         </View>
-        {/* <View style={styles.inputContainer}>
-           <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderDropdown}
-            containerStyle={styles.containerDropdownBottom}
-            itemTextStyle={styles.itemTextDropdown}
-            data={preferencesList}
-            labelField="label"
-            valueField="preferences"
-            placeholder="Vos préférences"
-            value={preferences}
-            onChange={(item) => setPreferences(item)}
-          />
-        </View> */}
+      
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.card}>
