@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: 180, // ajuste la largeur selon ton besoin ou utilise "100%" si tu veux toute la largeur du parent
+    width: 180, 
     marginTop: 2,
     marginBottom: 2,
     width: "100%",
