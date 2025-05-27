@@ -12,12 +12,14 @@ export default AppStyles = {
     headerJob : {
         fontFamily: 'Poppins_400Regular',
         color:'#F9F1F1',
-        fontSize:24
+        fontSize:24,
+        zIndex: 2,
     },
     headerPush : {
         fontFamily: 'Poppins_400Regular',
         color:'#F72C03',
-        fontSize : 24
+        fontSize : 24,
+        zIndex : 2,
     },
     title: {
         alignItems: 'center',

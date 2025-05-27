@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import AppStyles from "../AppStyles";
-import Favorite from "../components/Favorite";
 import { useSelector } from "react-redux";
 import JobCard from "../components/Jobcard";
 
@@ -35,7 +34,7 @@ export default function CandidaturesEnCours({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Favoris</Text>
-      <ScrollView style={{ width: "100%" }}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
           {favorites.length === 0 ? (
             <Text style={{ textAlign: "center", marginTop: 20 }}>Aucune offre en favori.</Text>
           ) : (
@@ -53,14 +52,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F9F1F1",
     justifyContent: 'center',
+    // borderColor: "blue",
+    // borderWidth: 1,
   },
  title: {
   ...AppStyles.title,
-  textAlign: 'center'},
+  textAlign: 'center',
+  // borderColor: "green",
+  // borderWidth: 1,
+  },
   scrollView: {
-    // borderColor: "blue",
-    // borderWidth: 1,
     width: "100%",
     paddingVertical: 20,
+    alignItems: 'center',
+    // borderColor: "red",
+    // borderWidth: 1,
   },
 });

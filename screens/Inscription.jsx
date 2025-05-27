@@ -108,6 +108,7 @@ export default function StackScreen2({ navigation }) {
           placeholder="email"
           placeholderTextColor="#999"
           keyboardType="email-address"
+          autoCapitalize="none"
           onFocus={() => setFocusedField("email")}
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setEmail(value)}
@@ -124,6 +125,7 @@ export default function StackScreen2({ navigation }) {
           placeholder="mot de passe"
           placeholderTextColor="#999"
           secureTextEntry
+          autoCapitalize="none"
           onFocus={() => setFocusedField("password")}
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setCheckPassword(value)}
@@ -137,6 +139,7 @@ export default function StackScreen2({ navigation }) {
           placeholder="confirmer mot de passe"
           placeholderTextColor="#999"
           secureTextEntry
+          autoCapitalize="none"
           onFocus={() => setFocusedField("confirm")}
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setPasswordConfirm(value)}

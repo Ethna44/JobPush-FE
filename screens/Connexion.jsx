@@ -66,6 +66,7 @@ export default function LogIn({ navigation }) {
           placeholder="email"
           placeholderTextColor="#999"
           keyboardType="email-address"
+          autoCapitalize="none"
           onFocus={() => setFocusedField("email")}
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setEmail(value)}
@@ -79,6 +80,7 @@ export default function LogIn({ navigation }) {
           placeholder="mot de passe"
           placeholderTextColor="#999"
           secureTextEntry
+          autoCapitalize="none"
           onFocus={() => setFocusedField("password")}
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setPassword(value)}
