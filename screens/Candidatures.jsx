@@ -1,22 +1,50 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Text } from "react-native";
 import EnCours from "./CandidaturesEnCours";
 import Favoris from "./Favoris";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { FontAwesome } from "@expo/vector-icons";
+import { View, TouchableOpacity, Text } from "react-native";
 
 const TopTab = createMaterialTopTabNavigator();
 
+function MyTabBar({ state, descriptors, navigation}) {
+  return (
+    <View style={{ flexDirection: 'row', backgroundColor: "#F9F1F1", height: 60 }}>
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const focused = state.index === index;
+        let iconName = route.name === "Mes candidatures" ? "briefcase" : "heart";
+        return (
+          <TouchableOpacity
+            key={route.key}
+            accessibilityRole="button"
+            onPress={() => navigation.navigate(route.name)}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              paddingVertical: 8,
+            }}
+          >
+            <FontAwesome
+              name={iconName}
+              size={22}
+              color={focused ? "#F72C03" : "#2B3033"}
+            />
+            <Text style={{ color: focused ? "#F72C03" : "#2B3033", fontSize: 12 }}>
+              {route.name}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
+
 export default function Candidatures() {
   return (
-    <TopTab.Navigator
-      screenOptions={{
-        tabBarStyle: { backgroundColor: "#2B3033" , height: 10 },
-        tabBarIndicatorStyle: { backgroundColor: "#F72C03", height: 10 },
-        
-      }}
-    >
-      <TopTab.Screen name="En cours" component={EnCours} />
-      <TopTab.Screen name="Favoris" component={Favoris} />
+    <TopTab.Navigator tabBar={props => <MyTabBar {...props} />}>
+      <TopTab.Screen name="Mes candidatures" component={EnCours} />
+      <TopTab.Screen name="Mes favoris" component={Favoris} />
     </TopTab.Navigator>
   );
 }
