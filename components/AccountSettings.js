@@ -2,53 +2,46 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
-
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function ParametresCompte({ navigation }) {
+  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+  const userToken = useSelector((state) => state.user.token);
+  console.log(userToken);
+  const user = useSelector((state) => state.user.profile);
+  console.log(user);
+  //  console.log('Test: ', user.email)
 
-     const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
-     const userToken = useSelector((state) => state.user.token);
-     console.log(userToken)
-     const user = useSelector((state) => state.user.profile);
-     console.log(user)
-    //  console.log('Test: ', user.email)
- 
- 
- 
- 
- 
-     // Remplace ces valeurs par les vraies infos utilisateur (props, redux, etc.)
- 
-
+  // Remplace ces valeurs par les vraies infos utilisateur (props, redux, etc.)
 
   const handleDelete = () => {
-  Alert.alert(
-    "Confirmation",
-    "Are you sure you want to delete your account?",
-    [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: () => {
-          fetch(`${EXPO_IP}/users/${userToken}`, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (!data.result) {
-                alert(data.error || "Erreur lors de la suppression");
-                return;
-              }
-              
-              navigation.navigate("Accueil");
-            });
+    Alert.alert(
+      "Confirmation",
+      "Are you sure you want to delete your account?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            fetch(`${EXPO_IP}/users/${userToken}`, {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (!data.result) {
+                  alert(data.error || "Erreur lors de la suppression");
+                  return;
+                }
+
+                navigation.navigate("Accueil");
+              });
+          },
         },
-      },
-    ]
-  );
-};
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -74,19 +67,37 @@ export default function ParametresCompte({ navigation }) {
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Ville</Text>
-          <Text style={styles.value}>{user.address[0].city } {user.address[0].zipCode }</Text>
+          <Text style={styles.value}>
+            {user.address[0].city} {user.address[0].zipCode}
+          </Text>
         </View>
-         <View style={styles.row}>
+        <View style={styles.row}>
           <Text style={styles.label}>Adresse</Text>
-          <Text style={styles.value}>{user.address[0].streetNumber} {user.address[0].streetName}</Text>
+          <Text style={styles.value}>
+            {user.address[0].streetNumber} {user.address[0].streetName}
+          </Text>
         </View>
       </View>
 
-      <TouchableOpacity style={styles.editButton} onPress={() => {/* Ajoute la logique de modification ici */}}>
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={() => {
+          /* Ajoute la logique de modification ici */
+        }}
+      >
         <Text style={styles.editButtonText}>Modifiez informations</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete()}>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => handleDelete()}
+      >
         <Text style={styles.deleteButtonText}>Supprimer compte</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.ApplyButton}  onPress={() => {
+          
+          navigation.navigate("Compte");
+        }}>
+        <FontAwesome name="arrow-left" size={20} color="#fff" />
       </TouchableOpacity>
     </View>
   );
@@ -144,7 +155,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "80%",
     alignItems: "center",
-
   },
   editButtonText: {
     color: "#fff",
@@ -164,5 +174,26 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  ApplyButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#F72C03",
+    borderRadius: 18,
+    shadowColor: "#2B3033",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
+    marginBottom: 7,
+    marginTop: 4,
+    borderColor: "blue",
+    borderWidth: 1,
+    maxWidth: " 35%",
   },
 });

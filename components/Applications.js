@@ -3,6 +3,7 @@ import React from "react";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { Modal } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function Applications() {
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +22,16 @@ export default function Applications() {
             <Text>Date d'entretien</Text>
             <Text>Reponse</Text>
             <Text>Lettre de remerciement</Text>
+            <BouncyCheckbox
+              size={25}
+              fillColor="red"
+              unFillColor="#FFFFFF"
+              text="Date de rappel"
+              iconStyle={{ borderColor: "red" }}
+              innerIconStyle={{ borderWidth: 2 }}
+              textStyle={{ fontFamily: "Poppins_400Regular" ,  textDecorationLine: "none",}}
+              
+            />
           </View>
           <View style={styles.button}>
             <TouchableOpacity

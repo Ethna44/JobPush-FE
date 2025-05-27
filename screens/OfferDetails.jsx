@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function OfferDetails({ navigation }) {
-  const route = useRoute();
+  const route = useRoute(); //Pour accéder aux params de offres
   const [isLiked, setIsLiked] = useState(false);
   const token = useSelector((state) => state.user.token);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";

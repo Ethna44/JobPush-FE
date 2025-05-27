@@ -22,7 +22,7 @@ const { width } = Dimensions.get("window");
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
-export default function Recherche({navigation }) {
+export default function Recherche({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user);
@@ -34,7 +34,7 @@ export default function Recherche({navigation }) {
   const [region, setRegion] = useState(null);
   const [focusedField, setFocusedField] = useState(null);
 
- const handleSubmit = async () => {
+  const handleSubmit = async () => {
     const response = await fetch(`${EXPO_IP}/users/addPreferences`, {
       method: "POST",
       headers: {
@@ -54,16 +54,16 @@ export default function Recherche({navigation }) {
       const data = await response.json();
       if (data.result) {
         navigation.navigate("Offres");
-      console.log("Préférence mise à jour avec succès");
-    } else {
-      console.error("Erreur lors de la mise à jour des préférences");
+        console.log("Préférence mise à jour avec succès");
+      } else {
+        console.error("Erreur lors de la mise à jour des préférences");
+      }
     }
-  }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={AppStyles.title}>Nouvelle recherche d'emploi</Text>
+      <Text style={styles.title}>Nouvelle recherche d'emploi</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={[
@@ -157,8 +157,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: AppStyles.color.background,
+    textAlign: "center",
   },
-  title: { ...AppStyles.title, marginLeft: 20 },
+  title: { ...AppStyles.title, textAlign: "center",marginBottom:30,marginTop:20 },
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
   inputContainer: {
