@@ -6,7 +6,6 @@ import Applications from "../components/Applications";
 export default function CandidaturesEnCours() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Candidatures</Text>
       <Applications/>
     </View>
   );

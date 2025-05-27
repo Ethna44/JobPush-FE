@@ -22,7 +22,7 @@ function MyTabBar({ state, descriptors, navigation}) {
               flex: 1,
               alignItems: "center",
               justifyContent: "center",
-              paddingVertical: 8,
+              paddingVertical: 4,
             }}
           >
             <FontAwesome

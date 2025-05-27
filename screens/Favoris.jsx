@@ -37,7 +37,6 @@ export default function CandidaturesEnCours({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Favoris</Text>
       <ScrollView contentContainerStyle={styles.scrollView}>
         {favorites.length === 0 ? (
           <Text style={{ textAlign: "center", marginTop: 20 }}>
@@ -59,12 +58,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F1F1",
     justifyContent: "center",
     // borderColor: "blue",
-    // borderWidth: 1,
-  },
-  title: {
-    ...AppStyles.title,
-    textAlign: "center",
-    // borderColor: "green",
     // borderWidth: 1,
   },
   scrollView: {

@@ -5,15 +5,14 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 export default function PreferencesCard(props) {
   return (
     <View style={styles.container}>
-        <TouchableOpacity>
-            <FontAwesome
-                name="close"
-                size={25}
-                color={AppStyles.color.text}
-                style={{ position: "absolute",right: 0 }}
-           />
-        </TouchableOpacity>
-        
+      <TouchableOpacity>
+        <FontAwesome
+          name="close"
+          size={25}
+          color={AppStyles.color.text}
+          style={{ position: "absolute",right: 0 }}
+        />
+      </TouchableOpacity>  
       <View>
         <Text style={AppStyles.text}>Titre du poste</Text>
         <Text style={AppStyles.text}>Secteur</Text>
