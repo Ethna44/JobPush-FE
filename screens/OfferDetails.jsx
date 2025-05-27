@@ -14,8 +14,8 @@ import { useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function OfferDetails() {
-  const route = useRoute();
+export default function OfferDetails({ navigation }) {
+  const route = useRoute(); //Pour accéder aux params de offres
   const [isLiked, setIsLiked] = useState(false);
   const token = useSelector((state) => state.user.token);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
@@ -138,7 +138,10 @@ export default function OfferDetails() {
         <TouchableOpacity style={styles.ApplyButton}>
           <Text style={styles.buttonText}>CANDIDATER</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.ApplyButton}>
+        <TouchableOpacity style={styles.ApplyButton}  onPress={() => {
+          
+          navigation.navigate("Compte");
+        }}>
           <FontAwesome name="arrow-left" size={20} color="#fff" />
         </TouchableOpacity>
       </View>

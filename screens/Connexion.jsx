@@ -12,7 +12,7 @@ import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { updateToken,updateUser } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
-import Favorite from "../components/Favorite";
+
 
 
 export default function LogIn({ navigation }) {
