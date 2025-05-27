@@ -22,9 +22,9 @@ export default function StackScreen1({ navigation }) {
           <Text style={styles.buttonText}>SE CONNECTER</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.googleContainer}>
+      {/* <View style={styles.googleContainer}>
         <GoogleLoginButton title="Google" onPress={() => navigation.navigate("Profil")}  />
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 }

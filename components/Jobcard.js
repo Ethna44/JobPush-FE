@@ -66,7 +66,6 @@ export default function JobCard(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (!data.result) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
@@ -78,7 +77,7 @@ export default function JobCard(props) {
 
   const heartIconStyle = {
     fontSize: 24,
-    color: isLiked ? "#e74c3c" : "#ccc",
+    color: isLiked ? "#F72C03" : "#ccc",
     position: 'absolute',
     bottom: 10, //positionner l'élément
     right: 10, //positionner l'élément
@@ -111,7 +110,7 @@ export default function JobCard(props) {
     if (props.grade > i) {
       stars.push(<FontAwesome key={i} name="star" color="#F72C03" size={16}/>)
     } else {
-      stars.push(<FontAwesome key={i} name="star" size={16}/>)
+      stars.push(<FontAwesome key={i} name="star" color="#ccc" size={16}/>)
     }
   }
 
