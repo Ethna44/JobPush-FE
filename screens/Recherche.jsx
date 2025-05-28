@@ -159,16 +159,12 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.color.background,
     textAlign: "center",
   },
-<<<<<<< HEAD
-  title: { ...AppStyles.title, textAlign: "center" },
-=======
   title: {
     ...AppStyles.title,
     textAlign: "center",
     marginBottom: 30,
     marginTop: 20,
   },
->>>>>>> d0b3b2a38418b734455b9d0c53069b1b1ed94c9c
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
   inputContainer: {
