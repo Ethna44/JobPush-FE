@@ -68,6 +68,7 @@ useFocusEffect(
         region: region,
       }),
     });
+    
     if (response.ok) {
       const data = await response.json();
       if (data.result) {

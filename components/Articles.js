@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import AppStyles from "../AppStyles";
 
-
 export default function Articles({ props }) {
   return (
     <TouchableOpacity style={styles.container}>
@@ -32,24 +31,24 @@ const styles = StyleSheet.create({
   },
   title: {
     ...AppStyles.headline,
-    borderBottomColor : '#F72C03',
-    borderBottomWidth : 1,
+    borderBottomColor: "#F72C03",
+    borderBottomWidth: 1,
     fontSize: 13,
   },
   description: AppStyles.important,
-  icon : {
-    position: 'absolute',
+  icon: {
+    position: "absolute",
     top: -10, //positionner l'élément
     right: -10, //positionner l'élément
-    backgroundColor : "#F9F1F1",
+    backgroundColor: "#F9F1F1",
     borderRadius: 50,
-    padding : 8,
+    padding: 8,
     zIndex: 1, //place l'élément au dessus du reste comme sur un système de calque
     shadowColor: "#2B3033",
     shadowOffset: {
-	    width: 0,
-	    height: 3,
-      },
+      width: 0,
+      height: 3,
+    },
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 3,
