@@ -21,6 +21,10 @@ import regions from "../json/regions.json";
 import { Alert } from "react-native";
 const { width } = Dimensions.get("window");
 import { addPreference } from "../reducers/user";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
+
+
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
@@ -28,13 +32,25 @@ export default function Recherche({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user);
-  const [contractType, setcontractType] = useState(null);
-  const [remote, setRemote] = useState(null);
-  const [jobTitle, setJobTitle] = useState(null);
-  const [sector, setSector] = useState(null);
-  const [cityJob, setCityJob] = useState(null);
-  const [region, setRegion] = useState(null);
+const [contractType, setcontractType] = useState("");
+const [remote, setRemote] = useState("");
+const [jobTitle, setJobTitle] = useState("");
+const [sector, setSector] = useState("");
+const [cityJob, setCityJob] = useState("");
+const [region, setRegion] = useState("");
   const [focusedField, setFocusedField] = useState(null);
+
+  
+useFocusEffect(
+  useCallback(() => {
+    setcontractType("");
+    setRemote("");
+    setJobTitle("");
+    setSector("");
+    setCityJob("");
+    setRegion("");
+  }, [])
+);
 
   const handleSubmit = async () => {
     const response = await fetch(`${EXPO_IP}/users/addPreferences`, {
@@ -52,6 +68,7 @@ export default function Recherche({ navigation }) {
         region: region,
       }),
     });
+    
     if (response.ok) {
       const data = await response.json();
       if (data.result) {

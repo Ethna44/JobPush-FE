@@ -14,6 +14,7 @@ import Candidatures from "./screens/Candidatures";
 import Astuces from "./screens/Astuces";
 import Compte from "./screens/Compte";
 import Header from "./components/Header";
+import SubAstuces  from "./screens/SubAstuces"
 import Profil from "./screens/Profil";
 import Alerte from "./screens/Alerte";
 import OfferDetails from "./screens/OfferDetails";
@@ -186,6 +187,7 @@ export default function App() {
               <Stack.Screen name="Alerte" component={Alerte} />
               <Stack.Screen name ="Annonce" component={OfferDetails}/>
               <Stack.Screen name="ParametresCompte" component={AccountSettings} />
+               <Stack.Screen name="SubAstuces" component={SubAstuces} />
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
             </Stack.Navigator>
           </NavigationContainer>
