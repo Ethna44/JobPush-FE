@@ -97,7 +97,7 @@ export default function TabScreen1({ navigation }) {
                   streetName: address.streetName,
                   city: address.city,
                   zipCode: address.zipCode,
-                  source: "Pôle Emploi",
+                  source: "France Travail",
                   offerLink: offer.origineOffre.urlOrigine,
                   description: offer.description,
                 }),

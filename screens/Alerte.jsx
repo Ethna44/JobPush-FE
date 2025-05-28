@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AppStyles from "../AppStyles";
 import { updateUser } from "../reducers/user";
 import { useEffect } from "react";
+import { Alert } from "react-native";
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
 const options = {
@@ -53,6 +54,10 @@ export default function Alerte({ navigation, route }) {
       .then((data) => {
         if (data.result) {
           //console.log("Alertes modifiées avec succès");
+           Alert.alert(
+                    "Alerte enregistrée",
+                    "Votre alerte a bien été prise en compte !"
+                  );
           navigation.navigate("TabNavigator");
         } else {
           //console.log("Erreur lors de la modification des alertes");

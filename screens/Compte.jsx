@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
 import AppStyles from "../AppStyles";
 import PreferencesCard from "../components/PreferencesCard";
+import { useSelector } from "react-redux";
 
 export default function TabScreen1({ navigation }) {
+    const preferences = useSelector((state) => state.user.profile.preferences);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Mon compte</Text>
@@ -10,7 +12,9 @@ export default function TabScreen1({ navigation }) {
       {/* <Text style={AppStyles.subtitle}>Mes Préférences</Text> */}
       <View style={styles.preferencesContainer}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <PreferencesCard/>
+           {preferences.map((data, i) => (
+        <PreferencesCard key={data._id} {...data} index={i} />
+      ))}
         </ScrollView>
       </View>
          {/* <View style={styles.separator} /> */}
