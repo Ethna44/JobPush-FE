@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 import { callOffresApi, reverseGeocode, fusionWord } from "../apiUtilis";
 import JobCard from "../components/Jobcard";
 import AppStyles from "../AppStyles";
-import { Dropdown } from "react-native-element-dropdown";
 
 const LIMIT_OFFER = 10;
 
@@ -37,8 +36,6 @@ export default function TabScreen1({ navigation }) {
   }
 
   const fetchOffers = async () => {
-    if (checkEnd) return;
-
     fetch(
       `${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`
     )
@@ -48,7 +45,7 @@ export default function TabScreen1({ navigation }) {
         setStartIndex(startIndex + data.offers.length);
 
         if (data.offers.length < LIMIT_OFFER) {
-          console.log("is ended");
+          //console.log("is ended");
           setCheckEnd(true);
         }
       })
@@ -109,8 +106,10 @@ export default function TabScreen1({ navigation }) {
   };
 
   useEffect(() => {
-    fetchOffers()
-  }, []);
+    if (!checkEnd) {
+      fetchOffers();
+    }
+  }, [checkEnd]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -125,7 +124,6 @@ export default function TabScreen1({ navigation }) {
           />
           <FontAwesome name="search" color="#F72C03" size={16} />
         </View>
-      
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.card}>

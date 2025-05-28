@@ -11,16 +11,16 @@ import { Alert } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
-import  { useState } from "react";
+import { useState } from "react";
 
 export default function ParametresCompte({ navigation }) {
   const dispatch = useDispatch();
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const userToken = useSelector((state) => state.user.token);
-  console.log(userToken);
+  //console.log(userToken);
   const user = useSelector((state) => state.user.profile);
-  console.log(user);
-  //  console.log('Test: ', user.email)
+  //console.log(user);
+  //  //console.log('Test: ', user.email)
   const [name, setName] = useState(user.name || "");
   const [firstName, setFirstName] = useState(user.firstName || "");
   const [email, setEmail] = useState(user.email || "");
@@ -160,6 +160,9 @@ export default function ParametresCompte({ navigation }) {
             keyboardType="numeric"
             placeholder="N°"
           />
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Adresse</Text>
           <TextInput
             style={styles.value}
             value={streetName}

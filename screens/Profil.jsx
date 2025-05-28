@@ -49,7 +49,7 @@ export default function Profil({ navigation }) {
     }
   }, [errorMessage]);
 
-  console.log("Ville Selectionner", cityJob);
+  //console.log("Ville Selectionner", cityJob);
   // const citiesList = cities.cities
   //   .filter((city) => city.label) // garde seulement ceux qui ont un label
   //   .map((city) => ({
@@ -58,7 +58,39 @@ export default function Profil({ navigation }) {
   //     value: city.label.charAt(0).toUpperCase() + city.label.slice(1),
   //   }));
 
+  // Validation helpers
+  const isNumeric = (value) => /^[0-9]+$/.test(value);
+
+  const isPhoneNumber = (value) => /^0[1-9][0-9]{8}$/.test(value);
+  // Cette fonction vérifie que le numéro de téléphone est au format français (commence par 0, puis 9 chiffres).
+
+  const isZipCode = (value) => /^[0-9]{5}$/.test(value);
+  // Cette fonction vérifie que le code postal contient exactement 5 chiffres.
+
   const handleSubmit = () => {
+    // Validation
+    if (streetNumber && !isNumeric(streetNumber)) {
+      setErrorMessage(
+        "Le numéro de rue doit contenir uniquement des chiffres."
+      );
+      return;
+    }
+    // Si le champ numéro de rue existe et n'est pas numérique, on affiche un message d'erreur et on arrête la soumission.
+
+    if (phonenumber && !isPhoneNumber(phonenumber)) {
+      setErrorMessage(
+        "Le numéro de téléphone doit être au format français (10 chiffres)."
+      );
+      return;
+    }
+    // Si le numéro de téléphone existe et n'est pas au bon format, on affiche un message d'erreur et on arrête la soumission.
+
+    if (zipCode && !isZipCode(zipCode)) {
+      setErrorMessage("Le code postal doit contenir 5 chiffres.");
+      return;
+    }
+    // Si le code postal existe et n'est pas composé de 5 chiffres, on affiche un message d'erreur et on arrête la soumission.
+
     fetch(`${EXPO_IP}/users`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -82,7 +114,7 @@ export default function Profil({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data.result);
+          //console.log(data.result);
           dispatch(
             updateUser({
               name: name,
@@ -100,7 +132,7 @@ export default function Profil({ navigation }) {
           );
           navigation.navigate("Alerte", { origin: "signup" });
         } else {
-          console.log(data);
+          //console.log(data);
           setErrorMessage(
             data.message || "Une erreur est survenue. Veuillez réessayer."
           );
@@ -152,7 +184,10 @@ export default function Profil({ navigation }) {
             ]}
             placeholder="Numéro de téléphone*"
             placeholderTextColor={errorMessage && "rgba(255, 0, 0, 0.4)"}
-            onChangeText={(value) => setPhoneNumber(value)}
+            onChangeText={
+              (value) => setPhoneNumber(value.replace(/[^0-9]/g, "")) // Permet uniquement la saisie de chiffres dans le numéro de téléphone
+            } // Empêche la saisie de lettres
+            keyboardType="numeric"
             onFocus={() => setFocusedField("PhoneNumber")}
             onBlur={() => setFocusedField(null)}
           />
@@ -162,7 +197,10 @@ export default function Profil({ navigation }) {
               focusedField === "StreetNumber" && styles.inputFocused,
             ]}
             placeholder="Numéro de rue"
-            onChangeText={(value) => setStreetNumber(value)}
+            onChangeText={(value) =>
+              setStreetNumber(value.replace(/[^0-9]/g, ""))
+            } // Empêche la saisie de lettres
+            keyboardType="numeric"
             onFocus={() => setFocusedField("StreetNumber")}
             onBlur={() => setFocusedField(null)}
           />
@@ -192,7 +230,8 @@ export default function Profil({ navigation }) {
               focusedField === "ZipCode" && styles.inputFocused,
             ]}
             placeholder="Code Postal"
-            onChangeText={(value) => setZipCode(value)}
+            onChangeText={(value) => setZipCode(value.replace(/[^0-9]/g, ""))} // Empêche la saisie de lettres
+            keyboardType="numeric"
             onFocus={() => setFocusedField("ZipCode")}
             onBlur={() => setFocusedField(null)}
           />

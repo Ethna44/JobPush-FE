@@ -13,31 +13,32 @@ import { updateUser } from "../reducers/user";
 import { useEffect } from "react";
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
-
-  const options = {
-    option1: "Notifications en temps réel",
-    option2: "Notification une fois par jour",
-    option3: "Alerte par mail une fois par jour",
-  };
+const options = {
+  option1: "Notifications en temps réel",
+  option2: "Notification une fois par jour",
+  option3: "Alerte par mail une fois par jour",
+};
 const getOptionKey = (alertValue) => {
-  return Object.keys(options).find((key) => options[key] === alertValue) || "option1";
-}
+  return (
+    Object.keys(options).find((key) => options[key] === alertValue) || "option1"
+  );
+};
 
 export default function Alerte({ navigation, route }) {
-  const [selectedValue, setSelectedValue] = useState( route.params.origin === "signup" ? "option1" : getOptionKey(alerts));
+  const [selectedValue, setSelectedValue] = useState(
+    route.params.origin === "signup" ? "option1" : getOptionKey(alerts)
+  );
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
-  console.log(route);
+  //console.log(route);
 
-  
-const alerts = useSelector((state) => state.user.profile.alerts);
+  const alerts = useSelector((state) => state.user.profile.alerts);
 
   useEffect(() => {
-  if (route.params.origin !== "signup") {
-    setSelectedValue(getOptionKey(alerts));
-  }
-}, [alerts]);
-
+    if (route.params.origin !== "signup") {
+      setSelectedValue(getOptionKey(alerts));
+    }
+  }, [alerts]);
 
   const handleSubmit = () => {
     fetch(`${EXPO_IP}/users/alerts`, {
@@ -51,14 +52,14 @@ const alerts = useSelector((state) => state.user.profile.alerts);
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log("Alertes modifiées avec succès");
+          //console.log("Alertes modifiées avec succès");
           navigation.navigate("TabNavigator");
         } else {
-          console.log("Erreur lors de la modification des alertes");
+          //console.log("Erreur lors de la modification des alertes");
         }
       });
   };
- 
+
   const handleSubmitProfile = () => {
     fetch(`${EXPO_IP}/users/alerts`, {
       method: "PUT",
@@ -71,12 +72,12 @@ const alerts = useSelector((state) => state.user.profile.alerts);
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data)
-          console.log("Alertes modifiées avec succès");
+          //console.log(data)
+          //console.log("Alertes modifiées avec succès");
           navigation.navigate("Compte");
-         dispatch(updateUser({ alerts: data.alerts }));
+          dispatch(updateUser({ alerts: data.alerts }));
         } else {
-          console.log("Erreur lors de la modification des alertes");
+          //console.log("Erreur lors de la modification des alertes");
         }
       });
   };
