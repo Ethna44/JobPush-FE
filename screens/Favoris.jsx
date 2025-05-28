@@ -10,30 +10,32 @@ export default function CandidaturesEnCours({ navigation }) {
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const [favorites, setFavorites] = useState([]);
 
-  useFocusEffect(useCallback(() => {
-    const getFavorites = async () => {
-      // 1. Récupérer le profil utilisateur pour avoir les IDs des favoris
-      const res = await fetch(`${EXPO_IP}/users/profile/${token}`);
-      const data = await res.json();
-      console.log("indata", data);
-      if (data.result && data.favorites && data.favorites.length > 0) {
-        console.log(data.favorites);
-        console.log(JSON.stringify({ ids: data.favorites }));
-        // 2. Récupérer les détails des offres favorites
-        const offersRes = await fetch(`${EXPO_IP}/offers/byIds`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ids: data.favorites }),
-        });
-        const offersData = await offersRes.json();
-        console.log("offersData dssataa", offersData);
-        setFavorites(offersData.offers || []);
-      } else {
-        setFavorites([]);
-      }
-    };
-    if (token) getFavorites();
-  }, []));
+  useFocusEffect(
+    useCallback(() => {
+      const getFavorites = async () => {
+        // 1. Récupérer le profil utilisateur pour avoir les IDs des favoris
+        const res = await fetch(`${EXPO_IP}/users/profile/${token}`);
+        const data = await res.json();
+        //console.log("indata", data);
+        if (data.result && data.favorites && data.favorites.length > 0) {
+          //console.log(data.favorites);
+          //console.log(JSON.stringify({ ids: data.favorites }));
+          // 2. Récupérer les détails des offres favorites
+          const offersRes = await fetch(`${EXPO_IP}/offers/byIds`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ids: data.favorites }),
+          });
+          const offersData = await offersRes.json();
+          //console.log("offersData dssataa", offersData);
+          setFavorites(offersData.offers || []);
+        } else {
+          setFavorites([]);
+        }
+      };
+      if (token) getFavorites();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>

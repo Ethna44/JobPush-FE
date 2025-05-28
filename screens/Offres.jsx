@@ -39,8 +39,6 @@ export default function TabScreen1({ navigation }) {
   }
 
   const fetchOffers = async () => {
-    if (checkEnd) return;
-
     fetch(
       `${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`
     )
@@ -50,7 +48,7 @@ export default function TabScreen1({ navigation }) {
         setStartIndex(startIndex + data.offers.length);
 
         if (data.offers.length < LIMIT_OFFER) {
-          console.log("is ended");
+          //console.log("is ended");
           setCheckEnd(true);
         }
       })
@@ -109,13 +107,21 @@ export default function TabScreen1({ navigation }) {
         });
       });
   };
+
+  // useEffect(() => {
+  //   if (!checkEnd) {
+  //     fetchOffers();
+  //   }
+  // }, [checkEnd]);
   useFocusEffect(
     useCallback(() => {
-      setOffersData([]);
-      setStartIndex(0);
-      setCheckEnd(false);
-      fetchOffers().then(() => token && updateProfile());
-    }, [])
+      if (!checkEnd) {
+        setOffersData([]);
+        setStartIndex(0);
+        setCheckEnd(false);
+        fetchOffers().then(() => token && updateProfile());
+      }
+    }, [checkEnd])
   );
 
   return (

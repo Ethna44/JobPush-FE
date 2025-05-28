@@ -10,9 +10,8 @@ import {
 } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
-import { updateToken,updateUser } from "../reducers/user";
+import { updateToken, updateUser } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
-
 
 export default function LogIn({ navigation }) {
   const dispatch = useDispatch();
@@ -34,12 +33,12 @@ export default function LogIn({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
+        // //console.log(data);
         if (!data.result) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
         }
-          // console.log('check:', data.phoneNumber, data.address)
+        // //console.log('check:', data.phoneNumber, data.address)
 
         dispatch(updateToken(data.token));
         dispatch(
@@ -55,13 +54,13 @@ export default function LogIn({ navigation }) {
             applications: data.applications,
           })
         );
-      
+
         navigation.navigate("TabNavigator");
       });
   };
-  console.log(email);
-  console.log(password);
-  
+  //console.log(email);
+  //console.log(password);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

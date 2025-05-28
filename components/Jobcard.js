@@ -4,20 +4,16 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 import AppStyles from "../AppStyles";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addFavorite, updateUser, removeFavorite } from "../reducers/user";
 
 export default function JobCard(props) {
-  const navigation = props.navigation;
-  const [isLiked, setIsLiked] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  const token = useSelector((state) => state.user.token);
-  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
-
   const {
     _id,
     title,
@@ -35,70 +31,69 @@ export default function JobCard(props) {
     description,
   } = props;
 
+  const navigation = props.navigation;
+  // const [isLiked, setIsLiked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const token = useSelector((state) => state.user.token);
+  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+  const favorites = useSelector((state) => state.user.profile.favorites);
+
+  const dispatch = useDispatch();
+
   const handleLikeOffer = () => {
-  if (!isLiked) {
-    fetch(`${EXPO_IP}/users/favorites`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        offerId: props._id,
-        token: token,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (!data.result) {
-          setErrorMessage(data.error || "An error occurred. Please try again.");
-          setIsLiked(!isLiked);
-          return;
-        }
-        setIsLiked(true); // tu avais oublié de le mettre ici
-      });
-  } else {
-    fetch(`${EXPO_IP}/users/favorites/remove`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        offerId: props._id,
-        token: token,
-      }),
-    })
-      .then((response) => response.json())
+    fetch(
+      `${EXPO_IP}/users/favorites${favorites?.includes(_id) ? "/remove" : "/"}`,
+      {
+        method: favorites?.includes(_id) ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          offerId: _id,
+          token: token,
+        }),
+      }
+    )
+      .then((res) => res.json())
       .then((data) => {
         if (!data.result) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
-          return;
+        } else {
+          dispatch(
+            favorites?.includes(_id) ? removeFavorite(_id) : addFavorite(_id)
+          );
         }
-        setIsLiked(false); // ici aussi, tu mettais `setIsLiked(isLiked)` = inutile
+      })
+      .catch((e) => {
+        Alert.alert(e.message);
       });
-  }
-};
+  };
+
+  // //console.log("favorites:", favorites, "_id:", _id, "isFavorite:", isFavorite);
 
   const heartIconStyle = {
     fontSize: 24,
-    color: isLiked ? "#F72C03" : "#ccc",
-    position: 'absolute',
+    color: favorites?.includes(_id) ? "#F72C03" : "#ccc", // islIked before
+    position: "absolute",
     bottom: 10, //positionner l'élément
     right: 10, //positionner l'élément
-    backgroundColor : "#F9F1F1",
+    backgroundColor: "#F9F1F1",
     borderRadius: 50,
-    padding : 4,
+    padding: 4,
     zIndex: 2, //place l'élément au dessus du reste comme sur un système de calque
     shadowColor: "#2B3033",
-        shadowOffset: {
-	        width: 0,
-	        height: 3,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-        elevation: 3,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
   };
 
   const favoritePress = (
     <TouchableOpacity>
       <FontAwesome
-        name="heart"
+        name={favorites?.includes(_id) ? "heart" : "heart-o"}
         onPress={() => handleLikeOffer()}
         style={heartIconStyle}
       />
@@ -106,15 +101,13 @@ export default function JobCard(props) {
   );
 
   const stars = [];
-  for (let i=0; i<5; i++) {
+  for (let i = 0; i < 5; i++) {
     if (props.grade > i) {
-      stars.push(<FontAwesome key={i} name="star" color="#F72C03" size={16}/>)
+      stars.push(<FontAwesome key={i} name="star" color="#F72C03" size={16} />);
     } else {
-      stars.push(<FontAwesome key={i} name="star" color="#ccc" size={16}/>)
+      stars.push(<FontAwesome key={i} name="star" color="#ccc" size={16} />);
     }
   }
-
-
 
   return (
     <TouchableOpacity
@@ -138,19 +131,22 @@ export default function JobCard(props) {
       style={styles.card}
     >
       <View style={styles.photoContainer}>
-        <Image source={require("../assets/logoJobPush-Photoroom.jpg")}
-          style={styles.logo}>
-        </Image>
+        <Image
+          source={require("../assets/logoJobPush-Photoroom.jpg")}
+          style={styles.logo}
+        ></Image>
         {favoritePress}
       </View>
       <View style={styles.info}>
-        <Text style={styles.headline}>{props.title} | {props.contractType}</Text>
+        <Text style={styles.headline}>
+          {props.title} | {props.contractType}
+        </Text>
         <View style={styles.inlineInfos}>
-          <Text style={styles.textInfo}>{props.compagny} | {props.city}</Text>
+          <Text style={styles.textInfo}>
+            {props.compagny} | {props.city}
+          </Text>
         </View>
-        <View style={styles.rating}>
-          {stars}
-        </View>
+        <View style={styles.rating}>{stars}</View>
         <Text style={styles.source}>{props.source}</Text>
         <Text style={styles.textInfo}>Publié le : {props.publicationDate}</Text>
       </View>
@@ -199,13 +195,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textInfo: {
-    ...AppStyles.body, 
+    ...AppStyles.body,
     fontSize: 13,
     // borderColor: "red",
     // borderWidth: 1,
   },
   rating: {
-    flexDirection : 'row'
+    flexDirection: "row",
   },
   source: {
     fontFamily: "Poppins_600SemiBold",

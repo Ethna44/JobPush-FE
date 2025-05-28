@@ -27,7 +27,7 @@ export default function TabScreen1({ navigation }) {
         style={styles.button}
         onPress={() => navigation.navigate("Alerte", { origin: "account" })}
       >
-        <Text style={styles.buttonText}>Alertes</Text>
+        <Text style={styles.buttonText}>ALERTES</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -35,7 +35,7 @@ export default function TabScreen1({ navigation }) {
           navigation.navigate("ParametresCompte");
         }}
       >
-        <Text style={styles.buttonText}>Paramètres du compte</Text>
+        <Text style={styles.buttonText}>PARAMETRES DU COMPTE</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -46,26 +46,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F9F1F1",
     alignItems : 'center',
-    borderColor: "red",
-    borderWidth: 1,
+    // borderColor: "red",
+    // borderWidth: 1,
   },
   title: {
     ...AppStyles.title,
-    borderColor: "blue",
-    borderWidth: 1,
+    // borderColor: "blue",
+    // borderWidth: 1,
   },
   preferencesContainer: {
     width: "100%",
     height: '50%',
     alignItems : 'center',
-    borderColor: "blue",
-    borderWidth: 1,
+    paddingTop: 8,
+    // borderColor: "blue",
+    // borderWidth: 1,
   },
   scrollView: {
     justifyContent : 'center',
     alignItems : 'center',
-    borderColor: "green",
-    borderWidth: 1,
+    // borderColor: "green",
+    // borderWidth: 1,
   },
   // separator: {
   //   width: "90%",
@@ -97,10 +98,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     lineHeight: 24,
   },
-  button: { ...AppStyles.button, marginBottom: 20, width: "60%", height: 50 },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
+  button: { ...AppStyles.button, marginBottom: 20, width: 250},
+  buttonText: AppStyles.buttonText,
 });

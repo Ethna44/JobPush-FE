@@ -22,7 +22,6 @@ export default function StackScreen2({ navigation }) {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const user = useSelector((state) => state.user.profile.email);
   const dispatch = useDispatch();
@@ -36,7 +35,7 @@ export default function StackScreen2({ navigation }) {
     }
   }
 
-  function validateEmail(email) { 
+  function validateEmail(email) {
     var emailReg = new RegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i
     );
@@ -62,7 +61,7 @@ export default function StackScreen2({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         if (data.result) {
           // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
           dispatch(updateToken(data.token));
@@ -72,24 +71,25 @@ export default function StackScreen2({ navigation }) {
           navigation.navigate("Profil");
         }
         if (!data.result) {
-          console.log("Erreur reçue :", data.error);
+          //console.log("Erreur reçue :", data.error);
           setErrorMessage(data.error || "An error occurred. Please try again.");
-          console.log("errorMessage (état local) :", errorMessage);
+          //console.log("errorMessage (état local) :", errorMessage);
           return;
         }
-       
       });
-  
   };
-   
-  console.log(user);
-  console.log(checkMail);
-  console.log(email);
-  console.log(password);
-  console.log(passwordConfirm);
+
+  //console.log(user);
+  //console.log(checkMail);
+  //console.log(email);
+  //console.log(password);
+  //console.log(passwordConfirm);
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <View style={styles.imageContainer}>
         <Image
           style={styles.logo}
@@ -153,7 +153,7 @@ export default function StackScreen2({ navigation }) {
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-           // navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
+            // navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
             handleRegister();
           }}
           style={styles.button}
