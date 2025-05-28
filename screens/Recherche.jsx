@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.color.background,
     textAlign: "center",
   },
-  title: { ...AppStyles.title, textAlign: "center",marginBottom:30,marginTop:20 },
+  title: { ...AppStyles.title, textAlign: "center" },
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
   inputContainer: {
@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "flex-end",
     paddingBottom: 50,
-    paddingRight: 20,
     paddingTop: 30,
     // borderColor: "pink",
     // borderWidth: 1,

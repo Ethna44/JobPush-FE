@@ -5,6 +5,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Dimensions
 } from "react-native";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
@@ -12,6 +13,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
 import  { useState } from "react";
+import AppStyles from "../AppStyles";
+const { width } = Dimensions.get('window');
 
 export default function ParametresCompte({ navigation }) {
   const dispatch = useDispatch();
@@ -110,8 +113,6 @@ export default function ParametresCompte({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Paramètres compte</Text>
-      <View style={styles.separator} />
-
       <View style={styles.infoTable}>
         <View style={styles.row}>
           <Text style={styles.label}>Nom</Text>
@@ -170,16 +171,16 @@ export default function ParametresCompte({ navigation }) {
       </View>
 
       <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
-        <Text style={styles.editButtonText}>Modifiez informations</Text>
+        <Text style={styles.editButtonText}>ENREGISTRER MES NOUVELLES INFOS</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.deleteButton}
         onPress={() => handleDelete()}
       >
-        <Text style={styles.deleteButtonText}>Supprimer compte</Text>
+        <Text style={styles.deleteButtonText}>SUPPRIMER MON COMPTE</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.ApplyButton}
+        style={styles.backButton}
         onPress={() => {
           navigation.navigate("Compte");
         }}
@@ -195,80 +196,54 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F9F1F1",
     alignItems: "center",
-    paddingTop: 20,
   },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
-    fontStyle: "italic",
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  separator: {
-    width: "90%",
-    height: 1,
-    backgroundColor: "#BDBDBD",
-    marginVertical: 10,
-  },
+  title: AppStyles.title,
   infoTable: {
-    width: "90%",
-    marginBottom: 140,
+    width: width*0.85,
     marginTop: 10,
+    borderColor : "blue",
+    borderWidth: 1,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#495057",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginBottom: 2,
+    backgroundColor: '#FEDDD7',
+    borderBottomWidth: 2,
+    borderBottomColor: '#F72C03',
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
+    marginBottom: 10,
+    paddingHorizontal: 10,
     borderRadius: 2,
+    // borderColor : "orange",
+    // borderWidth: 1,
   },
   label: {
-    color: "#fff",
-    fontWeight: "bold",
-    width: "35%",
+    ...AppStyles.body,
+    color: "grey",
   },
   value: {
-    color: "#fff",
-    width: "60%",
-    textAlign: "right",
+    ...AppStyles.body,
+    borderColor : "purple",
+    borderWidth: 1,
   },
   editButton: {
-    backgroundColor: "#1CCFC1",
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 5,
+    ...AppStyles.button,
     marginVertical: 10,
-    width: "80%",
-    alignItems: "center",
-  },
-  editButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
+  }, 
+  editButtonText: AppStyles.buttonText,
   deleteButton: {
-    backgroundColor: "#C94A5F",
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 5,
+    ...AppStyles.button,
     marginVertical: 10,
-    width: "80%",
-    alignItems: "center",
   },
-  deleteButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  ApplyButton: {
+  deleteButtonText: AppStyles.buttonText,
+  backButton: {
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    //paddingHorizontal: 20,
     backgroundColor: "#F72C03",
-    borderRadius: 18,
+    borderRadius: 50,
     shadowColor: "#2B3033",
     shadowOffset: {
       width: 0,
@@ -279,8 +254,9 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginBottom: 7,
     marginTop: 4,
-    borderColor: "blue",
-    borderWidth: 1,
-    maxWidth: " 35%",
+    // borderColor: "blue",
+    // borderWidth: 1,
+    width: 45,
+    height: 45,
   },
 });
