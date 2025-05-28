@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import React from "react";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
@@ -7,44 +13,137 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function Applications() {
   const [showModal, setShowModal] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
+  const [notes, setNotes] = useState(null);
 
   const handleTodoList = () => {
     setShowModal(true);
+  };
+
+  const handleNotes = () => {
+    setShowNotes(true);
   };
 
   const modal = (
     <Modal visible={showModal} transparent={true}>
       <View style={styles.modal}>
         <View style={styles.todo}>
-          <View style={AppStyles.inputContainer}>
-            <Text style={AppStyles.subtitle}>Todo List</Text>
-            <Text>Date de rappel </Text>
-            <Text>Date d'entretien</Text>
-            <Text>Reponse</Text>
-            <Text>Lettre de remerciement</Text>
+          <Text style={AppStyles.subtitle}>Todo List</Text>
+          <View
+            style={[
+              AppStyles.inputContainer,
+              { flexDirection: "row", flexWrap: "wrap" ,alignItems:"center"},
+            ]}
+          >
             <BouncyCheckbox
               size={25}
-              fillColor="red"
-              unFillColor="#FFFFFF"
-              text="Date de rappel"
-              iconStyle={{ borderColor: "red" }}
+              fillColor="#F72C03"
+              unFillColor="#F9F1F1"
+              iconStyle={{ borderColor: "#F72C03" }}
               innerIconStyle={{ borderWidth: 2 }}
-              textStyle={{ fontFamily: "Poppins_400Regular" ,  textDecorationLine: "none",}}
-              
+              textStyle={{
+                fontFamily: "Poppins_400Regular",
+                textDecorationLine: "none",
+              }}
+              style={styles.checkbox}
             />
+            <TextInput placeholder="Date de rappel" style={[AppStyles.input,{width:"80%"}]} />
+            <BouncyCheckbox
+              size={25}
+              fillColor="#F72C03"
+              unFillColor="#F9F1F1"
+              iconStyle={{ borderColor: "#F72C03" }}
+              innerIconStyle={{ borderWidth: 2 }}
+              textStyle={{
+                fontFamily: "Poppins_400Regular",
+                textDecorationLine: "none",
+              }}
+              style={styles.checkbox}
+            />
+            <TextInput placeholder="Date de rappel" style={[AppStyles.input,{width:"80%"}]} />
+            <BouncyCheckbox
+              size={25}
+              fillColor="#F72C03"
+              unFillColor="#F9F1F1"
+              iconStyle={{ borderColor: "#F72C03" }}
+              innerIconStyle={{ borderWidth: 2 }}
+              textStyle={{
+                fontFamily: "Poppins_400Regular",
+                textDecorationLine: "none",
+              }}
+              style={styles.checkbox}
+            />
+            <TextInput placeholder="Date de rappel" style={[AppStyles.input,{width:"80%"}]} />
+            <BouncyCheckbox
+              size={25}
+              fillColor="#F72C03"
+              unFillColor="#F9F1F1"
+              iconStyle={{ borderColor: "#F72C03" }}
+              innerIconStyle={{ borderWidth: 2 }}
+              textStyle={{
+                fontFamily: "Poppins_400Regular",
+                textDecorationLine: "none",
+              }}
+              style={styles.checkbox}
+            />
+            <TextInput placeholder="Date de rappel" style={[AppStyles.input,{width:"80%"}]} />
+          </View>
+          <View>
+            <TouchableOpacity
+              style={AppStyles.button}
+              onPress={() => handleNotes()}
+            >
+              <Text style={AppStyles.buttonText}>NOTES</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.button}>
             <TouchableOpacity
               style={AppStyles.button}
               onPress={() => setShowModal(false)}
             >
-              <Text style={AppStyles.buttonText}>Fermer</Text>
+              <Text style={AppStyles.buttonText}>FERMER</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={AppStyles.button}
               onPress={() => setShowModal(false)}
             >
-              <Text style={AppStyles.buttonText}>Confirmer</Text>
+              <Text style={AppStyles.buttonText}>CONFIRMER</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const note = (
+    <Modal visible={showNotes} transparent={true}>
+      <View style={styles.modal}>
+        <View style={[styles.todo, { height: "70%" }]}>
+          <Text style={AppStyles.subtitle}>Notes</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.textArea}
+              multiline={true}
+              scrollEnabled={true}
+              placeholder="Tape ta note"
+              onChangeText={(value) => setNotes(value)}
+              onFocus={() => setFocusedField("Notes")}
+              onBlur={() => setFocusedField(null)}
+            />
+          </View>
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={AppStyles.button}
+              onPress={() => setShowNotes(false)}
+            >
+              <Text style={AppStyles.buttonText}>FERMER</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={AppStyles.button}
+              onPress={() => setShowNotes(false)}
+            >
+              <Text style={AppStyles.buttonText}>CONFIRMER</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -66,6 +165,7 @@ export default function Applications() {
       <TouchableOpacity style={AppStyles.button} onPress={handleTodoList}>
         <Text style={AppStyles.buttonText}>Todo List</Text>
       </TouchableOpacity>
+      {note}
       {modal}
     </TouchableOpacity>
   );
@@ -77,7 +177,6 @@ const styles = StyleSheet.create({
     height: "16%",
     borderRadius: 10,
     flexDirection: "row",
-    alignItems: "center",
     backgroundColor: "#F3E4E5",
     margin: 10,
     padding: 5,
@@ -96,7 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   todo: {
-    height: "50%",
+    height: "60%",
     width: "80%",
     justifyContent: "space-between",
     backgroundColor: "#fff",
@@ -112,5 +211,21 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  inputContainer: {
+    width: "100%",
+  },
+  textArea: {
+    height: "70%",
+    textAlignVertical: "top",
+    borderColorTop: AppStyles.color.text,
+    borderTopWidth: 0.5,
+  },
+  checkbox: {
+    width: "12%",
+    padding: 5,
+    paddingLeft: 0,
+    // borderColor: "red",
+    // borderWidth: 1,
   },
 });

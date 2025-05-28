@@ -2,48 +2,70 @@ import { createSlice } from "@reduxjs/toolkit";
 import Applications from "../components/Applications";
 
 const initialState = {
-	token: null, // Valeur initiale du token
-	profile: {
-  name: null,
-  firstName: null,
-  email: null,
-  phoneNumber: null,
-  address: [{streetNumber: null,
-	streetName: null,
-	city: null,
-	zipCode: null
-    }],
-  preferences: [{
-	 contractType: null,
-    remote:null,
-    jobTitle:null,
-    sector:null,
-    cityJob:null,
-    region:null,
-  }],
-  alerts: null,
-  favorites: [],
-  applications: [],
-
-
-  
-}
+  token: null, // Valeur initiale du token
+  profile: {
+    name: null,
+    firstName: null,
+    email: null,
+    phoneNumber: null,
+    address: [
+      { streetNumber: null, streetName: null, city: null, zipCode: null },
+    ],
+    preferences: [
+      {
+        contractType: null,
+        remote: null,
+        jobTitle: null,
+        sector: null,
+        cityJob: null,
+        region: null,
+      },
+    ],
+    alerts: null,
+    favorites: [],
+    applications: [],
+  },
 };
 
 export const userSlice = createSlice({
-	name: "user", // Nom du reducer à exporter
-	initialState,
-	// Fonctions à importer dans les composants pour agir sur le reducer
-	reducers: {
-		updateUser: (state, action) => {
-			state.profile = action.payload;
-		},
+  name: "user", // Nom du reducer à exporter
+  initialState,
+  // Fonctions à importer dans les composants pour agir sur le reducer
+  reducers: {
+    updateUser: (state, action) => {
+      state.profile = action.payload;
+    },
 
-		updateToken: (state, action) => {
-			state.token = action.payload;
-		},
-	},
+    updateToken: (state, action) => {
+      state.token = action.payload;
+    },
+    addFavorite: (state, action) => {
+      state.profile.favorites.push(action.payload);
+    },
+    removeFavorite: (state, action) => {
+      state.profile.favorites = state.profile.favorites.filter(
+        (e) => e !== action.payload
+      );
+    },
+    addApplication: (state, action) => {
+      state.profile.applications.push(action.payload);
+    },
+    addPreference: (state, action) => {
+      state.profile.preferences.push(action.payload);
+    },
+    addAddress: (state, action) => {
+      state.profile.address.push(action.payload);
+    },
+  },
 });
 
-export const {updateUser,updateToken } = userSlice.actions;
+export const {
+  updateUser,
+  updateToken,
+  addAddress,
+  addFavorite,
+  removeFavorite,
+  addApplication,
+  addPreference,
+} = userSlice.actions;
 export default userSlice.reducer;

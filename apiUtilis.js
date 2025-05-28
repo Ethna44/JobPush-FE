@@ -1,4 +1,4 @@
-const callOffresApi = async(
+const callOffresApi = async (
   tokenManager,
   KeyWord,
   Sector,
@@ -14,7 +14,7 @@ const callOffresApi = async(
     commune = commune || "";
 
     const token = await tokenManager.getToken();
-    console.log("🔑 Token récupéré :", token);
+    //console.log("🔑 Token récupéré :", token);
 
     const response = await fetch(
       `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&typeContrat=${contractType}&region=${region}&commune=${commune}`,

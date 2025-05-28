@@ -54,7 +54,7 @@ export default function Recherche({ navigation }) {
       const data = await response.json();
       if (data.result) {
         navigation.navigate("Offres");
-        console.log("Préférence mise à jour avec succès");
+        //console.log("Préférence mise à jour avec succès");
       } else {
         console.error("Erreur lors de la mise à jour des préférences");
       }
@@ -159,7 +159,16 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.color.background,
     textAlign: "center",
   },
+<<<<<<< HEAD
   title: { ...AppStyles.title, textAlign: "center" },
+=======
+  title: {
+    ...AppStyles.title,
+    textAlign: "center",
+    marginBottom: 30,
+    marginTop: 20,
+  },
+>>>>>>> d0b3b2a38418b734455b9d0c53069b1b1ed94c9c
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
   inputContainer: {
