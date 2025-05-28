@@ -113,6 +113,7 @@ export default function LogIn({ navigation }) {
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
+            navigation.navigate("TabNavigator")
             handleRegister();
           }}
           style={styles.button}
