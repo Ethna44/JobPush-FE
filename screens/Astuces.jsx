@@ -43,12 +43,12 @@ export default function TabScreen1({ navigation }) {
       {articles.map((article, index) => (
         <Articles
           key={index}
-          props={{
-            title: article.title,
-            description: article.description,
-            icon: article.icon,
-          }}
-          
+          title={article.title}
+          description={article.description}
+          icon={article.icon}
+          onPress={() =>
+            navigation.navigate("SubAstuces", { title: article.title })
+          }
         />
       ))}
     </View>

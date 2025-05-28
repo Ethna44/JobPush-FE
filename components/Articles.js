@@ -2,13 +2,13 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import AppStyles from "../AppStyles";
 
-export default function Articles({ props }) {
+export default function Articles({ title, description, icon,onPress }) {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View>
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.description}>{props.description}</Text>
-        <View style={styles.icon}>{props.icon}</View>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
+        <View style={styles.icon}>{icon}</View>
       </View>
     </TouchableOpacity>
   );
