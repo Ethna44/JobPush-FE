@@ -9,13 +9,15 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import React from "react";
 import { TokenManager } from "../TokenManager";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { callOffresApi, reverseGeocode, fusionWord } from "../apiUtilis";
 import JobCard from "../components/Jobcard";
 import AppStyles from "../AppStyles";
+import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-element-dropdown";
 
 const LIMIT_OFFER = 10;
@@ -107,10 +109,14 @@ export default function TabScreen1({ navigation }) {
         });
       });
   };
-
-  useEffect(() => {
-    fetchOffers()
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      setOffersData([]);
+      setStartIndex(0);
+      setCheckEnd(false);
+      fetchOffers().then(() => token && updateProfile());
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -125,7 +131,6 @@ export default function TabScreen1({ navigation }) {
           />
           <FontAwesome name="search" color="#F72C03" size={16} />
         </View>
-      
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.card}>
