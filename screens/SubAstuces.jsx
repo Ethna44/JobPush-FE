@@ -3,19 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import AppStyles from "../AppStyles";
 
-// useEffect(() => {
-//   // Remplace l'URL par celle de ton backend
-//   fetch(`http://<TON_IP_BACKEND>:<PORT>/articles/subCategory/${category}`)
-//     .then(res => res.json())
-//     .then(data => {
-//       if (data.result) setSubCategories(data.subCategories);
-//       else setSubCategories([]);
-//     });
-// }, [category]); // <-- dépendance sur category
-
 export default function TabScreen1({ navigation }) {
   const route = useRoute();
-  const { title } = route.params; // <-- Correction ici
+  const { title } = route.params;
 
   return (
     <View style={styles.container}>

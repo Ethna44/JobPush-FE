@@ -48,6 +48,7 @@ export default function TabScreen1({ navigation }) {
             description: article.description,
             icon: article.icon,
           }}
+          
         />
       ))}
     </View>
