@@ -20,6 +20,7 @@ import contrat from "../json/contrat.json";
 import regions from "../json/regions.json";
 import { Alert } from "react-native";
 const { width } = Dimensions.get("window");
+import { addPreference } from "../reducers/user";
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
@@ -55,6 +56,17 @@ export default function Recherche({ navigation }) {
     if (response.ok) {
       const data = await response.json();
       if (data.result) {
+            dispatch(
+        addPreference({
+          _id: data._id,
+          contractType,
+          remote,
+          jobTitle,
+          sector,
+          cityJob,
+          region,
+        })
+      );
         setcontractType("");
         setRemote("");
         setJobTitle("");

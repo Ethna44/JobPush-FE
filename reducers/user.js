@@ -19,6 +19,7 @@ const initialState = {
         sector: null,
         cityJob: null,
         region: null,
+        _id: null,
       },
     ],
     alerts: null,
@@ -53,6 +54,11 @@ export const userSlice = createSlice({
     addPreference: (state, action) => {
       state.profile.preferences.push(action.payload);
     },
+    removePreference: (state, action) => {
+      state.profile.preferences = state.profile.preferences.filter(
+        (e, i) => e._id !== action.payload
+      );
+    },
     addAddress: (state, action) => {
       state.profile.address.push(action.payload);
     },
@@ -65,6 +71,7 @@ export const {
   addAddress,
   addFavorite,
   removeFavorite,
+  removePreference,
   addApplication,
   addPreference,
 } = userSlice.actions;
