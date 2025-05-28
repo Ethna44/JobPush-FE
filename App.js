@@ -185,7 +185,6 @@ export default function App() {
               <Stack.Screen name="Profil" component={Profil} />
               <Stack.Screen name="Alerte" component={Alerte} />
               <Stack.Screen name ="Annonce" component={OfferDetails}/>
-               <Stack.Screen name="Compte" component={Compte} />
               <Stack.Screen name="ParametresCompte" component={AccountSettings} />
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
             </Stack.Navigator>

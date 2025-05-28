@@ -10,12 +10,20 @@ import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { Modal } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { MaskedTextInput } from "react-native-mask-text";
+import * as Linking from "expo-linking";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function Applications() {
   const [showModal, setShowModal] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
   const [notes, setNotes] = useState(null);
+  const [candidateDate, setCandidateDate] = useState(null);
+  const [relanceDate, setRelanceDate] = useState(null);
+  const [interviewDate, setInterviewDate] = useState(null);
+  const [thanksDate, setThanksDate] = useState(null);
 
   const handleTodoList = () => {
     setShowModal(true);
@@ -25,6 +33,25 @@ export default function Applications() {
     setShowNotes(true);
   };
 
+  function formatDateForGoogle(dateStr) {
+    // dateStr: "DD/MM/YYYY"
+    if (!dateStr) return "";
+    const [day, month, year] = dateStr.split("/");
+    // Google Calendar format: YYYYMMDD
+    return `${year}${month}${day}`;
+  }
+
+  function getGoogleEndDate(dateStr) {
+    if (!dateStr) return "";
+    const [day, month, year] = dateStr.split("/");
+    const date = new Date(`${year}-${month}-${day}`);
+    date.setDate(date.getDate() + 1);
+    const endYear = date.getFullYear();
+    const endMonth = String(date.getMonth() + 1).padStart(2, "0");
+    const endDay = String(date.getDate()).padStart(2, "0");
+    return `${endYear}${endMonth}${endDay}`;
+  }
+
   const modal = (
     <Modal visible={showModal} transparent={true}>
       <View style={styles.modal}>
@@ -33,61 +60,105 @@ export default function Applications() {
           <View
             style={[
               AppStyles.inputContainer,
-              { flexDirection: "row", flexWrap: "wrap" ,alignItems:"center"},
+              { flexDirection: "row", flexWrap: "wrap", alignItems: "center" },
             ]}
           >
-            <BouncyCheckbox
-              size={25}
-              fillColor="#F72C03"
-              unFillColor="#F9F1F1"
-              iconStyle={{ borderColor: "#F72C03" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              textStyle={{
-                fontFamily: "Poppins_400Regular",
-                textDecorationLine: "none",
-              }}
-              style={styles.checkbox}
-            />
-            <TextInput placeholder="Date de rappel" style={[AppStyles.input,{width:"80%"}]} />
-            <BouncyCheckbox
-              size={25}
-              fillColor="#F72C03"
-              unFillColor="#F9F1F1"
-              iconStyle={{ borderColor: "#F72C03" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              textStyle={{
-                fontFamily: "Poppins_400Regular",
-                textDecorationLine: "none",
-              }}
-              style={styles.checkbox}
-            />
-            <TextInput placeholder="Date de rappel" style={[AppStyles.input,{width:"80%"}]} />
-            <BouncyCheckbox
-              size={25}
-              fillColor="#F72C03"
-              unFillColor="#F9F1F1"
-              iconStyle={{ borderColor: "#F72C03" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              textStyle={{
-                fontFamily: "Poppins_400Regular",
-                textDecorationLine: "none",
-              }}
-              style={styles.checkbox}
-            />
-            <TextInput placeholder="Date de rappel" style={[AppStyles.input,{width:"80%"}]} />
-            <BouncyCheckbox
-              size={25}
-              fillColor="#F72C03"
-              unFillColor="#F9F1F1"
-              iconStyle={{ borderColor: "#F72C03" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              textStyle={{
-                fontFamily: "Poppins_400Regular",
-                textDecorationLine: "none",
-              }}
-              style={styles.checkbox}
-            />
-            <TextInput placeholder="Date de rappel" style={[AppStyles.input,{width:"80%"}]} />
+            <View style={styles.row}>
+              <BouncyCheckbox
+                isChecked={!!candidateDate}
+                size={25}
+                fillColor="#F72C03"
+                unFillColor="#F9F1F1"
+                iconStyle={{ borderColor: "#F72C03" }}
+                innerIconStyle={{ borderWidth: 2 }}
+                textStyle={{
+                  fontFamily: "Poppins_400Regular",
+                  textDecorationLine: "none",
+                }}
+                style={styles.checkbox}
+              />
+              <Text style={styles.label}>Date de candidature:</Text>
+              <MaskedTextInput
+                mask="99/99/9999"
+                placeholder="JJ/MM/AAAA"
+                style={styles.value}
+                value={candidateDate}
+                onChangeText={setCandidateDate}
+                keyboardType="numeric"
+              />
+            </View>
+            <View style={styles.row}>
+              <BouncyCheckbox
+                isChecked={!!relanceDate}
+                size={25}
+                fillColor="#F72C03"
+                unFillColor="#F9F1F1"
+                iconStyle={{ borderColor: "#F72C03" }}
+                innerIconStyle={{ borderWidth: 2 }}
+                textStyle={{
+                  fontFamily: "Poppins_400Regular",
+                  textDecorationLine: "none",
+                }}
+                style={styles.checkbox}
+              />
+              <Text style={styles.label}>Date de Relance:</Text>
+              <MaskedTextInput
+                mask="99/99/9999"
+                placeholder="JJ/MM/AAAA"
+                style={styles.value}
+                value={relanceDate}
+                onChangeText={setRelanceDate}
+                keyboardType="numeric"
+              />
+            </View>
+            <View style={styles.row}>
+              <BouncyCheckbox
+                isChecked={!!interviewDate}
+                size={25}
+                fillColor="#F72C03"
+                unFillColor="#F9F1F1"
+                iconStyle={{ borderColor: "#F72C03" }}
+                innerIconStyle={{ borderWidth: 2 }}
+                textStyle={{
+                  fontFamily: "Poppins_400Regular",
+                  textDecorationLine: "none",
+                }}
+                style={styles.checkbox}
+              />
+              <Text style={styles.label}>Date de L'entretien:</Text>
+              <MaskedTextInput
+                mask="99/99/9999"
+                placeholder="JJ/MM/AAAA"
+                style={styles.value}
+                value={interviewDate}
+                onChangeText={setInterviewDate}
+                keyboardType="numeric"
+              />
+            </View>
+            <View style={styles.row}>
+              <BouncyCheckbox
+                isChecked={!!thanksDate}
+                size={25}
+                fillColor="#F72C03"
+                unFillColor="#F9F1F1"
+                iconStyle={{ borderColor: "#F72C03" }}
+                innerIconStyle={{ borderWidth: 2 }}
+                textStyle={{
+                  fontFamily: "Poppins_400Regular",
+                  textDecorationLine: "none",
+                }}
+                style={styles.checkbox}
+              />
+              <Text style={styles.label}>Lettre de remerciment:</Text>
+              <MaskedTextInput
+                mask="99/99/9999"
+                placeholder="JJ/MM/AAAA"
+                style={styles.value}
+                value={thanksDate}
+                onChangeText={setThanksDate}
+                keyboardType="numeric"
+              />
+            </View>
           </View>
           <View>
             <TouchableOpacity
@@ -97,18 +168,27 @@ export default function Applications() {
               <Text style={AppStyles.buttonText}>NOTES</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            style={AppStyles.button}
+            onPress={() => setShowCalendarModal(true)}
+          >
+            <Text style={AppStyles.buttonText}>Ajouter à Google Agenda</Text>
+          </TouchableOpacity>
+
           <View style={styles.button}>
             <TouchableOpacity
-              style={AppStyles.button}
-              onPress={() => setShowModal(false)}
+              style={styles.backButton}
+              onPress={() => {
+                setShowModal(false);
+              }}
             >
-              <Text style={AppStyles.buttonText}>FERMER</Text>
+              <FontAwesome name="arrow-left" size={20} color="#fff" />
             </TouchableOpacity>
             <TouchableOpacity
               style={AppStyles.button}
               onPress={() => setShowModal(false)}
             >
-              <Text style={AppStyles.buttonText}>CONFIRMER</Text>
+              <Text style={AppStyles.buttonText}>SAUVEGARDER</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -119,7 +199,7 @@ export default function Applications() {
   const note = (
     <Modal visible={showNotes} transparent={true}>
       <View style={styles.modal}>
-        <View style={[styles.todo, { height: "70%" }]}>
+        <View style={[styles.todo, { height: 500 }]}>
           <Text style={AppStyles.subtitle}>Notes</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -134,18 +214,96 @@ export default function Applications() {
           </View>
           <View style={styles.button}>
             <TouchableOpacity
-              style={AppStyles.button}
-              onPress={() => setShowNotes(false)}
+              style={styles.backButton}
+              onPress={() => {
+                setShowNotes(false);
+              }}
             >
-              <Text style={AppStyles.buttonText}>FERMER</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={AppStyles.button}
-              onPress={() => setShowNotes(false)}
-            >
-              <Text style={AppStyles.buttonText}>CONFIRMER</Text>
+              <FontAwesome name="arrow-left" size={20} color="#fff" />
             </TouchableOpacity>
           </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const googleAgenda = (
+    <Modal visible={showCalendarModal} transparent={true} animationType="fade">
+      <View style={styles.modal}>
+        <View style={[styles.todo, { height: "auto" }]}>
+          <Text style={AppStyles.body}>Ajouter à Google Agenda</Text>
+          {candidateDate && (
+            <TouchableOpacity
+              style={[AppStyles.button, { marginBottom: 10 }]}
+              onPress={() => {
+                Linking.openURL(
+                  `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Date%20de%20candidature&dates=${formatDateForGoogle(
+                    candidateDate
+                  )}/${getGoogleEndDate(
+                    candidateDate
+                  )}&details=Ajouté%20depuis%20JobPush`
+                );
+              }}
+            >
+              <Text style={AppStyles.buttonText}>Candidature</Text>
+            </TouchableOpacity>
+          )}
+          {relanceDate && (
+            <TouchableOpacity
+              style={[AppStyles.button, { marginBottom: 10 }]}
+              onPress={() => {
+                Linking.openURL(
+                  `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Date%20de%20relance&dates=${formatDateForGoogle(
+                    relanceDate
+                  )}/${getGoogleEndDate(
+                    relanceDate
+                  )}&details=Ajouté%20depuis%20JobPush`
+                );
+              }}
+            >
+              <Text style={AppStyles.buttonText}>Relance</Text>
+            </TouchableOpacity>
+          )}
+          {interviewDate && (
+            <TouchableOpacity
+              style={[AppStyles.button, { marginBottom: 10 }]}
+              onPress={() => {
+                Linking.openURL(
+                  `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Date%20d'entretien&dates=${formatDateForGoogle(
+                    interviewDate
+                  )}/${getGoogleEndDate(
+                    interviewDate
+                  )}&details=Ajouté%20depuis%20JobPush`
+                );
+              }}
+            >
+              <Text style={AppStyles.buttonText}>Entretien</Text>
+            </TouchableOpacity>
+          )}
+          {thanksDate && (
+            <TouchableOpacity
+              style={[AppStyles.button, { marginBottom: 10 }]}
+              onPress={() => {
+                Linking.openURL(
+                  `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Lettre%20de%20remerciement&dates=${formatDateForGoogle(
+                    thanksDate
+                  )}/${getGoogleEndDate(
+                    thanksDate
+                  )}&details=Ajouté%20depuis%20JobPush`
+                );
+              }}
+            >
+              <Text style={AppStyles.buttonText}>Remerciement</Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+                   style={styles.backButton}
+                   onPress={() => {
+                    setShowCalendarModal(false)
+                   }}
+                 >
+                   <FontAwesome name="arrow-left" size={20} color="#fff" />
+                 </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -165,6 +323,7 @@ export default function Applications() {
       <TouchableOpacity style={AppStyles.button} onPress={handleTodoList}>
         <Text style={AppStyles.buttonText}>Todo List</Text>
       </TouchableOpacity>
+      {showCalendarModal && googleAgenda}
       {note}
       {modal}
     </TouchableOpacity>
@@ -195,10 +354,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   todo: {
-    height: "60%",
+    height: 500,
     width: "80%",
     justifyContent: "space-between",
-    backgroundColor: "#fff",
+    backgroundColor: AppStyles.color.background,
     padding: 20,
     borderRadius: 10,
   },
@@ -227,5 +386,49 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     // borderColor: "red",
     // borderWidth: 1,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: "#FEDDD7",
+    borderBottomWidth: 2,
+    borderBottomColor: "#F72C03",
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 2,
+    // borderColor : "orange",
+    // borderWidth: 1,
+  },
+  label: {
+    ...AppStyles.body,
+    fontSize: 12,
+  },
+  value: {
+    ...AppStyles.body,
+  },
+  backButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    //paddingHorizontal: 20,
+    backgroundColor: "#F72C03",
+    borderRadius: 50,
+    shadowColor: "#2B3033",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
+    marginBottom: 7,
+    marginTop: 4,
+    // borderColor: "blue",
+    // borderWidth: 1,
+    width: 45,
+    height: 45,
   },
 });
