@@ -12,8 +12,9 @@ import { Alert } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../reducers/user";
-import  { useState } from "react";
+import { useState } from "react";
 import AppStyles from "../AppStyles";
+
 const { width } = Dimensions.get('window');
 
 export default function ParametresCompte({ navigation }) {
@@ -110,66 +111,138 @@ export default function ParametresCompte({ navigation }) {
     );
   };
 
+  const clearName = () => {
+    setName('')
+  };
+  const clearFirstName = () => {
+    setFirstName('')
+  };
+  const clearEmail = () => {
+    setEmail('')
+  };
+  const clearPhoneNumber = () => {
+    setPhoneNumber('')
+  };
+  const clearStreetNumber = () => {
+    setStreetNumber('')
+  };
+  const clearStreetName = () => {
+    setStreetName('')
+  };
+  const clearCity = () => {
+    setCity('')
+  };
+  const clearZipCode = () => {
+    setZipCode('')
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Paramètres compte</Text>
       <View style={styles.infoTable}>
         <View style={styles.row}>
           <Text style={styles.label}>Nom</Text>
-          <TextInput style={styles.value} value={name} onChangeText={setName} />
+          <View style={styles.rightContainer}>
+            <TextInput 
+          style={styles.value} 
+          value={name} 
+          onChangeText={setName} />
+          <TouchableOpacity style={styles.cross} onPress={clearName}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Prenom</Text>
-          <TextInput
+          <View style={styles.rightContainer}>
+            <TextInput
             style={styles.value}
             value={firstName}
             onChangeText={setFirstName}
           />
+          <TouchableOpacity style={styles.cross} onPress={clearFirstName}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>E-mail</Text>
-          <TextInput style={styles.value} value={email} editable={false} />
+          <View style={styles.rightContainer}>
+            <TextInput 
+          style={styles.value} 
+          value={email} 
+          editable={false} />
+          <TouchableOpacity style={styles.cross} onPress={clearEmail}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Tél.</Text>
-          <TextInput
+          <View style={styles.rightContainer}>
+            <TextInput
             style={styles.value}
             value={phoneNumber}
             onChangeText={setPhoneNumber}
             keyboardType="phone-pad"
           />
+          <TouchableOpacity style={styles.cross} onPress={clearPhoneNumber}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Ville</Text>
-          <TextInput style={styles.value} value={city} onChangeText={setCity} />
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Code Postal</Text>
-          <TextInput
-            style={styles.value}
-            value={zipCode}
-            onChangeText={setZipCode}
-            keyboardType="numeric"
-          />
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Adresse</Text>
-          <TextInput
+          <Text style={styles.label}>N°</Text>
+          <View style={styles.rightContainer}>
+            <TextInput
             style={styles.value}
             value={streetNumber}
             onChangeText={setStreetNumber}
             keyboardType="numeric"
-            placeholder="N°"
-          />
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearStreetNumber}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Adresse</Text>
-          <TextInput
+          <View style={styles.rightContainer}>
+            <TextInput
             style={styles.value}
             value={streetName}
             onChangeText={setStreetName}
-            placeholder="Rue"
-          />
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearStreetName}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Ville</Text>
+          <View style={styles.rightContainer}>
+            <TextInput 
+          style={styles.value} 
+          value={city} 
+          onChangeText={setCity} />
+          <TouchableOpacity style={styles.cross} onPress={clearCity}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Code Postal</Text>
+          <View style={styles.rightContainer}>
+            <TextInput
+            style={styles.value}
+            value={zipCode}
+            onChangeText={setZipCode}
+            keyboardType="numeric"/>
+            <TouchableOpacity style={styles.cross} onPress={clearZipCode}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+          
         </View>
       </View>
 
@@ -225,19 +298,27 @@ const styles = StyleSheet.create({
     ...AppStyles.body,
     color: "grey",
   },
+  rightContainer : {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   value: {
     ...AppStyles.body,
     borderColor : "purple",
+    marginRight:10,
     borderWidth: 1,
+  },
+  cross : {
+    zindex : 2,
   },
   editButton: {
     ...AppStyles.button,
-    marginVertical: 10,
+    marginVertical: 5,
   }, 
   editButtonText: AppStyles.buttonText,
   deleteButton: {
     ...AppStyles.button,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   deleteButtonText: AppStyles.buttonText,
   backButton: {
@@ -255,8 +336,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 3,
-    marginBottom: 7,
-    marginTop: 4,
+    marginVertical: 5,
     // borderColor: "blue",
     // borderWidth: 1,
     width: 45,

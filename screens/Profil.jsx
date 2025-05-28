@@ -19,10 +19,12 @@ import secteur from "../json/sector.json";
 import teletravail from "../json/remote.json";
 import contrat from "../json/contrat.json";
 import regions from "../json/regions.json";
+import { FontAwesome } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+
 export default function Profil({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
@@ -140,6 +142,31 @@ export default function Profil({ navigation }) {
       });
   };
 
+  const clearName = () => {
+    setName('')
+  };
+  const clearFirstName = () => {
+    setFirstName('')
+  };
+  const clearPhoneNumber = () => {
+    setPhoneNumber('')
+  };
+  const clearStreetNumber = () => {
+    setStreetNumber('')
+  };
+  const clearStreetName = () => {
+    setStreetName('')
+  };
+  const clearCity = () => {
+    setCity('')
+  };
+  const clearZipCode = () => {
+    setZipCode('')
+  };
+  const clearJobTitle = () => {
+    setJobTitle('')
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "position"}
@@ -151,11 +178,15 @@ export default function Profil({ navigation }) {
           <Text style={styles.subtitle}>Civilité</Text>
           <Text style={styles.important}>*obligatoires</Text>
         </View>
-        <View style={styles.inputContainer}>
-          {errorMessage && (
+        <View style={styles.topInputContainer}>
+          <View style={styles.errorMessageContainer}>
+            {errorMessage && (
             <Text style={{ color: "red", margin: 10 }}>{errorMessage}</Text>
           )}
-          <TextInput
+          </View>
+          
+          <View style={styles.row}>
+            <TextInput
             style={[
               styles.input,
               focusedField === "Name" && styles.inputFocused,
@@ -163,10 +194,17 @@ export default function Profil({ navigation }) {
             placeholder="Nom*"
             placeholderTextColor={errorMessage && "rgba(255, 0, 0, 0.4)"}
             onChangeText={(value) => setName(value)}
+            value={name}
             onFocus={() => setFocusedField("Name")}
             onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearName}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.row}>
+            <TextInput
             style={[
               styles.input,
               focusedField === "FirstName" && styles.inputFocused,
@@ -174,10 +212,17 @@ export default function Profil({ navigation }) {
             placeholder="Prenom*"
             placeholderTextColor={errorMessage && "rgba(255, 0, 0, 0.4)"}
             onChangeText={(value) => setFirstName(value)}
+            value={firstName}
             onFocus={() => setFocusedField("FirstName")}
             onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearFirstName}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.row}>
+            <TextInput
             style={[
               styles.input,
               focusedField === "PhoneNumber" && styles.inputFocused,
@@ -187,11 +232,18 @@ export default function Profil({ navigation }) {
             onChangeText={
               (value) => setPhoneNumber(value.replace(/[^0-9]/g, "")) // Permet uniquement la saisie de chiffres dans le numéro de téléphone
             } // Empêche la saisie de lettres
+            value={phonenumber}
             keyboardType="numeric"
             onFocus={() => setFocusedField("PhoneNumber")}
             onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearPhoneNumber}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.row}>
+            <TextInput
             style={[
               styles.input,
               focusedField === "StreetNumber" && styles.inputFocused,
@@ -200,57 +252,90 @@ export default function Profil({ navigation }) {
             onChangeText={(value) =>
               setStreetNumber(value.replace(/[^0-9]/g, ""))
             } // Empêche la saisie de lettres
+            value={streetNumber}
             keyboardType="numeric"
             onFocus={() => setFocusedField("StreetNumber")}
             onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearStreetNumber}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.row}>
+            <TextInput
             style={[
               styles.input,
               focusedField === "Address" && styles.inputFocused,
             ]}
             placeholder="Nom de rue"
             onChangeText={(value) => setStreetName(value)}
+            value={streetName}
             onFocus={() => setFocusedField("Address")}
             onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearStreetName}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.row}>
+            <TextInput
             style={[
               styles.input,
               focusedField === "City" && styles.inputFocused,
             ]}
             placeholder="Ville"
             onChangeText={(value) => setCity(value)}
+            value={city}
             onFocus={() => setFocusedField("City")}
             onBlur={() => setFocusedField(null)}
-          />
-          <TextInput
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearCity}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.row}>
+            <TextInput
             style={[
               styles.input,
               focusedField === "ZipCode" && styles.inputFocused,
             ]}
             placeholder="Code Postal"
             onChangeText={(value) => setZipCode(value.replace(/[^0-9]/g, ""))} // Empêche la saisie de lettres
+            value={zipCode}
             keyboardType="numeric"
             onFocus={() => setFocusedField("ZipCode")}
             onBlur={() => setFocusedField(null)}
-          />
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearZipCode}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.textContainer}>
           <Text style={styles.subtitle}>Mes préférences</Text>
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput
+        <View style={styles.bottomInputContainer}>
+          <View style={styles.row}>
+            <TextInput
             style={[
               styles.input,
               focusedField === "JobTitle" && styles.inputFocused,
             ]}
             placeholder="Poste"
             onChangeText={(value) => setJobTitle(value)}
+            value={jobTitle}
             onFocus={() => setFocusedField("JobTitle")}
             onBlur={() => setFocusedField(null)}
-          />
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearJobTitle}>
+              <FontAwesome name='close' color='grey' size={18}/>
+            </TouchableOpacity>
+          </View>
+          
           <Dropdown
             style={styles.dropdown}
             placeholderStyle={styles.placeholderDropdown}
@@ -338,7 +423,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: AppStyles.color.background,
-    paddingTop: 20,
+    //paddingTop: 20,
     // borderColor: "red",
     // borderWidth: 1,
   },
@@ -349,20 +434,58 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: 20,
+    marginVertical :10,
   },
   title: { ...AppStyles.title, marginLeft: 20 },
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
-  inputContainer: {
+  topInputContainer: {
     width: "100%",
-    justifyContent: "center",
+    height: 450,
+    justifyContent: "space-between",
     alignItems: "center",
     // borderColor: "green",
     // borderWidth: 1,
   },
-  input: AppStyles.input,
+  bottomInputContainer: {
+    width: "100%",
+    height: 370,
+    justifyContent: "space-between",
+    alignItems: "center",
+    // borderColor: "green",
+    // borderWidth: 1,
+  },
+  row : {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  cross : {
+    position: 'absolute',
+    right : 10,
+    zindex : 2,
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  eye : {
+    position: 'absolute',
+    right : 40,
+    zindex : 2,
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  input: {
+        ...AppStyles.input,
+        marginBottom: 0,
+        // borderColor: "red",
+        // borderWidth: 1,
+      },
   inputFocused: AppStyles.inputFocused,
-  dropdown: AppStyles.dropdown,
+  dropdown: {
+    ...AppStyles.dropdown,
+    marginBottom: 0,
+  },
   placeholderDropdown: AppStyles.placeholderDropdown,
   containerDropdownBottom: AppStyles.containerDropdownBottom,
   containerDropdownTop: AppStyles.containerDropdownTop,

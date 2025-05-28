@@ -13,12 +13,14 @@ import { useState } from "react";
 import { updateUser, updateToken } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function StackScreen2({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
   const [email, setEmail] = useState("");
   const [checkMail, setCheckMail] = useState(false);
   const [password, setCheckPassword] = useState("");
+  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -85,6 +87,18 @@ export default function StackScreen2({ navigation }) {
   //console.log(password);
   //console.log(passwordConfirm);
 
+  const clearEmail = () => {
+    setEmail('')
+  };
+
+  const clearPassword = () => {
+    setCheckPassword('')
+  };
+
+  const clearConfirmPassword = () => {
+    setPasswordConfirm('')
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -100,7 +114,8 @@ export default function StackScreen2({ navigation }) {
         <Text style={styles.title}>Inscription</Text>
       </View>
       <View style={styles.inputContainer}>
-        <TextInput
+        <View style={styles.row}>
+          <TextInput
           style={[
             styles.input,
             focusedField === "email" && styles.inputFocused,
@@ -113,47 +128,72 @@ export default function StackScreen2({ navigation }) {
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setEmail(value)}
           value={email}
-        />
+          />
+          <TouchableOpacity style={styles.cross} onPress={clearEmail}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+        </View>
+        
         {/* {checkMail && (
         <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
         )} */}
-        <TextInput
+        <View style={styles.row}>
+          <TextInput
           style={[
             styles.input,
             focusedField === "password" && styles.inputFocused,
           ]}
           placeholder="mot de passe"
           placeholderTextColor="#999"
-          secureTextEntry
+          secureTextEntry={isPasswordSecure}
           autoCapitalize="none"
           onFocus={() => setFocusedField("password")}
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setCheckPassword(value)}
           value={password}
-        />
-        <TextInput
+          />
+          <TouchableOpacity style={styles.cross} onPress={clearPassword}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.eye}>
+            <FontAwesome name='eye' color='grey' size={18} onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}/>
+          </TouchableOpacity>
+        </View>
+        
+        <View style={styles.row}>
+          <TextInput
           style={[
             styles.input,
             focusedField === "confirm" && styles.inputFocused,
           ]}
           placeholder="confirmer mot de passe"
           placeholderTextColor="#999"
-          secureTextEntry
+          secureTextEntry={isPasswordSecure}
           autoCapitalize="none"
           onFocus={() => setFocusedField("confirm")}
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setPasswordConfirm(value)}
           value={passwordConfirm}
-        />
+          />
+          <TouchableOpacity style={styles.cross} onPress={clearConfirmPassword}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.eye}>
+            <FontAwesome name='eye' color='grey' size={18} onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}/>
+          </TouchableOpacity>
+        </View>
 
-        {errorMessage && (
-          <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
+        <View style={styles.errorMessageContainer}>
+          {errorMessage && (
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
         )}
+        </View>
+        
       </View>
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-            // navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
+            navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
             handleRegister();
           }}
           style={styles.button}
@@ -198,16 +238,50 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: AppStyles.title,
+  row : {
+    justifyContent: 'center',
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  cross : {
+    position: 'absolute',
+    right : 10,
+    zindex : 2,
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  eye : {
+    position: 'absolute',
+    right : 40,
+    zindex : 2,
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    // borderColor: "blue",
-    // borderWidth: 1,
+    height: '25%',
+    justifyContent : "space-between",
+    borderColor: "green",
+    borderWidth: 1,
     margin: 30,
   },
-  input: AppStyles.input,
+  input: {
+      ...AppStyles.input,
+      // borderColor: "red",
+      // borderWidth: 1,
+      marginBottom: 0,
+    },
   inputFocused: AppStyles.inputFocused,
+  errorMessageContainer : {
+    width: "70%"
+  },
+  errorMessage : {
+    color: "red", 
+    marginTop: 4,
+    textAlign : 'center'
+  },
   buttonAndTextContainer: {
     justifyContent: "center",
     alignItems: "center",

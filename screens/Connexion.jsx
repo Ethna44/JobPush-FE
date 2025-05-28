@@ -12,6 +12,7 @@ import AppStyles from "../AppStyles";
 import { useState } from "react";
 import { updateToken, updateUser } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function LogIn({ navigation }) {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function LogIn({ navigation }) {
   const [email, setEmail] = useState("");
   const [checkMail, setCheckMail] = useState(false);
   const [password, setPassword] = useState("");
+  const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
@@ -61,6 +63,14 @@ export default function LogIn({ navigation }) {
   //console.log(email);
   //console.log(password);
 
+  const clearEmail = () => {
+    setEmail('')
+  };
+
+  const clearPassword = () => {
+    setPassword('')
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -76,7 +86,8 @@ export default function LogIn({ navigation }) {
         <Text style={styles.title}>Connexion</Text>
       </View>
       <View style={styles.inputContainer}>
-        <TextInput
+        <View style={styles.row}>
+          <TextInput
           style={[
             styles.input,
             focusedField === "email" && styles.inputFocused,
@@ -90,24 +101,39 @@ export default function LogIn({ navigation }) {
           onChangeText={(value) => setEmail(value)}
           value={email}
         />
-        <TextInput
+        <TouchableOpacity style={styles.cross} onPress={clearEmail}>
+          <FontAwesome name='close' color='grey' size={18}/>
+        </TouchableOpacity>
+        </View>
+
+        <View style={styles.row}>
+          <TextInput
           style={[
             styles.input,
             focusedField === "password" && styles.inputFocused,
           ]}
           placeholder="mot de passe"
           placeholderTextColor="#999"
-          secureTextEntry
+          secureTextEntry={isPasswordSecure}
           autoCapitalize="none"
           onFocus={() => setFocusedField("password")}
           onBlur={() => setFocusedField(null)}
           onChangeText={(value) => setPassword(value)}
           value={password}
-        />
-
-        {errorMessage && (
-          <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
+          />
+          <TouchableOpacity style={styles.cross} onPress={clearPassword}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.eye}>
+            <FontAwesome name='eye' color='grey' size={18} onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}/>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.errorMessageContainer}>
+          {errorMessage && (
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
         )}
+        </View>
+        
       </View>
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
@@ -157,16 +183,50 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: AppStyles.title,
+  row : {
+    justifyContent: 'center',
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  cross : {
+    position: 'absolute',
+    right : 10,
+    zindex : 2,
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  eye : {
+    position: 'absolute',
+    right : 40,
+    zindex : 2,
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    // borderColor: "blue",
+    height: '16%',
+    justifyContent : "space-between",
+    // borderColor: "green",
     // borderWidth: 1,
     margin: 30,
   },
-  input: AppStyles.input,
+  input: {
+    ...AppStyles.input,
+    // borderColor: "red",
+    // borderWidth: 1,
+    marginBottom: 0,
+  },
   inputFocused: AppStyles.inputFocused,
+  errorMessageContainer : {
+    width: "70%"
+  },
+  errorMessage : {
+    color: "red", 
+    marginTop: 4,
+    textAlign : 'center'
+  },
   buttonAndTextContainer: {
     justifyContent: "center",
     alignItems: "center",
