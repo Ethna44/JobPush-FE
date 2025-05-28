@@ -79,11 +79,11 @@ export default function StackScreen2({ navigation }) {
       });
   };
 
-  //console.log(user);
-  //console.log(checkMail);
-  //console.log(email);
-  //console.log(password);
-  //console.log(passwordConfirm);
+  console.log(user);
+  console.log(checkMail);
+  console.log(email);
+  console.log(password);
+  console.log(passwordConfirm);
 
   return (
     <KeyboardAvoidingView
