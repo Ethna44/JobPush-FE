@@ -18,6 +18,7 @@ import secteur from "../json/sector.json";
 import teletravail from "../json/remote.json";
 import contrat from "../json/contrat.json";
 import regions from "../json/regions.json";
+import { Alert } from "react-native";
 const { width } = Dimensions.get("window");
 import { addPreference } from "../reducers/user";
 
@@ -65,8 +66,17 @@ export default function Recherche({ navigation }) {
           region,
         })
       );
+        setcontractType("");
+        setRemote("");
+        setJobTitle("");
+        setSector("");
+        setCityJob("");
+        setRegion("");
+        Alert.alert(
+          "Préférences enregistrées",
+          "Votre recherche a bien été prise en compte !"
+        );
         navigation.navigate("Offres");
-        //console.log("Préférence mise à jour avec succès");
       } else {
         console.error("Erreur lors de la mise à jour des préférences");
       }
@@ -171,12 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.color.background,
     textAlign: "center",
   },
-  title: {
-    ...AppStyles.title,
-    textAlign: "center",
-    marginBottom: 30,
-    marginTop: 20,
-  },
+  title: { ...AppStyles.title, textAlign: "center" },
   subtitle: AppStyles.subtitle,
   important: AppStyles.important,
   inputContainer: {
