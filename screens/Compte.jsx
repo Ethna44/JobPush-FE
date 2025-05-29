@@ -1,52 +1,22 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
 import AppStyles from "../AppStyles";
 import PreferencesCard from "../components/PreferencesCard";
-import { useSelector } from "react-redux";
-import city from "../json/citie.json";
-import region from "../json/regions.json";
-import sector from "../json/sector.json";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function TabScreen1({ navigation }) {
-  const preferences = useSelector((state) => state.user.profile.preferences);
-
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Mon compte</Text>
-      {/* <View style={styles.separator} /> */}
-      {/* <Text style={AppStyles.subtitle}>Mes Préférences</Text> */}
-      <Text style={[AppStyles.subtitle,{alignSelf:"flex-start",marginLeft:20}]}>Mes préférences</Text>
       <View style={styles.preferencesContainer}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          {preferences.map((data, i) => {
-            const cityMatch = city.find((c) => c.insee === data.city);
-            const regionMatch = region.find((r) => r.code === data.region);
-            const sectorMatch = sector.find((s) => s.code === data.sector);
-            return (
-              <PreferencesCard
-                key={data._id}
-                {...data}
-                cityJob={cityMatch ? cityMatch.name : data.city}
-                region={regionMatch ? regionMatch.label : null}
-                sector={sectorMatch ? sectorMatch.label : data.sector}
-                index={i}
-              />
-            );
-          })}
+          <PreferencesCard/>
         </ScrollView>
       </View>
-      {/* <View style={styles.separator} /> */}
       <View style={styles.addSearchRow}>
         <Text style={styles.body}>Ajoutez nouvelle recherche</Text>
-        <TouchableOpacity
-          style={styles.plusButton}
-          onPress={() => navigation.navigate("Recherche")}
+        <TouchableOpacity 
+        style={styles.plusButton} 
+        onPress={() => navigation.navigate("Recherche")}
         >
           <Text style={styles.plusText}>+</Text>
         </TouchableOpacity>
@@ -56,6 +26,7 @@ export default function TabScreen1({ navigation }) {
         onPress={() => navigation.navigate("Alerte", { origin: "account" })}
       >
         <Text style={styles.buttonText}>ALERTES</Text>
+        <FontAwesome name="bell" size={20} color="#F9F1F1"/>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -64,6 +35,7 @@ export default function TabScreen1({ navigation }) {
         }}
       >
         <Text style={styles.buttonText}>PARAMETRES DU COMPTE</Text>
+        <FontAwesome name="cog" size={22} color="#F9F1F1"/>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -73,7 +45,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9F1F1",
-    alignItems: "center",
+    alignItems : 'center',
     // borderColor: "red",
     // borderWidth: 1,
   },
@@ -84,24 +56,18 @@ const styles = StyleSheet.create({
   },
   preferencesContainer: {
     width: "100%",
-    height: "50%",
-    alignItems: "center",
+    height: '50%',
+    alignItems : 'center',
     paddingTop: 8,
     // borderColor: "blue",
     // borderWidth: 1,
   },
   scrollView: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent : 'center',
+    alignItems : 'center',
     // borderColor: "green",
     // borderWidth: 1,
   },
-  // separator: {
-  //   width: "90%",
-  //   height: 1,
-  //   backgroundColor: "#BDBDBD",
-  //   marginVertical: 10,
-  // },
   addSearchRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -126,6 +92,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     lineHeight: 24,
   },
-  button: { ...AppStyles.button, marginBottom: 20, width: 250 },
-  buttonText: AppStyles.buttonText,
+  button: { 
+    ...AppStyles.button, 
+    marginBottom: 20, 
+    width: 270,
+    flexDirection : 'row',
+    justifyContent : "center"
+  },
+  buttonText: {
+    ...AppStyles.buttonText,
+    marginRight: 10,
+    marginBottom : 0,
+    // borderColor: "blue",
+    // borderWidth: 1,
+  }
 });
