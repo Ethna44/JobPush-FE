@@ -164,7 +164,7 @@ export default function TabScreen1({ navigation }) {
 
         {loading && (
           <ActivityIndicator
-            size={50}
+            size={75}
             color="#F72C03"
             style={{ marginVertical: 20 }}
           />

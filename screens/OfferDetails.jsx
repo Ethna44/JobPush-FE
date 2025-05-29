@@ -119,6 +119,13 @@ export default function OfferDetails({ navigation }) {
     }
   }
 
+    const dateCreation = new Date(props.publicationDate);
+  const dateFormatted = dateCreation.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -135,7 +142,7 @@ export default function OfferDetails({ navigation }) {
       </View>
       <View style={styles.infos}>
         <Text style={styles.textInfo}>{stars} sur Glassdoor</Text>
-        <Text style={styles.textInfo}>Publiée le : {publicationDate}</Text>
+        <Text style={styles.textInfo}>Publiée le : {dateFormatted}</Text>
         <Text style={styles.source}>{source}</Text>
       </View>
       <View style={styles.card}>
