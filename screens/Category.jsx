@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, Button, ScrollView } from "react-native";
+import { StyleSheet, Text, TextInput, View, SafeAreaView, TouchableOpacity, Button, ScrollView } from "react-native";
 import AppStyles from "../AppStyles";
 import Articles from "../components/Articles";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
+import { useState } from "react";
 
 //un tableau qui contient les articles
 const articles = [
@@ -36,12 +37,36 @@ const articles = [
     icon: <FontAwesome name={"group"} size={22} color={"#F72C03"} />,
   },
 ];
+
+
+
 export default function TabScreen1({ navigation }) {
+  const [search, setSearch] = useState("");
+
+  const clearSearch = () => {
+    setSearch('')
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Astuces</Text>
-      {articles.map((article, index) => (
-        <Articles
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topContainer}>
+        <Text style={styles.title}>Astuces</Text>
+        <View style={styles.inputSearchContainer}>
+          <FontAwesome name="search" color="#F72C03" size={18} />
+          <TextInput
+          placeholder="Recherche"
+          style={styles.inputSearch}
+          onChangeText={(value) => setSearch(value)}
+          value={search}
+          />
+          <TouchableOpacity style={styles.cross} onPress={clearSearch}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        {articles.map((article, index) => (
+          <Articles
           key={index}
           title={article.title}
           description={article.description}
@@ -51,10 +76,10 @@ export default function TabScreen1({ navigation }) {
               title: article.title,
               icon: article.icon,
             })
-          }
-        />
-      ))}
-    </View>
+          }/>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -65,4 +90,33 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F1F1",
   },
   title: AppStyles.title,
+  topContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    // borderColor: "pink",
+    // borderWidth: 1,
+  },
+  inputSearch: {
+    flex: 1,
+    fontFamily: "Poppins_400Regular",
+    fontSize: 16,
+    paddingBottom: 8,
+  },
+  inputSearchContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "80%",
+    borderBottomColor: "#2B3033",
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  },
+  scrollView: {
+    // borderColor: "blue",
+    // borderWidth: 1,
+    width: "100%",
+    alignItems: "center",
+    paddingVertical: 20,
+  },
 });

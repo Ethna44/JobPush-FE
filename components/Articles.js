@@ -17,11 +17,11 @@ export default function Articles({ title, description, icon,onPress }) {
 const styles = StyleSheet.create({
   container: {
     width: "90%",
-    height: "15%",
+    height: 100,
     alignItems: "center",
     borderRadius: 10,
     backgroundColor: "#F3E4E5",
-    margin: 10,
+    marginBottom: 20,
     padding: 5,
     shadowColor: "#2B3033",
     shadowOffset: { width: 0, height: 3 },

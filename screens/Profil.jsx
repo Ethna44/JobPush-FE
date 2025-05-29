@@ -165,7 +165,7 @@ export default function Profil({ navigation }) {
   };
   const clearJobTitle = () => {
     setJobTitle('')
-  }
+  };
 
   return (
     <KeyboardAvoidingView
