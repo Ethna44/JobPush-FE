@@ -41,24 +41,25 @@ const articles = [
 export default function TabScreen1({ navigation }) {
   const [search, setSearch] = useState("");
   const [filteredArticles, setFilteredArticles] = useState(articles);
+  const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
-const fetchArticlesByTags = async (search) => {
-  if (!search) {
-    setFilteredArticles(articles);
-    return;
-  }
-  const tags = search.split(" ").filter(Boolean).join(",");
-  const response = await fetch(`http://${EXPO_IP}/articles/byTags?tags=${tags}`);
-  const data = await response.json();
-  if (data.result) {
-    setFilteredArticles(
-      data.articles.map((a) => ({
-        ...a,
-        icon: <FontAwesome name="file-text-o" size={22} color="#F72C03" />,
-      }))
-    );
-  }
-};
+  const fetchArticlesByTags = async (search) => {
+    if (!search) {
+      setFilteredArticles(articles);
+      return;
+    }
+    const tags = search.split(" ").filter(Boolean).join(",");
+    const response = await fetch(`${EXPO_IP}/articles/byTags?tags=${tags}`);
+    const data = await response.json();
+    if (data.result) {
+      setFilteredArticles(
+        data.articles.map((a) => ({
+          ...a,
+          icon: <FontAwesome name="lightbulb-o" size={22} color="#F72C03" />,
+        }))
+      );
+    }
+  };
 
 const handleSearch = (value) => {
   setSearch(value);

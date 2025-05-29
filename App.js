@@ -20,7 +20,7 @@ import Alerte from "./screens/Alerte";
 import OfferDetails from "./screens/OfferDetails";
 import Recherche from "./screens/Recherche";
 import ArticleDetails from "./screens/ArticleDetails"
-import AccountSettings from "./components/AccountSettings";
+import AccountSettings from "./screens/AccountSettings";
 import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
