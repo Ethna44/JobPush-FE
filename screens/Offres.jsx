@@ -108,11 +108,11 @@ export default function TabScreen1({ navigation }) {
       });
   };
 
-  useEffect(() => {
-    if (!checkEnd) {
-      fetchOffers();
-    }
-  }, [checkEnd]);
+  // useEffect(() => {
+  //   if (!checkEnd) {
+  //     fetchOffers();
+  //   }
+  // }, [checkEnd]);
     useFocusEffect(
     useCallback(() => {
       setOffersData([]);
