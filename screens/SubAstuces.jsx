@@ -12,7 +12,6 @@ export default function TabScreen1({ navigation }) {
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
   useEffect(() => {
-    // Remplace l'URL par celle de ton backend
     fetch(`${EXPO_IP}/articles/byCategory/${title}`)
       .then((res) => res.json())
       .then((data) => {
