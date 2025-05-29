@@ -106,12 +106,16 @@ export default function TabScreen1({ navigation }) {
       });
   };
 
-  // useEffect(() => {
-  //   if (!checkEnd) {
-  //     fetchOffers();
-  //   }
-  // }, [checkEnd]);
-    useFocusEffect(
+  useEffect(() => {
+    if (!checkEnd) {
+      setOffersData([]);
+      setStartIndex(0);
+      setCheckEnd(false);
+      fetchOffers();
+    }
+  }, [checkEnd]);
+
+  useFocusEffect(
     useCallback(() => {
       setOffersData([]);
       setStartIndex(0);
@@ -121,7 +125,7 @@ export default function TabScreen1({ navigation }) {
   );
 
   const clearSearch = () => {
-    setSearch('')
+    setSearch("");
   };
 
   return (
@@ -137,7 +141,7 @@ export default function TabScreen1({ navigation }) {
             value={search}
           />
           <TouchableOpacity style={styles.cross} onPress={clearSearch}>
-            <FontAwesome name='close' color='grey' size={18}/>
+            <FontAwesome name="close" color="grey" size={18} />
           </TouchableOpacity>
         </View>
       </View>
