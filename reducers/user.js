@@ -51,6 +51,11 @@ export const userSlice = createSlice({
     addApplication: (state, action) => {
       state.profile.applications.push(action.payload);
     },
+    removeApplication: (state, action) => {
+      state.profile.applications = state.profile.applications.filter(
+        (e) => e !== action.payload
+      );
+    },
     addPreference: (state, action) => {
       state.profile.preferences.push(action.payload);
     },
@@ -73,6 +78,7 @@ export const {
   removeFavorite,
   removePreference,
   addApplication,
+  removeApplication,
   addPreference,
 } = userSlice.actions;
 export default userSlice.reducer;

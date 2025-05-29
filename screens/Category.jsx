@@ -1,39 +1,40 @@
-import { StyleSheet, Text, TextInput, View, SafeAreaView, TouchableOpacity, Button, ScrollView } from "react-native";
+import { StyleSheet, Dimensions, Text, TextInput, View, SafeAreaView, TouchableOpacity, Button, ScrollView } from "react-native";
 import AppStyles from "../AppStyles";
 import Articles from "../components/Articles";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
 import { useState } from "react";
+const { width } = Dimensions.get('window');
 
-//un tableau qui contient les articles
+//un tableau qui contient les catégories d'articles
 const articles = [
   {
     title: "Préparer sa candidature",
     description:
-      "Rédiger un CV et une lettre de motivation adaptés à l'offre d'emploi.",
+      "Tous nos tips pour rédiger un CV et une lettre de motivation adaptés au poste que vous visez. Les erreurs à éviter, les bonnes pratiques... On vous dit tout !",
     icon: <FontAwesome name={"file-text-o"} size={22} color={"#F72C03"} />,
   },
   {
     title: "Reussir son entretien",
     description:
-      "Préparer des réponses aux questions courantes et des questions à poser.",
+      "Entretiens de motivation, entretiens techniques... Découvrez nos conseils. On vous aide à préparer des réponses aux questions courantes et des questions à poser.",
     icon: <FontAwesome name={"handshake-o"} size={22} color={"#F72C03"} />,
   },
   {
     title: "Stratégie de recherche d'emploi",
     description:
-      "Utiliser les réseaux sociaux, les sites d'emploi et le réseautage pour trouver des opportunités.",
+      "Utiliser les réseaux sociaux, les sites d'emploi et le réseautage pour trouver des opportunités. Optimisez vos recherches pour gagner du temps et trouver un emploi plus rapidement.",
     icon: <FontAwesome name={"search"} size={22} color={"#F72C03"} />,
   },
   {
     title: "Conseils métiers",
     description:
-      "Explorer les tendances du marché, les compétences demandées et les opportunités de carrière.",
+      "Explorer les tendances du marché, les compétences demandées, les outils les plus utilisés et les opportunités de carrière dans votre secteur d'activité.",
     icon: <FontAwesome name={"comment"} size={22} color={"#F72C03"} />,
   },
   {
     title: "Soft skills",
     description:
-      "Développer des compétences interpersonnelles essentielles pour le milieu professionnel.",
+      "Ecoute active, résolution de problème, attitude positive face au changement... Développer des compétences interpersonnelles essentielles pour le milieu professionnel.",
     icon: <FontAwesome name={"group"} size={22} color={"#F72C03"} />,
   },
 ];
@@ -89,18 +90,6 @@ const clearSearch = () => {
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {/* {articles.map((article, index) => (
-          <Articles
-          key={index}
-          title={article.title}
-          description={article.description}
-          icon={article.icon}
-          onPress={() =>
-            navigation.navigate("SubAstuces", {
-              title: article.title,
-              icon: article.icon,
-            })/>
-          } */}
           {filteredArticles.map((article, index) => (
             <Articles
             key={index}
@@ -124,6 +113,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "#F9F1F1",
+    // borderColor: "red",
+    // borderWidth: 1,
   },
   title: AppStyles.title,
   topContainer: {
@@ -138,6 +129,8 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_400Regular",
     fontSize: 16,
     paddingBottom: 8,
+    // borderColor: "pink",
+    // borderWidth: 1,
   },
   inputSearchContainer: {
     flexDirection: "row",
@@ -149,10 +142,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   scrollView: {
-    // borderColor: "blue",
-    // borderWidth: 1,
-    width: "100%",
+    width: width,
     alignItems: "center",
     paddingVertical: 20,
+    // borderColor: "blue",
+    // borderWidth: 1,
   },
 });

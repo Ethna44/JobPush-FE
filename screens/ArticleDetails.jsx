@@ -15,7 +15,7 @@ import { useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function OfferDetails({ navigation }) {
+export default function ArticleDetails({ navigation }) {
   const route = useRoute(); //Pour accéder aux params de offres
   const { title, description, content, author, tags } = route.params;
 
@@ -30,14 +30,14 @@ export default function OfferDetails({ navigation }) {
         </View>
         <View style={styles.textHeader}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.compagny}>{author}</Text>
+          <Text style={styles.author}>{author}</Text>
         </View>
       </View>
       <View style={styles.infos}>
         <Text style={styles.textInfo}>{description}</Text>
       </View>
       <View style={styles.card}>
-        <ScrollView style={{ maxHeight: 450 }}>
+        <ScrollView style={{ maxHeight: 420 }}>
           <Text style={styles.body}>{content}</Text>
         </ScrollView>
       </View>
@@ -91,16 +91,12 @@ const styles = StyleSheet.create({
   title: {
     ...AppStyles.headline,
     maxWidth: "100%",
+    fontSize: 13,
     // borderColor: "pink",
     // borderWidth: 1,
   },
-  compagny: {
-    ...AppStyles.body,
-    // borderColor: "orange",
-    // borderWidth: 1,
-  },
-  heartContainer: {
-    width: 35,
+  author: {
+    ...AppStyles.important,
     // borderColor: "orange",
     // borderWidth: 1,
   },
@@ -144,27 +140,6 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  applyButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: "#F72C03",
-    borderRadius: 10,
-    shadowColor: "#2B3033",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
-    marginBottom: 7,
-    marginTop: 4,
-    // borderColor: "blue",
-    // borderWidth: 1,
-    width: "40%",
   },
   backButton: {
     alignItems: "center",

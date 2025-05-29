@@ -119,6 +119,7 @@ export default function JobCard(props) {
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("Annonce", {
+         _id,
           title,
           compagny,
           logoLink,
