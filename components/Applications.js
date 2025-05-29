@@ -208,6 +208,7 @@ export default function Applications() {
               scrollEnabled={true}
               placeholder="Tape ta note"
               onChangeText={(value) => setNotes(value)}
+              value={notes}
               onFocus={() => setFocusedField("Notes")}
               onBlur={() => setFocusedField(null)}
             />

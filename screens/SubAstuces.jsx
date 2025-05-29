@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import AppStyles from "../AppStyles";
 import Articles from "../components/Articles";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function TabScreen1() {
   const route = useRoute();
   const [subCategories, setSubCategories] = useState([]);
-  const { title } = route.params;
+  const { title, icon } = route.params;
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
   useEffect(() => {
@@ -21,14 +22,19 @@ export default function TabScreen1() {
       });
   }, [title]);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      {subCategories.map((data, i) => (
-        <Articles key={i} title={data.title} description={data.description} />
-      ))}
-    </View>
-  );
+ return (
+  <View style={styles.container}>
+    <Text style={styles.title}>{title}</Text>
+ {subCategories.map((data, i) => (
+  <Articles
+    key={i}
+    title={data.title}
+    description={data.description}
+    icon={icon} // <-- Passe l’icône ici
+  />
+))}
+  </View>
+);
 }
 
 const styles = StyleSheet.create({

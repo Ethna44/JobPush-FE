@@ -47,7 +47,10 @@ export default function TabScreen1({ navigation }) {
           description={article.description}
           icon={article.icon}
           onPress={() =>
-            navigation.navigate("SubAstuces", { title: article.title })
+            navigation.navigate("SubAstuces", {
+              title: article.title,
+              icon: article.icon,
+            })
           }
         />
       ))}

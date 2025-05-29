@@ -108,20 +108,18 @@ export default function TabScreen1({ navigation }) {
       });
   };
 
-  // useEffect(() => {
-  //   if (!checkEnd) {
-  //     fetchOffers();
-  //   }
-  // }, [checkEnd]);
-  useFocusEffect(
+  useEffect(() => {
+    if (!checkEnd) {
+      fetchOffers();
+    }
+  }, [checkEnd]);
+    useFocusEffect(
     useCallback(() => {
-      if (!checkEnd) {
-        setOffersData([]);
-        setStartIndex(0);
-        setCheckEnd(false);
-        fetchOffers().then(() => token && updateProfile());
-      }
-    }, [checkEnd])
+      setOffersData([]);
+      setStartIndex(0);
+      setCheckEnd(false);
+      fetchOffers().then(() => token && updateProfile());
+    }, [])
   );
 
   return (
