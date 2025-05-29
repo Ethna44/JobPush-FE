@@ -21,6 +21,7 @@ export default function TabScreen1({ navigation }) {
       <Text style={styles.title}>Mon compte</Text>
       {/* <View style={styles.separator} /> */}
       {/* <Text style={AppStyles.subtitle}>Mes Préférences</Text> */}
+      <Text style={[AppStyles.subtitle,{alignSelf:"flex-start",marginLeft:20}]}>Mes préférences</Text>
       <View style={styles.preferencesContainer}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           {preferences.map((data, i) => {
