@@ -14,7 +14,7 @@ import { MaskedTextInput } from "react-native-mask-text";
 import * as Linking from "expo-linking";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function Applications() {
+export default function Applications({ navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [showCalendarModal, setShowCalendarModal] = useState(false);
@@ -298,25 +298,25 @@ export default function Applications() {
             </TouchableOpacity>
           )}
           <TouchableOpacity
-                   style={styles.backButton}
-                   onPress={() => {
-                    setShowCalendarModal(false)
-                   }}
-                 >
-                   <FontAwesome name="arrow-left" size={20} color="#fff" />
-                 </TouchableOpacity>
+            style={styles.backButton}
+            onPress={() => {
+              setShowCalendarModal(false);
+            }}
+          >
+            <FontAwesome name="arrow-left" size={20} color="#fff" />
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
   );
 
+  console.log("marche ton oncle ");
+
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.candidature}>
         <View>
-          <Text style={AppStyles.inputSearch}>
-            Developpeur JavaScript FrontEnd
-          </Text>
+          <Text style={AppStyles.inputSearch}>Titre : </Text>
           <Text style={AppStyles.important}>Entreprise: JobPush </Text>
         </View>
         <Text style={AppStyles.body}>Candidaté le : 14 novembre 2025 </Text>

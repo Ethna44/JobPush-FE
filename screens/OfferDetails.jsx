@@ -140,7 +140,7 @@ export default function OfferDetails({ navigation }) {
     }
   }
 
-    const dateCreation = new Date(props.publicationDate);
+    const dateCreation = new Date(publicationDate);
   const dateFormatted = dateCreation.toLocaleDateString("fr-FR", {
     year: "numeric",
     month: "long",
