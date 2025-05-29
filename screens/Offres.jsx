@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import { TokenManager } from "../TokenManager";
@@ -31,28 +32,29 @@ export default function TabScreen1({ navigation }) {
   const clientId = process.env.EXPO_PUBLIC_CLIENT_ID_FT;
   const clientSecret = process.env.EXPO_PUBLIC_CLIENT_SECRET_FT;
   const tokenManagerRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
   if (!tokenManagerRef.current) {
     tokenManagerRef.current = new TokenManager(clientId, clientSecret);
   }
 
   const fetchOffers = async () => {
-    fetch(
-      `${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setOffersData([...offersData, ...data.offers]);
-        setStartIndex(startIndex + data.offers.length);
-
-        if (data.offers.length < LIMIT_OFFER) {
-          //console.log("is ended");
-          setCheckEnd(true);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`
+      );
+      const data = await response.json();
+      setOffersData((prev) => [...prev, ...data.offers]);
+      setStartIndex((prev) => prev + data.offers.length);
+      if (data.offers.length < LIMIT_OFFER) {
+        setCheckEnd(true);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateProfile = async () => {
@@ -70,12 +72,6 @@ export default function TabScreen1({ navigation }) {
         ).then((data) => {
           for (let o = 0; o < data.resultats.length; o++) {
             const offer = data.resultats[o];
-            const dateCreation = new Date(offer.dateCreation);
-            offer.dateCreation = dateCreation.toLocaleDateString("fr-FR", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
             reverseGeocode(
               offer.lieuTravail.latitude,
               offer.lieuTravail.longitude
@@ -165,13 +161,20 @@ export default function TabScreen1({ navigation }) {
               <JobCard key={i} {...data} navigation={navigation} />
             ))}
         </View>
-        <View>
-          {!checkEnd && (
-            <TouchableOpacity onPress={() => fetchOffers()} style={styles.load}>
-              <Text style={styles.buttonText}>CHARGER PLUS</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+
+        {loading && (
+          <ActivityIndicator
+            size={50}
+            color="#F72C03"
+            style={{ marginVertical: 20 }}
+          />
+        )}
+
+        {!checkEnd && !loading && (
+          <TouchableOpacity onPress={() => fetchOffers()} style={styles.load}>
+            <Text style={styles.buttonText}>CHARGER PLUS</Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

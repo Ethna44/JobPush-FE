@@ -108,6 +108,12 @@ export default function JobCard(props) {
       stars.push(<FontAwesome key={i} name="star" color="#ccc" size={16} />);
     }
   }
+  const dateCreation = new Date(props.publicationDate);
+  const dateFormatted = dateCreation.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <TouchableOpacity
@@ -148,7 +154,7 @@ export default function JobCard(props) {
         </View>
         <View style={styles.rating}>{stars}</View>
         <Text style={styles.source}>{props.source}</Text>
-        <Text style={styles.textInfo}>Publié le : {props.publicationDate}</Text>
+        <Text style={styles.textInfo}>Publié le : {dateFormatted}</Text>
       </View>
     </TouchableOpacity>
   );

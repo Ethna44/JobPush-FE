@@ -23,6 +23,7 @@ export default function LogIn({ navigation }) {
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+  
 
   const handleRegister = () => {
     fetch(`${EXPO_IP}/users/signin`, {
@@ -138,7 +139,7 @@ export default function LogIn({ navigation }) {
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-           navigation.navigate("TabNavigator")
+          // navigation.navigate("TabNavigator")
             handleRegister();
           }}
           style={styles.button}
