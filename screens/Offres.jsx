@@ -2,12 +2,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   SafeAreaView,
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Image,
 } from "react-native";
 import React from "react";
 import { TokenManager } from "../TokenManager";

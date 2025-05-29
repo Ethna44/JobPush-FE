@@ -38,14 +38,37 @@ const articles = [
   },
 ];
 
-
-
 export default function TabScreen1({ navigation }) {
   const [search, setSearch] = useState("");
+  const [filteredArticles, setFilteredArticles] = useState(articles);
 
-  const clearSearch = () => {
-    setSearch('')
-  };
+const fetchArticlesByTags = async (search) => {
+  if (!search) {
+    setFilteredArticles(articles);
+    return;
+  }
+  const tags = search.split(" ").filter(Boolean).join(",");
+  const response = await fetch(`http://${EXPO_IP}/articles/byTags?tags=${tags}`);
+  const data = await response.json();
+  if (data.result) {
+    setFilteredArticles(
+      data.articles.map((a) => ({
+        ...a,
+        icon: <FontAwesome name="file-text-o" size={22} color="#F72C03" />,
+      }))
+    );
+  }
+};
+
+const handleSearch = (value) => {
+  setSearch(value);
+  fetchArticlesByTags(value);
+};
+
+
+const clearSearch = () => {
+  setSearch('')
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,7 +79,7 @@ export default function TabScreen1({ navigation }) {
           <TextInput
           placeholder="Recherche"
           style={styles.inputSearch}
-          onChangeText={(value) => setSearch(value)}
+          onChangeText={handleSearch}
           value={search}
           />
           <TouchableOpacity style={styles.cross} onPress={clearSearch}>
@@ -65,7 +88,7 @@ export default function TabScreen1({ navigation }) {
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {articles.map((article, index) => (
+        {/* {articles.map((article, index) => (
           <Articles
           key={index}
           title={article.title}
@@ -75,6 +98,18 @@ export default function TabScreen1({ navigation }) {
             navigation.navigate("SubAstuces", {
               title: article.title,
               icon: article.icon,
+            })/>
+          } */}
+          {filteredArticles.map((article, index) => (
+            <Articles
+            key={index}
+            title={article.title}
+            description={article.description}
+            icon={article.icon}
+            onPress={() =>
+            navigation.navigate("SubAstuces", {
+            title: article.title,
+            icon: article.icon,
             })
           }/>
         ))}
