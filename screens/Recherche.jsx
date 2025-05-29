@@ -23,6 +23,7 @@ const { width } = Dimensions.get("window");
 import { addPreference } from "../reducers/user";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
+import { FontAwesome } from "@expo/vector-icons";
 
 
 
@@ -32,12 +33,12 @@ export default function Recherche({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user);
-const [contractType, setcontractType] = useState("");
-const [remote, setRemote] = useState("");
-const [jobTitle, setJobTitle] = useState("");
-const [sector, setSector] = useState("");
-const [cityJob, setCityJob] = useState("");
-const [region, setRegion] = useState("");
+  const [contractType, setcontractType] = useState("");
+  const [remote, setRemote] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [sector, setSector] = useState("");
+  const [cityJob, setCityJob] = useState("");
+  const [region, setRegion] = useState("");
   const [focusedField, setFocusedField] = useState(null);
 
   
@@ -82,7 +83,7 @@ useFocusEffect(
           cityJob,
           region,
         })
-      );
+      )
         setcontractType("");
         setRemote("");
         setJobTitle("");
@@ -100,20 +101,31 @@ useFocusEffect(
     }
   };
 
+  const clearJobTitle = () => {
+    setJobTitle('')
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nouvelle recherche d'emploi</Text>
       <View style={styles.inputContainer}>
-        <TextInput
+        <View style={styles.row}>
+          <TextInput
           style={[
             styles.input,
             focusedField === "JobTitle" && styles.inputFocused,
           ]}
           placeholder="Poste"
           onChangeText={(value) => setJobTitle(value)}
+          value={jobTitle}
           onFocus={() => setFocusedField("JobTitle")}
           onBlur={() => setFocusedField(null)}
-        />
+          />
+          <TouchableOpacity style={styles.cross} onPress={clearJobTitle}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
+        </View>
+        
         <Dropdown
           style={styles.dropdown}
           placeholderStyle={styles.placeholderDropdown}
@@ -199,18 +211,38 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   title: { ...AppStyles.title, textAlign: "center" },
-  subtitle: AppStyles.subtitle,
-  important: AppStyles.important,
   inputContainer: {
     width: "100%",
-    justifyContent: "center",
+    height: 350,
+    justifyContent: "space-between",
     alignItems: "center",
     // borderColor: "green",
     // borderWidth: 1,
   },
-  input: AppStyles.input,
+  row : {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+   cross : {
+    position: 'absolute',
+    right : 10,
+    zindex : 2,
+    // borderColor: "blue",
+    // borderWidth: 1,
+  },
+  input: {
+    ...AppStyles.input,
+    marginBottom: 0,
+    // borderColor: "red",
+    // borderWidth: 1,
+  },
   inputFocused: AppStyles.inputFocused,
-  dropdown: AppStyles.dropdown,
+  dropdown: {
+    ...AppStyles.dropdown,
+    marginBottom: 0,
+  },
   placeholderDropdown: AppStyles.placeholderDropdown,
   containerDropdownBottom: AppStyles.containerDropdownBottom,
   containerDropdownTop: AppStyles.containerDropdownTop,

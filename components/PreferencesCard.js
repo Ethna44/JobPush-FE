@@ -29,7 +29,6 @@ export default function PreferencesCard(props) {
       if (data.result) {
         dispatch(removePreference(_id));
 
-        //console.log("Préférence mise à jour avec succès");
       } else {
         console.error("Erreur lors de la mise à jour des préférences");
       }
@@ -47,12 +46,12 @@ export default function PreferencesCard(props) {
         />
       </TouchableOpacity>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>{jobTitle || "Poste"}</Text>
-        <Text style={styles.text}>{sector || "Secteur"}</Text>
-        <Text style={styles.text}>{contractType || "Type de contrat"}</Text>
-        <Text style={styles.text}>{cityJob || "Ville"}</Text>
-        <Text style={styles.text}>{region || "Région"}</Text>
-        <Text style={styles.text}>{remote || "Télétravail"}</Text>
+        {jobTitle && <Text style={styles.text}>{jobTitle}</Text>}
+        {sector && <Text style={styles.text}>{sector}</Text>}
+        {contractType && <Text style={styles.text}>{contractType}</Text>}
+        {cityJob && <Text style={styles.text}>{cityJob}</Text>}
+        {region && <Text style={styles.text}>{region}</Text>}
+        {remote && <Text style={styles.text}>{remote}</Text>}
       </View>
     </View>
   );
@@ -60,7 +59,7 @@ export default function PreferencesCard(props) {
 
 const styles = StyleSheet.create({
   card: {
-    height: 180,
+    height: "auto",
     width: 350,
     justifyContent: "center",
     borderRadius: 10,
@@ -78,8 +77,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     maxWidth: 300,
-    borderColor: "purple",
-    borderWidth: 1,
+    minHeight: 30,
+    justifyContent: "center",
   },
   text: AppStyles.body,
 });

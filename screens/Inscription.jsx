@@ -263,8 +263,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: '25%',
     justifyContent : "space-between",
-    borderColor: "green",
-    borderWidth: 1,
+    // borderColor: "green",
+    // borderWidth: 1,
     margin: 30,
   },
   input: {

@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import React from "react";
 import AppStyles from "../AppStyles";
+const { width } = Dimensions.get('window');
 
 export default function Articles({ title, description, icon,onPress }) {
   return (
@@ -16,24 +17,30 @@ export default function Articles({ title, description, icon,onPress }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
-    height: "15%",
+    width: width*0.9,
+    height: 140,
     alignItems: "center",
     borderRadius: 10,
     backgroundColor: "#F3E4E5",
-    margin: 10,
+    marginBottom: 20,
     padding: 5,
     shadowColor: "#2B3033",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.5,
     shadowRadius: 12,
     elevation: 3,
+    // borderColor: "blue",
+    // borderWidth: 1,
   },
   title: {
     ...AppStyles.headline,
+    width: width*0.8,
+    height: 'auto',
     borderBottomColor: "#F72C03",
     borderBottomWidth: 1,
     fontSize: 13,
+    // borderColor: "red",
+    // borderWidth: 1,
   },
   description: AppStyles.important,
   icon: {

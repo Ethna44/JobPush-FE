@@ -11,7 +11,7 @@ import Inscription from "./screens/Inscription";
 import Connexion from "./screens/Connexion";
 import Offres from "./screens/Offres";
 import Candidatures from "./screens/Candidatures";
-import Astuces from "./screens/Astuces";
+import Category from "./screens/Category";
 import Compte from "./screens/Compte";
 import Header from "./components/Header";
 import SubAstuces  from "./screens/SubAstuces"
@@ -19,7 +19,8 @@ import Profil from "./screens/Profil";
 import Alerte from "./screens/Alerte";
 import OfferDetails from "./screens/OfferDetails";
 import Recherche from "./screens/Recherche";
-import AccountSettings from "./components/AccountSettings";
+import ArticleDetails from "./screens/ArticleDetails"
+import AccountSettings from "./screens/AccountSettings";
 import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
@@ -118,7 +119,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => null, // On supprime l'icône par défaut car nous utilisons un bouton personnalisé
         }}
       />
-      <Tab.Screen name="Astuces" component={Astuces} />
+      <Tab.Screen name="Astuces" component={Category} />
       <Tab.Screen name="Compte" component={Compte} />
     </Tab.Navigator>
   );
@@ -188,6 +189,7 @@ export default function App() {
               <Stack.Screen name ="Annonce" component={OfferDetails}/>
               <Stack.Screen name="ParametresCompte" component={AccountSettings} />
                <Stack.Screen name="SubAstuces" component={SubAstuces} />
+               <Stack.Screen name="ArticleDetails" component={ArticleDetails}/>
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
             </Stack.Navigator>
           </NavigationContainer>
