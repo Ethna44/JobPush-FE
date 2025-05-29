@@ -37,6 +37,8 @@ export default function CandidaturesEnCours({ navigation }) {
     }, [])
   );
 
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>

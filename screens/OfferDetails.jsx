@@ -6,20 +6,30 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
-  Linking
+  Linking,
 } from "react-native";
 import AppStyles from "../AppStyles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
+import { Alert } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {
+  addFavorite,
+  updateUser,
+  removeFavorite,
+  addApplication,
+} from "../reducers/user";
 
 export default function OfferDetails({ navigation }) {
   const route = useRoute(); //Pour accéder aux params de offres
-  const [isLiked, setIsLiked] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
   const token = useSelector((state) => state.user.token);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
+  const favorites = useSelector((state) => state.user.profile.favorites);
+
+  const dispatch = useDispatch();
 
   const {
     title,
@@ -38,73 +48,84 @@ export default function OfferDetails({ navigation }) {
     _id,
   } = route.params;
 
-  const handleLikeOffer = () => {
-    if (!isLiked) {
-      fetch(`${EXPO_IP}/users/favorites`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          offerId: _id,
-          token: token,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (!data.result) {
-            setErrorMessage(
-              data.error || "An error occurred. Please try again."
-            );
-            setIsLiked(!isLiked);
-            return;
-          }
-          setIsLiked(true);
-        });
+  const handleApply = async () => {
+    const response = await fetch(`${EXPO_IP}/offers/applications`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token,
+        offerId: _id,
+      }),
+    });
+
+    const data = await response.json();
+    if (data.result) {
+      console.log('marche')
+      Alert.alert(
+        "Candidature envoyée !",
+        "Votre candidature a bien été prise en compte."
+      );
+      dispatch(addApplication(_id));
+      console.log(_id)
+      Linking.openURL(offerLink);
     } else {
-      fetch(`${EXPO_IP}/users/favorites/remove`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          offerId: _id,
-          token: token,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (!data.result) {
-            setErrorMessage(
-              data.error || "An error occurred. Please try again."
-            );
-            return;
-          }
-          setIsLiked(false);
-        });
+      console.log("marche pas");
+      
+      Alert.alert("Erreur", data.error || "Une erreur est survenue.");
     }
   };
 
+  // Ancien fetch
+
+  const handleLikeOffer = () => {
+    fetch(
+      `${EXPO_IP}/users/favorites${favorites?.includes(_id) ? "/remove" : "/"}`,
+      {
+        method: favorites?.includes(_id) ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          offerId: _id,
+          token: token,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.result) {
+          setErrorMessage(data.error || "An error occurred. Please try again.");
+        } else {
+          dispatch(
+            favorites?.includes(_id) ? removeFavorite(_id) : addFavorite(_id)
+          );
+        }
+      })
+      .catch((e) => {
+        Alert.alert(e.message);
+      });
+  };
   const heartIconStyle = {
     fontSize: 24,
     height: 32,
     width: 32,
-    color: isLiked ? "#F72C03" : "#ccc",
-    backgroundColor : "#F9F1F1",
+    color: favorites?.includes(_id) ? "#F72C03" : "#ccc",
+    backgroundColor: "#F9F1F1",
     borderRadius: 50,
-    padding : 4,
+    padding: 4,
     zIndex: 2, //place l'élément au dessus du reste comme sur un système de calque
     shadowColor: "#2B3033",
-        shadowOffset: {
-	        width: 0,
-	        height: 3,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-        elevation: 3,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
   };
 
   const favoritePress = (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={handleLikeOffer}>
       <FontAwesome
-        name="heart"
-        onPress={handleLikeOffer}
+        name={favorites?.includes(_id) ? "heart" : "heart-o"}
         style={heartIconStyle}
       />
     </TouchableOpacity>
@@ -123,15 +144,16 @@ export default function OfferDetails({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View style={styles.photoContainer}>
-          <Image source={require("../assets/logoJobPush-Photoroom.jpg")} style={styles.logo}/>
+          <Image
+            source={require("../assets/logoJobPush-Photoroom.jpg")}
+            style={styles.logo}
+          />
         </View>
         <View style={styles.textHeader}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.compagny}>{compagny}</Text>
         </View>
-        <View style={styles.heartContainer}>
-          {favoritePress}
-        </View>
+        <View style={styles.heartContainer}>{favoritePress}</View>
       </View>
       <View style={styles.infos}>
         <Text style={styles.textInfo}>{stars} sur Glassdoor</Text>
@@ -139,15 +161,23 @@ export default function OfferDetails({ navigation }) {
         <Text style={styles.source}>{source}</Text>
       </View>
       <View style={styles.card}>
-        <ScrollView style={{maxHeight: 350}}>
+        <ScrollView style={{ maxHeight: 350 }}>
           <Text style={styles.body}>{description}</Text>
         </ScrollView>
       </View>
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.applyButton} onPress={() => Linking.openURL(offerLink)}>
+        <TouchableOpacity
+          style={styles.applyButton}
+          onPress={() => {
+            handleApply();
+          }}
+        >
           <Text style={styles.buttonText}>CANDIDATER</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Offres")}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate("Offres")}
+        >
           <FontAwesome name="arrow-left" size={20} color="#F9F1F1" />
         </TouchableOpacity>
       </View>
@@ -159,20 +189,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9F1F1",
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
     // bordercolor : "blue",
     // borderWidth :1,
   },
-   photoContainer: {
+  photoContainer: {
     width: "20%",
     height: "70%",
-    borderRadius : 10,
+    borderRadius: 10,
   },
   logo: {
     width: "100%",
     height: "100%",
-    borderRadius: 10
+    borderRadius: 10,
   },
   header: {
     width: "100%",
@@ -197,7 +227,7 @@ const styles = StyleSheet.create({
     // borderColor: "pink",
     // borderWidth: 1,
   },
-  compagny : {
+  compagny: {
     ...AppStyles.body,
     fontSize: 13,
     maxWidth: "100%",
@@ -212,12 +242,12 @@ const styles = StyleSheet.create({
   textInfo: {
     ...AppStyles.body,
     fontSize: 13,
-    width: "100%", 
+    width: "100%",
     // borderColor: "orange",
     // borderWidth: 1,
   },
   infos: {
-    width: '100%',
+    width: "100%",
     paddingLeft: 10,
     // borderColor: "green",
     // borderWidth: 1,
@@ -233,7 +263,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F3E4E5",
     borderRadius: 12,
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     shadowColor: "#2B3033",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.5,
@@ -244,11 +274,11 @@ const styles = StyleSheet.create({
   },
   body: AppStyles.body,
   buttons: {
-    width: '100%',
+    width: "100%",
     // borderColor: "red",
     // borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   applyButton: {
     alignItems: "center",
