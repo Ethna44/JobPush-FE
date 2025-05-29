@@ -7,7 +7,7 @@ import { useState } from "react";
 //un tableau qui contient les articles
 const articles = [
   {
-    title: "Preparer sa candidature",
+    title: "Préparer sa candidature",
     description:
       "Rédiger un CV et une lettre de motivation adaptés à l'offre d'emploi.",
     icon: <FontAwesome name={"file-text-o"} size={22} color={"#F72C03"} />,

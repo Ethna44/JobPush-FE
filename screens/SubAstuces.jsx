@@ -5,7 +5,7 @@ import AppStyles from "../AppStyles";
 import Articles from "../components/Articles";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function TabScreen1() {
+export default function TabScreen1({ navigation }) {
   const route = useRoute();
   const [subCategories, setSubCategories] = useState([]);
   const { title, icon } = route.params;
@@ -16,25 +16,33 @@ export default function TabScreen1() {
     fetch(`${EXPO_IP}/articles/byCategory/${title}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.result)
-          setSubCategories(data.articles); // <-- articles et pas subCategories
+        if (data.result) setSubCategories(data.articles);
         else setSubCategories([]);
       });
   }, [title]);
 
- return (
-  <View style={styles.container}>
-    <Text style={styles.title}>{title}</Text>
- {subCategories.map((data, i) => (
-  <Articles
-    key={i}
-    title={data.title}
-    description={data.description}
-    icon={icon} // <-- Passe l’icône ici
-  />
-))}
-  </View>
-);
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      {subCategories.map((data, i) => (
+        <Articles
+          key={i}
+          title={data.title}
+          description={data.description}
+          icon={icon}
+          onPress={() =>
+            navigation.navigate("ArticleDetails", {
+              title: data.title,
+              description: data.description,
+              content: data.content,
+              author: data.author,
+              tags: data.tags,
+            })
+          }
+        />
+      ))}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -43,6 +51,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F9F1F1",
   },
-  title: AppStyles.title,
+  title: { ...AppStyles.title ,
+      textAlign:"center"
+  },
+
   description: AppStyles.important,
 });
