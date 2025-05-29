@@ -83,7 +83,7 @@ useFocusEffect(
           cityJob,
           region,
         })
-      );
+      )
         setcontractType("");
         setRemote("");
         setJobTitle("");
