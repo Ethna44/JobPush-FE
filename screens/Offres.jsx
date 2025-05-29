@@ -122,18 +122,25 @@ export default function TabScreen1({ navigation }) {
     }, [])
   );
 
+  const clearSearch = () => {
+    setSearch('')
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
         <Text style={styles.title}>Offres d'emploi</Text>
         <View style={styles.inputSearchContainer}>
+          <FontAwesome name="search" color="#F72C03" size={18} />
           <TextInput
             placeholder="Recherche"
             style={styles.inputSearch}
             onChangeText={(value) => setSearch(value)}
             value={search}
           />
-          <FontAwesome name="search" color="#F72C03" size={16} />
+          <TouchableOpacity style={styles.cross} onPress={clearSearch}>
+            <FontAwesome name='close' color='grey' size={18}/>
+          </TouchableOpacity>
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -175,9 +182,7 @@ const styles = StyleSheet.create({
     // borderColor: "green",
     // borderWidth: 1,
   },
-
   title: AppStyles.title,
-
   topContainer: {
     justifyContent: "center",
     alignItems: "center",
