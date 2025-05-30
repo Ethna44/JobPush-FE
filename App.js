@@ -149,8 +149,8 @@ const persistedReducers = persistReducer(
   {
     key: "Jobpush",
     storage: AsyncStorage,
-    blacklist: ["user"], // Add reducers that you don't want to persist
-    whitelist: [], // Add reducers that you want to persist
+    blacklist: [], // Add reducers that you don't want to persist
+    whitelist: ["user"], // Add reducers that you want to persist
   },
   combineReducers({ user })
 );
