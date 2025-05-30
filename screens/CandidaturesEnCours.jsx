@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import AppStyles from "../AppStyles";
 import Applications from "../components/Applications";
+import { useSelector } from "react-redux";
 
-export default function CandidaturesEnCours() {
+const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL;
 
+export default function CandidaturesEnCours({ navigation }) {
+  const token = useSelector((state) => state.user.token);
+  const [applicationsData, setApplicationsData] = useState([]);
 
-  
+  const fetchApplications = async () => {
+    const response = await fetch(
+      `${EXPO_IP}/offers/applications?token=${token}`
+    );
+    const data = await response.json();
+    setApplicationsData(data.applications);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchApplications();
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
-      <Applications/>
+      {applicationsData.map((data, i) => (
+        <Applications key={data.id || i} {...data} navigation={navigation} />
+      ))}
     </View>
   );
 }
