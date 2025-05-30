@@ -4,6 +4,10 @@ import AppStyles from "../AppStyles";
 import Applications from "../components/Applications";
 
 export default function CandidaturesEnCours() {
+
+
+  
+
   return (
     <View style={styles.container}>
       <Applications/>

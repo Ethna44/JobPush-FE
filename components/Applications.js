@@ -12,7 +12,7 @@ import { Modal } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { MaskedTextInput } from "react-native-mask-text";
 import * as Linking from "expo-linking";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";  
 
 export default function Applications() {
   const [showModal, setShowModal] = useState(false);
