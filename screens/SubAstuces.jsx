@@ -9,7 +9,7 @@ const { width } = Dimensions.get('window');
 export default function TabScreen1({ navigation }) {
   const route = useRoute();
   const [subCategories, setSubCategories] = useState([]);
-  const { title, icon } = route.params;
+  const { title, iconName } = route.params;
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function TabScreen1({ navigation }) {
           key={i}
           title={data.title}
           description={data.description}
-          icon={icon}
+          icon={<FontAwesome name={iconName} size={22} color={'#F72C03'}/>}
           onPress={() =>
             navigation.navigate("ArticleDetails", {
               title: data.title,

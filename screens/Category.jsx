@@ -11,31 +11,31 @@ const articles = [
     title: "Préparer sa candidature",
     description:
       "Tous nos tips pour rédiger un CV et une lettre de motivation adaptés au poste que vous visez. Les erreurs à éviter, les bonnes pratiques... On vous dit tout !",
-    icon: <FontAwesome name={"file-text-o"} size={22} color={"#F72C03"} />,
+    iconName : "file-text-o",
   },
   {
     title: "Reussir son entretien",
     description:
       "Entretiens de motivation, entretiens techniques... Découvrez nos conseils. On vous aide à préparer des réponses aux questions courantes et des questions à poser.",
-    icon: <FontAwesome name={"handshake-o"} size={22} color={"#F72C03"} />,
+    iconName : "handshake-o",
   },
   {
     title: "Stratégie de recherche d'emploi",
     description:
       "Utiliser les réseaux sociaux, les sites d'emploi et le réseautage pour trouver des opportunités. Optimisez vos recherches pour gagner du temps et trouver un emploi plus rapidement.",
-    icon: <FontAwesome name={"search"} size={22} color={"#F72C03"} />,
+    iconName: "search",
   },
   {
     title: "Conseils métiers",
     description:
       "Explorer les tendances du marché, les compétences demandées, les outils les plus utilisés et les opportunités de carrière dans votre secteur d'activité.",
-    icon: <FontAwesome name={"comment"} size={22} color={"#F72C03"} />,
+    iconName : "comment",
   },
   {
     title: "Soft skills",
     description:
       "Ecoute active, résolution de problème, attitude positive face au changement... Développer des compétences interpersonnelles essentielles pour le milieu professionnel.",
-    icon: <FontAwesome name={"group"} size={22} color={"#F72C03"} />,
+    iconName: "group",
   },
 ];
 
@@ -149,3 +149,4 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
 });
+
