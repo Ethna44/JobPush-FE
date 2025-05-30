@@ -55,13 +55,13 @@ export default function TabScreen1({ navigation }) {
       </Text>
       <View style={styles.preferencesContainer}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          {preferences.map((data, i) => {
+          {preferences?.map((data, i) => {
             const cityMatch = city.find((c) => c.insee === data.city);
             const regionMatch = region.find((r) => r.code === data.region);
             const sectorMatch = sector.find((s) => s.code === data.sector);
             return (
               <PreferencesCard
-                key={data._id}
+                key={i}
                 {...data}
                 cityJob={cityMatch ? cityMatch.name : data.city}
                 region={regionMatch ? regionMatch.label : null}
@@ -87,25 +87,25 @@ export default function TabScreen1({ navigation }) {
         onPress={() => navigation.navigate("Alerte", { origin: "account" })}
       >
         <Text style={styles.buttonText}>ALERTES</Text>
-        <FontAwesome name="bell" size={20} color="#F9F1F1"/>
+        <FontAwesome name="bell" size={20} color="#F9F1F1" />
       </TouchableOpacity>
       <TouchableOpacity
-      style={styles.button}
-      onPress={() => navigation.navigate("ParametresCompte")}
+        style={styles.button}
+        onPress={() => navigation.navigate("ParametresCompte")}
       >
         <Text style={styles.buttonText}>PARAMETRES DU COMPTE</Text>
-        <FontAwesome name="cog" size={22} color="#F9F1F1"/>
+        <FontAwesome name="cog" size={22} color="#F9F1F1" />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
           handleLogout();
-          dispatch(setKeepConnected(!keepConnected))
+          dispatch(setKeepConnected(!keepConnected));
           navigation.navigate("Connexion");
         }}
       >
         <Text style={styles.buttonText}>SE DÉCONNECTER</Text>
-        <FontAwesome name="power-off" size={22} color="#F9F1F1"/>
+        <FontAwesome name="power-off" size={22} color="#F9F1F1" />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -168,17 +168,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     lineHeight: 24,
   },
-  button: { 
-    ...AppStyles.button, 
-    marginBottom: 20, 
+  button: {
+    ...AppStyles.button,
+    marginBottom: 20,
     width: 270,
-    flexDirection : 'row',
-    justifyContent : "center"
+    flexDirection: "row",
+    justifyContent: "center",
   },
   buttonText: {
     ...AppStyles.buttonText,
     marginRight: 10,
-    marginBottom : 0,
+    marginBottom: 0,
     // borderColor: "blue",
     // borderWidth: 1,
   },

@@ -5,7 +5,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
@@ -15,7 +15,7 @@ import { updateUser } from "../reducers/user";
 import { useState } from "react";
 import AppStyles from "../AppStyles";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 export default function ParametresCompte({ navigation }) {
   const dispatch = useDispatch();
@@ -62,6 +62,7 @@ export default function ParametresCompte({ navigation }) {
           return;
         }
         // Met à jour le store Redux
+        navigation.navigate("TabNavigator");
         dispatch(
           updateUser({
             name,
@@ -112,28 +113,28 @@ export default function ParametresCompte({ navigation }) {
   };
 
   const clearName = () => {
-    setName('')
+    setName("");
   };
   const clearFirstName = () => {
-    setFirstName('')
+    setFirstName("");
   };
   const clearEmail = () => {
-    setEmail('')
+    setEmail("");
   };
   const clearPhoneNumber = () => {
-    setPhoneNumber('')
+    setPhoneNumber("");
   };
   const clearStreetNumber = () => {
-    setStreetNumber('')
+    setStreetNumber("");
   };
   const clearStreetName = () => {
-    setStreetName('')
+    setStreetName("");
   };
   const clearCity = () => {
-    setCity('')
+    setCity("");
   };
   const clearZipCode = () => {
-    setZipCode('')
+    setZipCode("");
   };
 
   return (
@@ -143,65 +144,63 @@ export default function ParametresCompte({ navigation }) {
         <View style={styles.row}>
           <Text style={styles.label}>Nom</Text>
           <View style={styles.rightContainer}>
-            <TextInput 
-          style={styles.value} 
-          value={name} 
-          onChangeText={setName} />
-          <TouchableOpacity style={styles.cross} onPress={clearName}>
-            <FontAwesome name='close' color='grey' size={18}/>
-          </TouchableOpacity>
+            <TextInput
+              style={styles.value}
+              value={name}
+              onChangeText={setName}
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearName}>
+              <FontAwesome name="close" color="grey" size={18} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Prenom</Text>
           <View style={styles.rightContainer}>
             <TextInput
-            style={styles.value}
-            value={firstName}
-            onChangeText={setFirstName}
-          />
-          <TouchableOpacity style={styles.cross} onPress={clearFirstName}>
-            <FontAwesome name='close' color='grey' size={18}/>
-          </TouchableOpacity>
+              style={styles.value}
+              value={firstName}
+              onChangeText={setFirstName}
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearFirstName}>
+              <FontAwesome name="close" color="grey" size={18} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>E-mail</Text>
           <View style={styles.rightContainer}>
-            <TextInput 
-          style={styles.value} 
-          value={email} 
-          editable={false} />
-          <TouchableOpacity style={styles.cross} onPress={clearEmail}>
-            <FontAwesome name='close' color='grey' size={18}/>
-          </TouchableOpacity>
+            <TextInput style={styles.value} value={email} editable={false} />
+            <TouchableOpacity style={styles.cross} onPress={clearEmail}>
+              <FontAwesome name="close" color="grey" size={18} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Tél.</Text>
           <View style={styles.rightContainer}>
             <TextInput
-            style={styles.value}
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="phone-pad"
-          />
-          <TouchableOpacity style={styles.cross} onPress={clearPhoneNumber}>
-            <FontAwesome name='close' color='grey' size={18}/>
-          </TouchableOpacity>
+              style={styles.value}
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              keyboardType="phone-pad"
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearPhoneNumber}>
+              <FontAwesome name="close" color="grey" size={18} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>N°</Text>
           <View style={styles.rightContainer}>
             <TextInput
-            style={styles.value}
-            value={streetNumber}
-            onChangeText={setStreetNumber}
-            keyboardType="numeric"
+              style={styles.value}
+              value={streetNumber}
+              onChangeText={setStreetNumber}
+              keyboardType="numeric"
             />
             <TouchableOpacity style={styles.cross} onPress={clearStreetNumber}>
-              <FontAwesome name='close' color='grey' size={18}/>
+              <FontAwesome name="close" color="grey" size={18} />
             </TouchableOpacity>
           </View>
         </View>
@@ -209,45 +208,48 @@ export default function ParametresCompte({ navigation }) {
           <Text style={styles.label}>Adresse</Text>
           <View style={styles.rightContainer}>
             <TextInput
-            style={styles.value}
-            value={streetName}
-            onChangeText={setStreetName}
+              style={styles.value}
+              value={streetName}
+              onChangeText={setStreetName}
             />
             <TouchableOpacity style={styles.cross} onPress={clearStreetName}>
-              <FontAwesome name='close' color='grey' size={18}/>
+              <FontAwesome name="close" color="grey" size={18} />
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Ville</Text>
           <View style={styles.rightContainer}>
-            <TextInput 
-          style={styles.value} 
-          value={city} 
-          onChangeText={setCity} />
-          <TouchableOpacity style={styles.cross} onPress={clearCity}>
-            <FontAwesome name='close' color='grey' size={18}/>
-          </TouchableOpacity>
+            <TextInput
+              style={styles.value}
+              value={city}
+              onChangeText={setCity}
+            />
+            <TouchableOpacity style={styles.cross} onPress={clearCity}>
+              <FontAwesome name="close" color="grey" size={18} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Code Postal</Text>
           <View style={styles.rightContainer}>
             <TextInput
-            style={styles.value}
-            value={zipCode}
-            onChangeText={setZipCode}
-            keyboardType="numeric"/>
+              style={styles.value}
+              value={zipCode}
+              onChangeText={setZipCode}
+              keyboardType="numeric"
+            />
             <TouchableOpacity style={styles.cross} onPress={clearZipCode}>
-              <FontAwesome name='close' color='grey' size={18}/>
+              <FontAwesome name="close" color="grey" size={18} />
             </TouchableOpacity>
           </View>
-          
         </View>
       </View>
 
       <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
-        <Text style={styles.editButtonText}>ENREGISTRER MES NOUVELLES INFOS</Text>
+        <Text style={styles.editButtonText}>
+          ENREGISTRER MES NOUVELLES INFOS
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.deleteButton}
@@ -275,7 +277,7 @@ const styles = StyleSheet.create({
   },
   title: AppStyles.title,
   infoTable: {
-    width: width*0.85,
+    width: width * 0.85,
     marginTop: 10,
     // borderColor : "blue",
     // borderWidth: 1,
@@ -283,9 +285,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: '#FEDDD7',
+    backgroundColor: "#FEDDD7",
     borderBottomWidth: 2,
-    borderBottomColor: '#F72C03',
+    borderBottomColor: "#F72C03",
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
     marginBottom: 10,
@@ -298,23 +300,23 @@ const styles = StyleSheet.create({
     ...AppStyles.body,
     color: "grey",
   },
-  rightContainer : {
-    flexDirection: 'row',
-    alignItems: 'center',
+  rightContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   value: {
     ...AppStyles.body,
-    marginRight:10,
+    marginRight: 10,
     // borderColor : "purple",
     // borderWidth: 1,
   },
-  cross : {
-    zindex : 2,
+  cross: {
+    zindex: 2,
   },
   editButton: {
     ...AppStyles.button,
     marginVertical: 5,
-  }, 
+  },
   editButtonText: AppStyles.buttonText,
   deleteButton: {
     ...AppStyles.button,

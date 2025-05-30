@@ -130,6 +130,16 @@ export default function Profil({ navigation }) {
                   zipCode: zipCode,
                 },
               ],
+              preferences: [
+                {
+                  contractType,
+                  remote,
+                  jobTitle,
+                  sector,
+                  cityJob,
+                  region,
+                },
+              ],
             })
           );
           navigation.navigate("Alerte", { origin: "signup" });

@@ -25,8 +25,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
-
-
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
 export default function Recherche({ navigation }) {
@@ -41,17 +39,16 @@ export default function Recherche({ navigation }) {
   const [region, setRegion] = useState("");
   const [focusedField, setFocusedField] = useState(null);
 
-  
-useFocusEffect(
-  useCallback(() => {
-    setcontractType("");
-    setRemote("");
-    setJobTitle("");
-    setSector("");
-    setCityJob("");
-    setRegion("");
-  }, [])
-);
+  useFocusEffect(
+    useCallback(() => {
+      setcontractType("");
+      setRemote("");
+      setJobTitle("");
+      setSector("");
+      setCityJob("");
+      setRegion("");
+    }, [])
+  );
 
   const handleSubmit = async () => {
     const response = await fetch(`${EXPO_IP}/users/addPreferences`, {
@@ -69,21 +66,21 @@ useFocusEffect(
         region: region,
       }),
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       if (data.result) {
-            dispatch(
-        addPreference({
-          _id: data._id,
-          contractType,
-          remote,
-          jobTitle,
-          sector,
-          cityJob,
-          region,
-        })
-      )
+        dispatch(
+          addPreference({
+            _id: data._id,
+            contractType,
+            remote,
+            jobTitle,
+            sector,
+            cityJob,
+            region,
+          })
+        );
         setcontractType("");
         setRemote("");
         setJobTitle("");
@@ -102,7 +99,7 @@ useFocusEffect(
   };
 
   const clearJobTitle = () => {
-    setJobTitle('')
+    setJobTitle("");
   };
 
   return (
@@ -111,21 +108,21 @@ useFocusEffect(
       <View style={styles.inputContainer}>
         <View style={styles.row}>
           <TextInput
-          style={[
-            styles.input,
-            focusedField === "JobTitle" && styles.inputFocused,
-          ]}
-          placeholder="Poste"
-          onChangeText={(value) => setJobTitle(value)}
-          value={jobTitle}
-          onFocus={() => setFocusedField("JobTitle")}
-          onBlur={() => setFocusedField(null)}
+            style={[
+              styles.input,
+              focusedField === "JobTitle" && styles.inputFocused,
+            ]}
+            placeholder="Poste"
+            onChangeText={(value) => setJobTitle(value)}
+            value={jobTitle}
+            onFocus={() => setFocusedField("JobTitle")}
+            onBlur={() => setFocusedField(null)}
           />
           <TouchableOpacity style={styles.cross} onPress={clearJobTitle}>
-            <FontAwesome name='close' color='grey' size={18}/>
+            <FontAwesome name="close" color="grey" size={18} />
           </TouchableOpacity>
         </View>
-        
+
         <Dropdown
           style={styles.dropdown}
           placeholderStyle={styles.placeholderDropdown}
@@ -219,16 +216,16 @@ const styles = StyleSheet.create({
     // borderColor: "green",
     // borderWidth: 1,
   },
-  row : {
-    flexDirection: 'row',
-    alignItems: 'center',
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
     // borderColor: "blue",
     // borderWidth: 1,
   },
-   cross : {
-    position: 'absolute',
-    right : 10,
-    zindex : 2,
+  cross: {
+    position: "absolute",
+    right: 10,
+    zindex: 2,
     // borderColor: "blue",
     // borderWidth: 1,
   },
