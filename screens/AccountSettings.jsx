@@ -277,8 +277,8 @@ const styles = StyleSheet.create({
   infoTable: {
     width: width*0.85,
     marginTop: 10,
-    borderColor : "blue",
-    borderWidth: 1,
+    // borderColor : "blue",
+    // borderWidth: 1,
   },
   row: {
     flexDirection: "row",
@@ -304,9 +304,9 @@ const styles = StyleSheet.create({
   },
   value: {
     ...AppStyles.body,
-    borderColor : "purple",
     marginRight:10,
-    borderWidth: 1,
+    // borderColor : "purple",
+    // borderWidth: 1,
   },
   cross : {
     zindex : 2,
