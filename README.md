@@ -27,12 +27,12 @@ expo start
 Scannez le QR Code avec Expo Go ou lancez un émulateur.
 
 ### ✨ Fonctionnalités principales
-Navigation ongletée : Accueil, Offres, Candidatures, Astuces, Compte
-Authentification, inscription, gestion du profil
-Recherche et filtrage d’offres
-Gestion des candidatures et favoris
-Articles & astuces par tags
-Notifications personnalisées
+- Navigation ongletée : Accueil, Offres, Candidatures, Astuces, Compte
+- Authentification, inscription, gestion du profil
+- Recherche et filtrage d’offres
+- Gestion des candidatures et favoris
+- Articles & astuces par tags
+- Notifications personnalisées
 
 ### 🧰 Stack technique 
 - React Native (via Expo)
