@@ -61,44 +61,53 @@ export default function TabScreen1({ navigation }) {
     fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
-        const job = fusionWord(data.preferences[0].jobTitle);
-        callOffresApi(
-          tokenManagerRef.current,
-          job,
-          data.preferences[0].sector,
-          data.preferences[0].contractType,
-          data.preferences[0].region,
-          data.preferences[0].city
-        ).then((data) => {
-          for (let o = 0; o < data.resultats.length; o++) {
-            const offer = data.resultats[o];
-            reverseGeocode(
-              offer.lieuTravail.latitude,
-              offer.lieuTravail.longitude
-            ).then((address) => {
-              const grade = Math.floor(Math.random() * 5) + 1;
-              fetch(`${EXPO_IP}/offers/add`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  title: offer.intitule,
-                  compagny: offer.entreprise.nom,
-                  logoLink: offer.entreprise.logo || "",
-                  grade: grade,
-                  contractType: offer.typeContrat,
-                  publicationDate: offer.dateCreation,
-                  streetNumber: address.streetNumber || "",
-                  streetName: address.streetName,
-                  city: address.city,
-                  zipCode: address.zipCode,
-                  source: "France Travail",
-                  offerLink: offer.origineOffre.urlOrigine,
-                  description: offer.description,
-                }),
+        const preferences = data.preferences;
+        for (let y = 0; y < preferences.length; y++) {
+          const pref = preferences[y];
+          const job = fusionWord(pref.jobTitle);
+
+          callOffresApi(
+            tokenManagerRef.current,
+            job,
+            pref.sector,
+            pref.contractType,
+            pref.region,
+            pref.city
+          ).then((data) => {
+            console.log("api gouv =>", data);
+            for (let o = 0; o < data.resultats.length; o++) {
+              const offer = data.resultats[o];
+
+              reverseGeocode(
+                offer.lieuTravail.latitude,
+                offer.lieuTravail.longitude
+              ).then((address) => {
+                const grade = Math.floor(Math.random() * 5) + 1;
+
+                fetch(`${EXPO_IP}/offers/add`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    title: offer.intitule,
+                    compagny: offer.entreprise.nom,
+                    logoLink: offer.entreprise.logo || "",
+                    grade: grade,
+                    sector: pref.sector, // 👈 secteur spécifique à la préférence actuelle
+                    contractType: offer.typeContrat,
+                    publicationDate: offer.dateCreation,
+                    streetNumber: address.streetNumber || "",
+                    streetName: address.streetName,
+                    city: address.city,
+                    zipCode: address.zipCode,
+                    source: "France Travail",
+                    offerLink: offer.origineOffre.urlOrigine,
+                    description: offer.description,
+                  }),
+                });
               });
-            });
-          }
-        });
+            }
+          });
+        }
       });
   };
 

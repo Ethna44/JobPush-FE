@@ -6,7 +6,11 @@ const callOffresApi = async (
   region,
   commune
 ) => {
+  console.log("hre 1");
+
   try {
+    console.log("hr 2e");
+
     KeyWord = KeyWord || "";
     Sector = Sector || "";
     contractType = contractType || "";
@@ -27,6 +31,8 @@ const callOffresApi = async (
     const data = await response.json();
     return data;
   } catch (error) {
+    console.log("hr 3e");
+
     console.error("❌ Erreur API :", error.message);
     throw error;
   }
@@ -51,7 +57,9 @@ async function reverseGeocode(latitude, longitude) {
 }
 
 function fusionWord(str) {
-  return str.trim().split(/\s+/).join(",");
+  if (!str) return "";
+
+  return str?.trim().split(/\s+/).join(",");
 }
 
 module.exports = {
