@@ -12,9 +12,12 @@ import { Modal } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { MaskedTextInput } from "react-native-mask-text";
 import * as Linking from "expo-linking";
-import { FontAwesome } from "@expo/vector-icons";  
+import { FontAwesome } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
-export default function Applications({ navigation }) {
+const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL;
+export default function Applications({ navigation, ...props }) {
+  const token = useSelector((state) => state.user.token);
   const [showModal, setShowModal] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [showCalendarModal, setShowCalendarModal] = useState(false);
@@ -51,6 +54,31 @@ export default function Applications({ navigation }) {
     const endDay = String(date.getDate()).padStart(2, "0");
     return `${endYear}${endMonth}${endDay}`;
   }
+
+  const updateTodo = () => {
+    fetch(
+      `${EXPO_IP}/offers/applications/todo?offerId=${props.offerId._id}&token=${token}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          recallDate: relanceDate,
+          interviewDate: interviewDate,
+          TyLetterDate: thanksDate,
+          notes: notes,
+        }),
+      }
+    );
+  };
+
+  React.useEffect(() => {
+    const date = new Date(props.offerId.publicationDate);
+    setCandidateDate(
+      `${String(date.getDate()).padStart(2, "0")}/${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}/${date.getFullYear()}`
+    );
+  }, [props.offerId.publicationDate]);
 
   const modal = (
     <Modal visible={showModal} transparent={true}>
@@ -172,7 +200,7 @@ export default function Applications({ navigation }) {
             style={AppStyles.button}
             onPress={() => setShowCalendarModal(true)}
           >
-            <Text style={AppStyles.buttonText}>Ajouter à Google Agenda</Text>
+            <Text style={AppStyles.buttonText}>AJOUTER A GOOGLE AGENDA</Text>
           </TouchableOpacity>
 
           <View style={styles.button}>
@@ -186,7 +214,9 @@ export default function Applications({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={AppStyles.button}
-              onPress={() => setShowModal(false)}
+              onPress={() => {
+                updateTodo(), setShowModal(false);
+              }}
             >
               <Text style={AppStyles.buttonText}>SAUVEGARDER</Text>
             </TouchableOpacity>
@@ -310,23 +340,30 @@ export default function Applications({ navigation }) {
     </Modal>
   );
 
-  console.log("marche ton oncle ");
+  console.log(props.offerId.publicationDate);
+
+  const dateCreation = new Date(props.offerId.publicationDate);
+  const dateFormatted = dateCreation.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <TouchableOpacity style={styles.container}>
-      <View style={styles.candidature}>
+      <View style={styles.textContainer}>
         <View>
-          <Text style={AppStyles.inputSearch}>Titre : </Text>
-          <Text style={AppStyles.important}>Entreprise: JobPush </Text>
+          <Text style={AppStyles.inputSearch}>{props.offerId.title} </Text>
+          <Text style={AppStyles.important}>{props.offerId.compagny}</Text>
         </View>
-        <Text style={AppStyles.body}>Candidaté le : 14 novembre 2025 </Text>
+        <Text style={AppStyles.body}>Candidaté le: {dateFormatted} </Text>
       </View>
-      <TouchableOpacity style={AppStyles.button} onPress={handleTodoList}>
-        <Text style={AppStyles.buttonText}>Todo List</Text>
+      <TouchableOpacity style={styles.todoContainer} onPress={handleTodoList}>
+        <Text style={AppStyles.buttonText}>TODO LIST</Text>
+        {showCalendarModal && googleAgenda}
+        {note}
+        {modal}
       </TouchableOpacity>
-      {showCalendarModal && googleAgenda}
-      {note}
-      {modal}
     </TouchableOpacity>
   );
 }
@@ -337,6 +374,7 @@ const styles = StyleSheet.create({
     height: "16%",
     borderRadius: 10,
     flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#F3E4E5",
     margin: 10,
     padding: 5,
@@ -349,9 +387,9 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 3,
   },
-  candidature: {
+  textContainer: {
     height: "100%",
-    width: "70%",
+    width: "65%",
     justifyContent: "space-between",
   },
   todo: {
@@ -372,6 +410,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  todoContainer: {
+    ...AppStyles.button,
+    width: "35%",
+  },
   inputContainer: {
     width: "100%",
   },
@@ -391,6 +433,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     width: "100%",
     backgroundColor: "#FEDDD7",
     borderBottomWidth: 2,
@@ -425,8 +468,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 3,
-    marginBottom: 7,
-    marginTop: 4,
     // borderColor: "blue",
     // borderWidth: 1,
     width: 45,
