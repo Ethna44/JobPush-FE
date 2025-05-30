@@ -15,7 +15,7 @@ import sector from "../json/sector.json";
 import { useDispatch } from "react-redux";
 import { updateToken } from "../reducers/user";
 import { setKeepConnected } from "../reducers/user";
-
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function TabScreen1({ navigation }) {
   const preferences = useSelector((state) => state.user.profile.preferences);
@@ -87,17 +87,25 @@ export default function TabScreen1({ navigation }) {
         onPress={() => navigation.navigate("Alerte", { origin: "account" })}
       >
         <Text style={styles.buttonText}>ALERTES</Text>
+        <FontAwesome name="bell" size={20} color="#F9F1F1"/>
       </TouchableOpacity>
-
       <TouchableOpacity
-        style={styles.logoutButton}
+      style={styles.button}
+      onPress={() => navigation.navigate("ParametresCompte")}
+      >
+        <Text style={styles.buttonText}>PARAMETRES DU COMPTE</Text>
+        <FontAwesome name="cog" size={22} color="#F9F1F1"/>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => {
           handleLogout();
           dispatch(setKeepConnected(!keepConnected))
           navigation.navigate("Connexion");
         }}
       >
-        <Text style={styles.logoutButtonText}>SE DÉCONNECTER</Text>
+        <Text style={styles.buttonText}>SE DÉCONNECTER</Text>
+        <FontAwesome name="power-off" size={22} color="#F9F1F1"/>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -118,7 +126,7 @@ const styles = StyleSheet.create({
   },
   preferencesContainer: {
     width: "100%",
-    height: "50%",
+    height: "38%",
     alignItems: "center",
     paddingTop: 8,
     // borderColor: "blue",
@@ -160,23 +168,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     lineHeight: 24,
   },
-  button: { ...AppStyles.button, marginBottom: 20, width: 250 },
-
-  buttonText: AppStyles.buttonText,
-
-  logoutButton: {
-    backgroundColor: "#F72C03",
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    alignItems: "center",
-    marginBottom: 20,
-    width: 250,
+  button: { 
+    ...AppStyles.button, 
+    marginBottom: 20, 
+    width: 270,
+    flexDirection : 'row',
+    justifyContent : "center"
   },
-  logoutButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-    letterSpacing: 1,
+  buttonText: {
+    ...AppStyles.buttonText,
+    marginRight: 10,
+    marginBottom : 0,
+    // borderColor: "blue",
+    // borderWidth: 1,
   },
 });
