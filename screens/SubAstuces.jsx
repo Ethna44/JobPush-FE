@@ -30,7 +30,7 @@ export default function TabScreen1({ navigation }) {
           key={i}
           title={data.title}
           description={data.description}
-          icon={<FontAwesome name={iconName} size={22} color={'#F72C03'}/>}
+          icon={<FontAwesome name={iconName} size={22} color={'#F72C03'}/>} //on reconstruit l'icone à partir du iconName qui nous vient de Category.jsx
           onPress={() =>
             navigation.navigate("ArticleDetails", {
               title: data.title,
