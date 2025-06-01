@@ -152,24 +152,6 @@ export default function TabScreen1({ navigation }) {
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.card}>
-          {/* {offersData
-            .filter((offer) => {
-              if (!search) return true;
-              const searchLower = search.toLowerCase();
-              return (
-                (offer.title &&
-                  offer.title.toLowerCase().includes(searchLower)) ||
-                (offer.compagny &&
-                  offer.compagny.toLowerCase().includes(searchLower)) ||
-                (offer.source &&
-                  offer.source.toLowerCase().includes(searchLower)) ||
-                (offer.city && offer.city.toLowerCase().includes(searchLower))
-              );
-            })
-            .map((data, i) => (
-              <JobCard key={i} {...data} navigation={navigation} />
-            ))} */}
-            //permet de ne pas montrer deux fois la même job card
             {Array.from(
               new Map(
                 offersData.filter((offer) => {
