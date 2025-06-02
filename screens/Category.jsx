@@ -59,8 +59,9 @@ export default function TabScreen1({ navigation }) {
     const data = await response.json();
     if (data.result) {
       setFilteredArticles(
-        data.articles.map((a) => ({
+        data.articles.map((a, i) => ({
           ...a,
+          key:{i},
           icon: <FontAwesome name="lightbulb-o" size={22} color="#F72C03" />,
         }))
       );
