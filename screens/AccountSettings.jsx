@@ -307,6 +307,8 @@ const styles = StyleSheet.create({
   value: {
     ...AppStyles.body,
     marginRight: 10,
+    minWidth : 180,
+    textAlign : 'right',
     // borderColor : "purple",
     // borderWidth: 1,
   },
