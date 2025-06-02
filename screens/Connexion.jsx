@@ -43,7 +43,7 @@ export default function LogIn({ navigation }) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
         }
-        // console.log('check:', data.phoneNumber, data.address)
+        // //console.log('check:', data.phoneNumber, data.address)
 
         dispatch(updateToken(data.token));
         dispatch(

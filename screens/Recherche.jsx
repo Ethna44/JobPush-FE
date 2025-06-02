@@ -186,7 +186,7 @@ export default function Recherche({ navigation }) {
           data={teletravail}
           labelField="label"
           valueField="value"
-          placeholder="Remote"
+          placeholder="Télétravail"
           value={remote}
           onChange={(item) => setRemote(item.value)}
         />

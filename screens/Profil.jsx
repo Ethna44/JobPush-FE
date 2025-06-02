@@ -30,7 +30,7 @@ export default function Profil({ navigation }) {
   const token = useSelector((state) => state.user.token);
   const [name, setName] = useState(null);
   const [firstName, setFirstName] = useState(null);
-  const [phonenumber, setPhoneNumber] = useState(null);
+  const [phonenumber, setPhoneNumber] = useState("");
   const [streetNumber, setStreetNumber] = useState(null);
   const [streetName, setStreetName] = useState(null);
   const [city, setCity] = useState(null);
@@ -409,7 +409,7 @@ export default function Profil({ navigation }) {
             data={teletravail}
             labelField="label"
             valueField="value"
-            placeholder="Remote"
+            placeholder="Télétravail"
             value={remote}
             onChange={(item) => setRemote(item.value)}
           />
