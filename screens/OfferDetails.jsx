@@ -28,6 +28,7 @@ export default function OfferDetails({ navigation }) {
   const token = useSelector((state) => state.user.token);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const favorites = useSelector((state) => state.user.profile.favorites);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -60,17 +61,17 @@ export default function OfferDetails({ navigation }) {
 
     const data = await response.json();
     if (data.result) {
-      console.log('marche')
+      console.log("marche");
       Alert.alert(
         "Candidature envoyée !",
         "Votre candidature a bien été prise en compte."
       );
+        Linking.openURL(offerLink);
       dispatch(addApplication(_id));
-      console.log(_id)
-      Linking.openURL(offerLink);
+      console.log(_id);
     } else {
       console.log("marche pas");
-      
+
       Alert.alert("Erreur", data.error || "Une erreur est survenue.");
     }
   };
@@ -140,7 +141,7 @@ export default function OfferDetails({ navigation }) {
     }
   }
 
-    const dateCreation = new Date(publicationDate);
+  const dateCreation = new Date(publicationDate);
   const dateFormatted = dateCreation.toLocaleDateString("fr-FR", {
     year: "numeric",
     month: "long",

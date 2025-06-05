@@ -56,14 +56,15 @@ export default function TabScreen1({ navigation }) {
       <View style={styles.preferencesContainer}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           {preferences?.map((data, i) => {
-            const cityMatch = city.find((c) => c.insee === data.city);
+            const cityCode = data.cityJob || data.city;
+            const cityMatch = city.find((c) => c.insee === cityCode);
             const regionMatch = region.find((r) => r.code === data.region);
             const sectorMatch = sector.find((s) => s.code === data.sector);
             return (
               <PreferencesCard
                 key={i}
                 {...data}
-                cityJob={cityMatch ? cityMatch.name : data.city}
+                cityJob={cityMatch ? cityMatch.name : cityCode}
                 region={regionMatch ? regionMatch.label : null}
                 sector={sectorMatch ? sectorMatch.label : data.sector}
                 index={i}

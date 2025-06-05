@@ -3,12 +3,12 @@ import Applications from "../components/Applications";
 
 const initialState = {
   token: null, // Valeur initiale du token
-  keepConnected : false ,
+  keepConnected: false,
   profile: {
     name: null,
     firstName: null,
     email: null,
-    phoneNumber: null,  
+    phoneNumber: null,
     address: [
       { streetNumber: null, streetName: null, city: null, zipCode: null },
     ],
@@ -37,14 +37,19 @@ export const userSlice = createSlice({
     updateUser: (state, action) => {
       state.profile = action.payload;
     },
-
     updateToken: (state, action) => {
       state.token = action.payload;
     },
+    signup: (state, action) => {
+      state.profile.favorites = [];
+    },
     addFavorite: (state, action) => {
+      console.log(action.payload);
+      console.log(state.profile);
       state.profile.favorites.push(action.payload);
     },
     removeFavorite: (state, action) => {
+      console.log(action.payload);
       state.profile.favorites = state.profile.favorites.filter(
         (e) => e !== action.payload
       );
@@ -69,8 +74,8 @@ export const userSlice = createSlice({
       state.profile.address.push(action.payload);
     },
     setKeepConnected: (state, action) => {
-  state.keepConnected = action.payload;
-},
+      state.keepConnected = action.payload;
+    },
   },
 });
 
@@ -85,5 +90,6 @@ export const {
   removeApplication,
   addPreference,
   setKeepConnected,
+  signup,
 } = userSlice.actions;
 export default userSlice.reducer;

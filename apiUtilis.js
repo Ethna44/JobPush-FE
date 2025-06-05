@@ -17,11 +17,19 @@ const callOffresApi = async (
     region = region || "";
     commune = commune || "";
 
+    let url = `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&region=${region}&commune=${commune}&range=0-9`;
+    
+    if (contractType === 'CDD' || contractType === 'CDI') {
+      url += `&typeContrat=${contractType}`;
+    } else {
+      url += `&natureContrat=E2&typeContrat=CDD`;
+    }
+
     const token = await tokenManager.getToken();
     //console.log("🔑 Token récupéré :", token);
 
     const response = await fetch(
-      `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&typeContrat=${contractType}&region=${region}&commune=${commune}`,
+     url,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -38,22 +46,27 @@ const callOffresApi = async (
   }
 };
 async function reverseGeocode(latitude, longitude) {
-  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": "YourAppName/1.0 (your@email.com)", // important avec Nominatim
-    },
-  });
+  try {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "YourAppName/1.0 (your@email.com)", // important avec Nominatim
+      },
+    });
 
-  const data = await response.json();
 
-  const address = data.address || {};
-  return {
-    streetNumber: address.house_number || " ",
-    streetName: address.road || "",
-    city: address.city || address.town || address.village || "",
-    zipCode: address.postcode || "",
-  };
+    const data = await response.json();
+
+    const address = data.address || {};
+    return {
+      streetNumber: address.house_number || " ",
+      streetName: address.road || "",
+      city: address.city || address.town || address.village || "",
+      zipCode: address.postcode || "",
+    };
+  } catch (e) {
+    console.error("errror in georeverse", e.message);
+  }
 }
 
 function fusionWord(str) {

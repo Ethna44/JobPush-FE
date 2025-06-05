@@ -140,6 +140,8 @@ export default function Profil({ navigation }) {
                   region,
                 },
               ],
+              favorites: [],
+              
             })
           );
           navigation.navigate("Alerte", { origin: "signup" });

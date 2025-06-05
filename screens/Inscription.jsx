@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
-import { updateUser, updateToken } from "../reducers/user";
+import { updateUser, updateToken, signup } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
@@ -31,7 +31,7 @@ export default function StackScreen2({ navigation }) {
   function handleSubmit() {
     if (validateEmail(email)) {
       setCheckMail(false);
-      dispatch(updateUser(email));
+      // dispatch(updateUser(email));
     } else {
       setCheckMail(true);
     }
@@ -65,8 +65,10 @@ export default function StackScreen2({ navigation }) {
       .then((data) => {
         //console.log(data);
         if (data.result) {
+          console.log(data);
           // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
           dispatch(updateToken(data.token));
+          dispatch(signup());
           setCheckMail("");
           setCheckPassword("");
           setPasswordConfirm("");
@@ -88,15 +90,15 @@ export default function StackScreen2({ navigation }) {
   console.log(passwordConfirm);
 
   const clearEmail = () => {
-    setEmail('')
+    setEmail("");
   };
 
   const clearPassword = () => {
-    setCheckPassword('')
+    setCheckPassword("");
   };
 
   const clearConfirmPassword = () => {
-    setPasswordConfirm('')
+    setPasswordConfirm("");
   };
 
   return (
@@ -116,84 +118,101 @@ export default function StackScreen2({ navigation }) {
       <View style={styles.inputContainer}>
         <View style={styles.row}>
           <TextInput
-          style={[
-            styles.input,
-            focusedField === "email" && styles.inputFocused,
-          ]}
-          placeholder="email"
-          placeholderTextColor="#999"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          onFocus={() => setFocusedField("email")}
-          onBlur={() => setFocusedField(null)}
-          onChangeText={(value) => setEmail(value)}
-          value={email}
+            style={[
+              styles.input,
+              focusedField === "email" && styles.inputFocused,
+            ]}
+            placeholder="email"
+            placeholderTextColor="#999"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            onFocus={() => setFocusedField("email")}
+            onBlur={() => setFocusedField(null)}
+            onChangeText={(value) => setEmail(value)}
+            value={email}
           />
           <TouchableOpacity style={styles.cross} onPress={clearEmail}>
-            <FontAwesome name='close' color='grey' size={18}/>
+            <FontAwesome name="close" color="grey" size={18} />
           </TouchableOpacity>
         </View>
-        
+
         {/* {checkMail && (
         <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
         )} */}
         <View style={styles.row}>
           <TextInput
-          style={[
-            styles.input,
-            focusedField === "password" && styles.inputFocused,
-          ]}
-          placeholder="mot de passe"
-          placeholderTextColor="#999"
-          secureTextEntry={isPasswordSecure}
-          autoCapitalize="none"
-          onFocus={() => setFocusedField("password")}
-          onBlur={() => setFocusedField(null)}
-          onChangeText={(value) => setCheckPassword(value)}
-          value={password}
+            style={[
+              styles.input,
+              focusedField === "password" && styles.inputFocused,
+            ]}
+            placeholder="mot de passe"
+            placeholderTextColor="#999"
+            secureTextEntry={isPasswordSecure}
+            autoCapitalize="none"
+            onFocus={() => setFocusedField("password")}
+            onBlur={() => setFocusedField(null)}
+            onChangeText={(value) => setCheckPassword(value)}
+            value={password}
           />
           <TouchableOpacity style={styles.cross} onPress={clearPassword}>
-            <FontAwesome name='close' color='grey' size={18}/>
+            <FontAwesome name="close" color="grey" size={18} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.eye}>
-            <FontAwesome name='eye' color='grey' size={18} onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}/>
+            <FontAwesome
+              name="eye"
+              color="grey"
+              size={18}
+              onPress={() => {
+                isPasswordSecure
+                  ? setIsPasswordSecure(false)
+                  : setIsPasswordSecure(true);
+              }}
+            />
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.row}>
           <TextInput
-          style={[
-            styles.input,
-            focusedField === "confirm" && styles.inputFocused,
-          ]}
-          placeholder="confirmer mot de passe"
-          placeholderTextColor="#999"
-          secureTextEntry={isPasswordSecure}
-          autoCapitalize="none"
-          onFocus={() => setFocusedField("confirm")}
-          onBlur={() => setFocusedField(null)}
-          onChangeText={(value) => setPasswordConfirm(value)}
-          value={passwordConfirm}
+            style={[
+              styles.input,
+              focusedField === "confirm" && styles.inputFocused,
+            ]}
+            placeholder="confirmer mot de passe"
+            placeholderTextColor="#999"
+            secureTextEntry={isPasswordSecure}
+            autoCapitalize="none"
+            onFocus={() => setFocusedField("confirm")}
+            onBlur={() => setFocusedField(null)}
+            onChangeText={(value) => setPasswordConfirm(value)}
+            value={passwordConfirm}
           />
           <TouchableOpacity style={styles.cross} onPress={clearConfirmPassword}>
-            <FontAwesome name='close' color='grey' size={18}/>
+            <FontAwesome name="close" color="grey" size={18} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.eye}>
-            <FontAwesome name='eye' color='grey' size={18} onPress={() => { isPasswordSecure ? setIsPasswordSecure(false) : setIsPasswordSecure(true) }}/>
+            <FontAwesome
+              name="eye"
+              color="grey"
+              size={18}
+              onPress={() => {
+                isPasswordSecure
+                  ? setIsPasswordSecure(false)
+                  : setIsPasswordSecure(true);
+              }}
+            />
           </TouchableOpacity>
         </View>
 
         <View style={styles.errorMessageContainer}>
           {errorMessage && (
-          <Text style={styles.errorMessage}>{errorMessage}</Text>
-        )}
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+          )}
         </View>
-        
       </View>
       <View style={styles.buttonAndTextContainer}>
         <TouchableOpacity
           onPress={() => {
-           // navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
+            // navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
             handleRegister();
           }}
           style={styles.button}
@@ -238,22 +257,22 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: AppStyles.title,
-  row : {
-    justifyContent: 'center',
+  row: {
+    justifyContent: "center",
     // borderColor: "blue",
     // borderWidth: 1,
   },
-  cross : {
-    position: 'absolute',
-    right : 10,
-    zindex : 2,
+  cross: {
+    position: "absolute",
+    right: 10,
+    zindex: 2,
     // borderColor: "blue",
     // borderWidth: 1,
   },
-  eye : {
-    position: 'absolute',
-    right : 40,
-    zindex : 2,
+  eye: {
+    position: "absolute",
+    right: 40,
+    zindex: 2,
     // borderColor: "blue",
     // borderWidth: 1,
   },
@@ -261,26 +280,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: '25%',
-    justifyContent : "space-between",
+    height: "25%",
+    justifyContent: "space-between",
     // borderColor: "green",
     // borderWidth: 1,
     margin: 30,
   },
   input: {
-      ...AppStyles.input,
-      // borderColor: "red",
-      // borderWidth: 1,
-      marginBottom: 0,
-    },
-  inputFocused: AppStyles.inputFocused,
-  errorMessageContainer : {
-    width: "70%"
+    ...AppStyles.input,
+    // borderColor: "red",
+    // borderWidth: 1,
+    marginBottom: 0,
   },
-  errorMessage : {
-    color: "red", 
+  inputFocused: AppStyles.inputFocused,
+  errorMessageContainer: {
+    width: "70%",
+  },
+  errorMessage: {
+    color: "red",
     marginTop: 4,
-    textAlign : 'center'
+    textAlign: "center",
   },
   buttonAndTextContainer: {
     justifyContent: "center",

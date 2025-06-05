@@ -71,14 +71,15 @@ export default function Applications({ navigation, ...props }) {
     );
   };
 
+
   React.useEffect(() => {
-    const date = new Date(props.offerId.publicationDate);
+    const date = new Date(props.applicationDate);
     setCandidateDate(
       `${String(date.getDate()).padStart(2, "0")}/${String(
         date.getMonth() + 1
       ).padStart(2, "0")}/${date.getFullYear()}`
     );
-  }, [props.offerId.publicationDate]);
+  }, [props.applicationDate]);
 
   const modal = (
     <Modal visible={showModal} transparent={true}>
@@ -340,9 +341,8 @@ export default function Applications({ navigation, ...props }) {
     </Modal>
   );
 
-  console.log(props.offerId.publicationDate);
 
-  const dateCreation = new Date(props.offerId.publicationDate);
+  const dateCreation = new Date(props.applicationDate);
   const dateFormatted = dateCreation.toLocaleDateString("fr-FR", {
     year: "numeric",
     month: "long",

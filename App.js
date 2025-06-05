@@ -14,12 +14,12 @@ import Candidatures from "./screens/Candidatures";
 import Category from "./screens/Category";
 import Compte from "./screens/Compte";
 import Header from "./components/Header";
-import SubAstuces  from "./screens/SubAstuces"
+import SubAstuces from "./screens/SubAstuces";
 import Profil from "./screens/Profil";
 import Alerte from "./screens/Alerte";
 import OfferDetails from "./screens/OfferDetails";
 import Recherche from "./screens/Recherche";
-import ArticleDetails from "./screens/ArticleDetails"
+import ArticleDetails from "./screens/ArticleDetails";
 import AccountSettings from "./screens/AccountSettings";
 import { Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -162,6 +162,7 @@ const store = configureStore({
 });
 
 const persistor = persistStore(store);
+// persistor.purge();  
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -186,10 +187,13 @@ export default function App() {
               <Stack.Screen name="Connexion" component={Connexion} />
               <Stack.Screen name="Profil" component={Profil} />
               <Stack.Screen name="Alerte" component={Alerte} />
-              <Stack.Screen name ="Annonce" component={OfferDetails}/>
-              <Stack.Screen name="ParametresCompte" component={AccountSettings} />
-               <Stack.Screen name="SubAstuces" component={SubAstuces} />
-               <Stack.Screen name="ArticleDetails" component={ArticleDetails}/>
+              <Stack.Screen name="Annonce" component={OfferDetails} />
+              <Stack.Screen
+                name="ParametresCompte"
+                component={AccountSettings}
+              />
+              <Stack.Screen name="SubAstuces" component={SubAstuces} />
+              <Stack.Screen name="ArticleDetails" component={ArticleDetails} />
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
             </Stack.Navigator>
           </NavigationContainer>
