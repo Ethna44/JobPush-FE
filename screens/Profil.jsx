@@ -51,14 +51,6 @@ export default function Profil({ navigation }) {
     }
   }, [errorMessage]);
 
-  // const citiesList = cities.cities
-  //   .filter((city) => city.label) // garde seulement ceux qui ont un label
-  //   .map((city) => ({
-  //     ...city,
-  //     label: city.label.charAt(0).toUpperCase() + city.label.slice(1),
-  //     value: city.label.charAt(0).toUpperCase() + city.label.slice(1),
-  //   }));
-
   // Validation helpers
   const isNumeric = (value) => /^[0-9]+$/.test(value);
 

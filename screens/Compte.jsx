@@ -47,12 +47,14 @@ export default function TabScreen1({ navigation }) {
           AppStyles.subtitle,
           { alignSelf: "flex-start", marginLeft: 20 },
         ]}
-      >Mes préférences</Text>
+      >
+        Mes préférences
+      </Text>
       <View style={styles.preferencesContainer}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          {preferences?.map((data, i) => {
-            const cityCode = data.cityJob || data.city;
-            const cityMatch = city.find((c) => c.insee === cityCode);
+          {preferences?.map((data, i) => { 
+            const cityCode = data.cityJob || data.city; // recupere les valeurs d'entre par les preférences user et les traduits par les valeurs brut
+            const cityMatch = city.find((c) => c.insee === cityCode);                       // ex : 75101 pour paris 
             const regionMatch = region.find((r) => r.code === data.region);
             const sectorMatch = sector.find((s) => s.code === data.sector);
             return (

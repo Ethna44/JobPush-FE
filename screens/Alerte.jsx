@@ -90,7 +90,7 @@ export default function Alerte({ navigation, route }) {
             value="option1"
             status={selectedValue === "option1" ? "checked" : "unchecked"}
             onPress={() => setSelectedValue("option1")}
-            color="#F72C03" // Custom color for the radio button
+            color="#F72C03" 
           />
           <Text style={styles.body} onPress={() => setSelectedValue("option1")}>
             {options.option1}
@@ -101,14 +101,14 @@ export default function Alerte({ navigation, route }) {
             value="option2"
             status={selectedValue === "option2" ? "checked" : "unchecked"}
             onPress={() => setSelectedValue("option2")}
-            color="#F72C03" // Custom color for the radio button
+            color="#F72C03"
           />
           <Text style={styles.body} onPress={() => setSelectedValue("option2")}>
             {options.option2}
           </Text>
         </View>
         <View style={styles.radioButton}>
-          <RadioButton
+          <RadioButton.Android
             value="option3"
             status={selectedValue === "option3" ? "checked" : "unchecked"}
             onPress={() => setSelectedValue("option3")}

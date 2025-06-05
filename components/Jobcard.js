@@ -11,7 +11,7 @@ import { useState } from "react";
 import AppStyles from "../AppStyles";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addFavorite, updateUser, removeFavorite } from "../reducers/user";
+import { addFavorite, removeFavorite } from "../reducers/user";
 
 export default function JobCard(props) {
   const {
@@ -41,9 +41,11 @@ export default function JobCard(props) {
 
   const dispatch = useDispatch();
 
+
+  //verifie si il y a deja l'id de l'offre et l'ajoute sinon l'enleve
   const handleLikeOffer = () => {
     fetch(
-      `${EXPO_IP}/users/favorites${favorites?.includes(_id) ? "/remove" : "/"}`,
+      `${EXPO_IP}/users/favorites${favorites?.includes(_id) ? "/remove" : "/"}`,     
       {
         method: favorites?.includes(_id) ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
@@ -99,8 +101,8 @@ export default function JobCard(props) {
     </TouchableOpacity>
   );
 
-  const stars = [];
-  for (let i = 0; i < 5; i++) {
+  const stars = [];                                                  
+  for (let i = 0; i < 5; i++) {                     
     if (props.grade > i) {
       stars.push(<FontAwesome key={i} name="star" color="#F72C03" size={16} />);
     } else {
@@ -108,7 +110,7 @@ export default function JobCard(props) {
     }
   }
   const dateCreation = new Date(props.publicationDate);
-  const dateFormatted = dateCreation.toLocaleDateString("fr-FR", {
+  const dateFormatted = dateCreation.toLocaleDateString("fr-FR", {  // formate la date donnée par mongoose en date réel ex: 15 mai 2025
     year: "numeric",
     month: "long",
     day: "numeric",

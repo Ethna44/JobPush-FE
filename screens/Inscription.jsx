@@ -64,7 +64,6 @@ export default function StackScreen2({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
           dispatch(updateToken(data.token));
           dispatch(signup());
           setCheckMail("");

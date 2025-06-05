@@ -60,12 +60,13 @@ export default function TabScreen1({ navigation }) {
     fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
-
+        //recupere les préférences utilisateurs et boucle dessus afin de recuperer toutes les offres qui correspondent a toutes les préférences utilisateur
         const preferences = data.preferences;
         for (let y = 0; y < preferences.length; y++) {
           const pref = preferences[y];
           const job = fusionWord(pref.jobTitle);
 
+          // recupere les offre en fonction de toutes les donnée de préférences utilisateur
           callOffresApi(
             tokenManagerRef.current,
             job,
@@ -76,13 +77,12 @@ export default function TabScreen1({ navigation }) {
           ).then((data) => {
             for (let o = 0; o < data.resultats.length; o++) {
               const offer = data.resultats[o];
-
+              //recupere la latitude et la longtude de l'api afin de recuperer l'adresse totale
               reverseGeocode(
                 offer.lieuTravail.latitude,
                 offer.lieuTravail.longitude
               ).then((address) => {
                 const grade = Math.floor(Math.random() * 5) + 1;
-
 
                 fetch(`${EXPO_IP}/offers/add`, {
                   method: "POST",
@@ -153,26 +153,31 @@ export default function TabScreen1({ navigation }) {
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.card}>
-            {Array.from(
-              new Map(
-                offersData.filter((offer) => {
+          {Array.from(
+            new Map(
+              offersData
+                .filter((offer) => {
                   if (!search) return true;
                   const searchLower = search.toLowerCase();
                   return (
-                    (offer.title && offer.title.toLowerCase().includes(searchLower)) ||
-                    (offer.compagny && offer.compagny.toLowerCase().includes(searchLower)) ||
-                    (offer.source && offer.source.toLowerCase().includes(searchLower)) ||
-                    (offer.city && offer.city.toLowerCase().includes(searchLower))
+                    (offer.title &&
+                      offer.title.toLowerCase().includes(searchLower)) ||
+                    (offer.compagny &&
+                      offer.compagny.toLowerCase().includes(searchLower)) ||
+                    (offer.source &&
+                      offer.source.toLowerCase().includes(searchLower)) ||
+                    (offer.city &&
+                      offer.city.toLowerCase().includes(searchLower))
                   );
-              })
-              .map((offer) => [offer._id, offer]) // clé = _id, valeur = offre
-              ).values() //on récupère les valeurs uniques
-            ).map((data, i) => (
-              <JobCard key={data._id} {...data} navigation={navigation} />
-              ))}
+                })
+                .map((offer) => [offer._id, offer]) // clé = _id, valeur = offre
+            ).values() //on récupère les valeurs uniques
+          ).map((data, i) => (
+            <JobCard key={data._id} {...data} navigation={navigation} />
+          ))}
         </View>
 
-        {loading && (
+        {loading && ( // spinner pour eviter du vide quand il y a du chargement sur les offres
           <ActivityIndicator
             size={75}
             color="#F72C03"

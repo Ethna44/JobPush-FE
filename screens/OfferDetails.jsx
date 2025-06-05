@@ -24,7 +24,6 @@ import {
 
 export default function OfferDetails({ navigation }) {
   const route = useRoute(); //Pour accéder aux params de offres
-  // const [isLiked, setIsLiked] = useState(false);
   const token = useSelector((state) => state.user.token);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const favorites = useSelector((state) => state.user.profile.favorites);
@@ -35,14 +34,8 @@ export default function OfferDetails({ navigation }) {
   const {
     title,
     compagny,
-    logoLink,
     grade,
-    contractType,
     publicationDate,
-    streetNumber,
-    streetName,
-    city,
-    zipCode,
     source,
     offerLink,
     description,

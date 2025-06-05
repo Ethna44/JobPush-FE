@@ -13,7 +13,7 @@ export default function CandidaturesEnCours({ navigation }) {
 
   const fetchApplications = async () => {
     const response = await fetch(
-      `${EXPO_IP}/offers/applications?token=${token}`
+      `${EXPO_IP}/applications?token=${token}`
     );
     const data = await response.json();
     setApplicationsData(data.applications);
@@ -27,9 +27,13 @@ export default function CandidaturesEnCours({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {applicationsData.map((data, i) => (
-        <Applications key={data.id || i} {...data} navigation={navigation} />
-      ))}
+      {applicationsData.length === 0 ? (
+        <Text style={styles.message}>Aucune candidature pour le moment.</Text>
+      ) : (
+        applicationsData.map((data, i) => (
+          <Applications key={data.id || i} {...data} navigation={navigation} />
+        ))
+      )}
     </View>
   );
 }

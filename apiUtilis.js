@@ -6,9 +6,8 @@ const callOffresApi = async (
   region,
   commune
 ) => {
-
   try {
-
+    // on envoie la donnée ou null sinon le undifined va faire casser l'url
     KeyWord = KeyWord || "";
     Sector = Sector || "";
     contractType = contractType || "";
@@ -16,8 +15,9 @@ const callOffresApi = async (
     commune = commune || "";
 
     let url = `https://api.pole-emploi.io/partenaire/offresdemploi/v2/offres/search?motsCles=${KeyWord}&grandDomaine=${Sector}&region=${region}&commune=${commune}&range=0-9`;
-    
-    if (contractType === 'CDD' || contractType === 'CDI') {
+
+    //on verifie si c'est un CDD ou CDI sinon on renvoie la valeur pour les alternances
+    if (contractType === "CDD" || contractType === "CDI") {
       url += `&typeContrat=${contractType}`;
     } else {
       url += `&natureContrat=E2&typeContrat=CDD`;
@@ -25,22 +25,19 @@ const callOffresApi = async (
 
     const token = await tokenManager.getToken();
 
-    const response = await fetch(
-     url,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const data = await response.json();
     return data;
   } catch (error) {
-
     console.error("❌ Erreur API :", error.message);
     throw error;
   }
 };
+
 async function reverseGeocode(latitude, longitude) {
   try {
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
@@ -49,7 +46,6 @@ async function reverseGeocode(latitude, longitude) {
         "User-Agent": "YourAppName/1.0 (your@email.com)", // important avec Nominatim
       },
     });
-
 
     const data = await response.json();
 
@@ -64,7 +60,7 @@ async function reverseGeocode(latitude, longitude) {
     console.error("errror in georeverse", e.message);
   }
 }
-
+// on join les mots recu par la fonction par une virgule pour que l'api recoit bien tout les mots
 function fusionWord(str) {
   if (!str) return "";
 

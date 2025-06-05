@@ -36,7 +36,7 @@ export default function Applications({ navigation, ...props }) {
     setShowNotes(true);
   };
 
-  function formatDateForGoogle(dateStr) {
+  function formatDateForGoogle(dateStr) {   // transforme la date donné en date voulu par google
     // dateStr: "DD/MM/YYYY"
     if (!dateStr) return "";
     const [day, month, year] = dateStr.split("/");
@@ -57,7 +57,7 @@ export default function Applications({ navigation, ...props }) {
 
   const updateTodo = () => {
     fetch(
-      `${EXPO_IP}/offers/applications/todo?offerId=${props.offerId._id}&token=${token}`,
+      `${EXPO_IP}/applications/todo?offerId=${props.offerId._id}&token=${token}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -81,8 +81,10 @@ export default function Applications({ navigation, ...props }) {
     );
   }, [props.applicationDate]);
 
-  const modal = (
-    <Modal visible={showModal} transparent={true}>
+
+  //modal qui contient toutes les données de la Todo avec les input , le bouton pour la modal des notes
+  const modal = (  
+    <Modal visible={showModal} transparent={true}>             
       <View style={styles.modal}>
         <View style={styles.todo}>
           <Text style={AppStyles.subtitle}>Todo List</Text>
@@ -227,7 +229,9 @@ export default function Applications({ navigation, ...props }) {
     </Modal>
   );
 
-  const note = (
+
+  //modal des notes
+  const note = ( 
     <Modal visible={showNotes} transparent={true}>
       <View style={styles.modal}>
         <View style={[styles.todo, { height: 500 }]}>
@@ -259,7 +263,8 @@ export default function Applications({ navigation, ...props }) {
     </Modal>
   );
 
-  const googleAgenda = (
+  //gestion du google agenda avec une modal qui affiche en fonction de si il y a une date dans l'input ou pas 
+  const googleAgenda = (    
     <Modal visible={showCalendarModal} transparent={true} animationType="fade">
       <View style={styles.modal}>
         <View style={[styles.todo, { height: "auto" }]}>
