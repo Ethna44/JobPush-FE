@@ -82,11 +82,7 @@ export default function TabScreen1({ navigation }) {
             pref.region,
             pref.city
           ).then((data) => {
-            console.log(
-              "update prodile dans le then du ftech des offres",
-              "api pole emploie"
-            );
-
+            //console.log("api gouv =>", data);
             for (let o = 0; o < data.resultats.length; o++) {
               const offer = data.resultats[o];
 
@@ -168,23 +164,23 @@ export default function TabScreen1({ navigation }) {
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.card}>
-          {offersData
-            .filter((offer) => {
-              if (!search) return true;
-              const searchLower = search.toLowerCase();
-              return (
-                (offer.title &&
-                  offer.title.toLowerCase().includes(searchLower)) ||
-                (offer.compagny &&
-                  offer.compagny.toLowerCase().includes(searchLower)) ||
-                (offer.source &&
-                  offer.source.toLowerCase().includes(searchLower)) ||
-                (offer.city && offer.city.toLowerCase().includes(searchLower))
-              );
-            })
-            .map((data, i) => (
-              <JobCard key={i} {...data} navigation={navigation} />
-            ))}
+            {Array.from(
+              new Map(
+                offersData.filter((offer) => {
+                  if (!search) return true;
+                  const searchLower = search.toLowerCase();
+                  return (
+                    (offer.title && offer.title.toLowerCase().includes(searchLower)) ||
+                    (offer.compagny && offer.compagny.toLowerCase().includes(searchLower)) ||
+                    (offer.source && offer.source.toLowerCase().includes(searchLower)) ||
+                    (offer.city && offer.city.toLowerCase().includes(searchLower))
+                  );
+              })
+              .map((offer) => [offer._id, offer]) // clé = _id, valeur = offre
+              ).values() //on récupère les valeurs uniques
+            ).map((data, i) => (
+              <JobCard key={data._id} {...data} navigation={navigation} />
+              ))}
         </View>
 
         {loading && (

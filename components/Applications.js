@@ -106,7 +106,7 @@ export default function Applications({ navigation, ...props }) {
                 }}
                 style={styles.checkbox}
               />
-              <Text style={styles.label}>Date de candidature:</Text>
+              <Text style={styles.label}>Date de candidature :</Text>
               <MaskedTextInput
                 mask="99/99/9999"
                 placeholder="JJ/MM/AAAA"
@@ -130,7 +130,7 @@ export default function Applications({ navigation, ...props }) {
                 }}
                 style={styles.checkbox}
               />
-              <Text style={styles.label}>Date de Relance:</Text>
+              <Text style={styles.label}>Date de relance :</Text>
               <MaskedTextInput
                 mask="99/99/9999"
                 placeholder="JJ/MM/AAAA"
@@ -154,7 +154,7 @@ export default function Applications({ navigation, ...props }) {
                 }}
                 style={styles.checkbox}
               />
-              <Text style={styles.label}>Date de L'entretien:</Text>
+              <Text style={styles.label}>Date de l'entretien :</Text>
               <MaskedTextInput
                 mask="99/99/9999"
                 placeholder="JJ/MM/AAAA"
@@ -178,7 +178,7 @@ export default function Applications({ navigation, ...props }) {
                 }}
                 style={styles.checkbox}
               />
-              <Text style={styles.label}>Lettre de remerciment:</Text>
+              <Text style={styles.label}>Mail de remerciements :</Text>
               <MaskedTextInput
                 mask="99/99/9999"
                 placeholder="JJ/MM/AAAA"
@@ -371,9 +371,10 @@ export default function Applications({ navigation, ...props }) {
 const styles = StyleSheet.create({
   container: {
     width: "90%",
-    height: "16%",
+    height: "18%",
     borderRadius: 10,
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#F3E4E5",
     margin: 10,
@@ -386,15 +387,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 12,
     elevation: 3,
+    // boderColor: "blue",
+    // borderWidth: 1,
   },
   textContainer: {
     height: "100%",
-    width: "65%",
+    width: "60%",
     justifyContent: "space-between",
+    // boderColor: "blue",
+    // borderWidth: 1,
   },
   todo: {
     height: 500,
-    width: "80%",
+    width: "90%",
     justifyContent: "space-between",
     backgroundColor: AppStyles.color.background,
     padding: 20,
@@ -412,8 +417,11 @@ const styles = StyleSheet.create({
   },
   todoContainer: {
     ...AppStyles.button,
-    width: "35%",
+    width: "40%",
+    // boderColor: "blue",
+    // borderWidth: 1,
   },
+  buttonText: AppStyles.buttonText,
   inputContainer: {
     width: "100%",
   },
@@ -433,7 +441,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     width: "100%",
     backgroundColor: "#FEDDD7",
     borderBottomWidth: 2,
@@ -452,6 +460,7 @@ const styles = StyleSheet.create({
   },
   value: {
     ...AppStyles.body,
+    fontSize: 12
   },
   backButton: {
     alignItems: "center",

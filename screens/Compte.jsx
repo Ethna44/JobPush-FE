@@ -39,20 +39,16 @@ export default function TabScreen1({ navigation }) {
         }
       });
   };
-
+  console.log("preferences Redux :", preferences);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Mon compte</Text>
-      {/* <View style={styles.separator} /> */}
-      {/* <Text style={AppStyles.subtitle}>Mes Préférences</Text> */}
       <Text
         style={[
           AppStyles.subtitle,
           { alignSelf: "flex-start", marginLeft: 20 },
         ]}
-      >
-        Mes préférences
-      </Text>
+      >Mes préférences</Text>
       <View style={styles.preferencesContainer}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           {preferences?.map((data, i) => {
