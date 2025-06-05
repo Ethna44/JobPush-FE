@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
   title: AppStyles.title,
-    scrollView: {
+    scrollView: { 
     flex : 1,
     paddingVertical: 20,
     alignItems: "center",
