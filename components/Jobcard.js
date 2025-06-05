@@ -68,7 +68,6 @@ export default function JobCard(props) {
       });
   };
 
-  // //console.log("favorites:", favorites, "_id:", _id, "isFavorite:", isFavorite);
 
   const heartIconStyle = {
     fontSize: 24,

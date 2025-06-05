@@ -61,16 +61,13 @@ export default function OfferDetails({ navigation }) {
 
     const data = await response.json();
     if (data.result) {
-      console.log("marche");
       Alert.alert(
         "Candidature envoyée !",
         "Votre candidature a bien été prise en compte."
       );
         Linking.openURL(offerLink);
       dispatch(addApplication(_id));
-      console.log(_id);
     } else {
-      console.log("marche pas");
 
       Alert.alert("Erreur", data.error || "Une erreur est survenue.");
     }

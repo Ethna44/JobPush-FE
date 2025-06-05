@@ -31,7 +31,6 @@ export default function Alerte({ navigation, route }) {
   );
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
-  //console.log(route);
 
   const alerts = useSelector((state) => state.user.profile.alerts);
 
@@ -53,14 +52,12 @@ export default function Alerte({ navigation, route }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          //console.log("Alertes modifiées avec succès");
           Alert.alert(
             "Alerte enregistrée",
             "Votre alerte a bien été prise en compte !"
           );
           navigation.navigate("TabNavigator");
         } else {
-          //console.log("Erreur lors de la modification des alertes");
         }
       });
   };
@@ -77,12 +74,9 @@ export default function Alerte({ navigation, route }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(data);r
-          //console.log("Alertes modifiées avec succès");
           navigation.navigate("Compte");
           dispatch(updateUser({ alerts: data.alerts }));
         } else {
-          //console.log("Erreur lors de la modification des alertes");
         }
       });
   };

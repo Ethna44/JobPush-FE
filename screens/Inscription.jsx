@@ -63,9 +63,7 @@ export default function StackScreen2({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        //console.log(data);
         if (data.result) {
-          console.log(data);
           // dispatch(login({ username: signUpUsername,firstname: signUpFirstName, token: data.token }));
           dispatch(updateToken(data.token));
           dispatch(signup());
@@ -75,19 +73,11 @@ export default function StackScreen2({ navigation }) {
           navigation.navigate("Profil");
         }
         if (!data.result) {
-          //console.log("Erreur reçue :", data.error);
           setErrorMessage(data.error || "An error occurred. Please try again.");
-          //console.log("errorMessage (état local) :", errorMessage);
           return;
         }
       });
   };
-
-  console.log(user);
-  console.log(checkMail);
-  console.log(email);
-  console.log(password);
-  console.log(passwordConfirm);
 
   const clearEmail = () => {
     setEmail("");

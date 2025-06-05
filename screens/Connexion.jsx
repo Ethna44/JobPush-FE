@@ -38,12 +38,10 @@ export default function LogIn({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        // //console.log(data);
         if (!data.result) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
         }
-        // console.log('check:', data.phoneNumber, data.address)
 
         dispatch(updateToken(data.token));
         dispatch(
@@ -64,8 +62,6 @@ export default function LogIn({ navigation }) {
         navigation.navigate("TabNavigator");
       });
   };
-  //console.log(email);
-  //console.log(password);
 
   const clearEmail = () => {
     setEmail("");
@@ -166,7 +162,6 @@ export default function LogIn({ navigation }) {
          
         <TouchableOpacity
           onPress={() => {
-            // navigation.navigate("TabNavigator")
             handleRegister();
           }}
           style={styles.button}

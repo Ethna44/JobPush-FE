@@ -51,7 +51,6 @@ export default function Profil({ navigation }) {
     }
   }, [errorMessage]);
 
-  //console.log("Ville Selectionner", cityJob);
   // const citiesList = cities.cities
   //   .filter((city) => city.label) // garde seulement ceux qui ont un label
   //   .map((city) => ({
@@ -116,7 +115,6 @@ export default function Profil({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          //console.log(data.result);
           dispatch(
             updateUser({
               name: name,
@@ -146,7 +144,6 @@ export default function Profil({ navigation }) {
           );
           navigation.navigate("Alerte", { origin: "signup" });
         } else {
-          //console.log(data);
           setErrorMessage(
             data.message || "Une erreur est survenue. Veuillez réessayer."
           );

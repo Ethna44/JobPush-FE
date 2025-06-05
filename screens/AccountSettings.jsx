@@ -21,10 +21,7 @@ export default function ParametresCompte({ navigation }) {
   const dispatch = useDispatch();
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const userToken = useSelector((state) => state.user.token);
-  //console.log(userToken);
   const user = useSelector((state) => state.user.profile);
-  //console.log(user);
-  //  //console.log('Test: ', user.email)
   const [name, setName] = useState(user.name || "");
   const [firstName, setFirstName] = useState(user.firstName || "");
   const [email, setEmail] = useState(user.email || "");

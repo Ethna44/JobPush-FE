@@ -17,7 +17,6 @@ import { callOffresApi, reverseGeocode, fusionWord } from "../apiUtilis";
 import JobCard from "../components/Jobcard";
 import AppStyles from "../AppStyles";
 import { useFocusEffect } from "@react-navigation/native";
-import { Dropdown } from "react-native-element-dropdown";
 
 const LIMIT_OFFER = 20;
 
@@ -58,21 +57,14 @@ export default function TabScreen1({ navigation }) {
   };
 
   const updateProfile = async () => {
-    console.log("update prodile before fetch", "users/profile");
     fetch(`${EXPO_IP}/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("update prodile dans le then du fetch", "users/profile");
 
         const preferences = data.preferences;
         for (let y = 0; y < preferences.length; y++) {
           const pref = preferences[y];
           const job = fusionWord(pref.jobTitle);
-
-          console.log(
-            "update prodile dans le then du fetch qui boucle les prefs",
-            "users/profile"
-          );
 
           callOffresApi(
             tokenManagerRef.current,
@@ -82,7 +74,6 @@ export default function TabScreen1({ navigation }) {
             pref.region,
             pref.city
           ).then((data) => {
-            //console.log("api gouv =>", data);
             for (let o = 0; o < data.resultats.length; o++) {
               const offer = data.resultats[o];
 
@@ -92,7 +83,6 @@ export default function TabScreen1({ navigation }) {
               ).then((address) => {
                 const grade = Math.floor(Math.random() * 5) + 1;
 
-                // console.log("dans le reverse geocode", pref);
 
                 fetch(`${EXPO_IP}/offers/add`, {
                   method: "POST",
@@ -102,7 +92,7 @@ export default function TabScreen1({ navigation }) {
                     compagny: offer.entreprise.nom || "",
                     logoLink: offer.entreprise.logo || "",
                     grade: grade || "",
-                    sector: pref.sector || "", // 👈 secteur spécifique à la préférence actuelle
+                    sector: pref.sector || "",
                     contractType: offer.typeContrat,
                     publicationDate: offer.dateCreation,
                     streetNumber: address.streetNumber || "",
@@ -136,7 +126,6 @@ export default function TabScreen1({ navigation }) {
       setStartIndex(0);
       setCheckEnd(false);
       setLoading(true);
-      // fetchOffers().then(() => token && updateProfile());
       updateProfile().then(() => fetchOffers());
     }, [])
   );

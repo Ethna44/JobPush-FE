@@ -6,10 +6,8 @@ const callOffresApi = async (
   region,
   commune
 ) => {
-  console.log("hre 1");
 
   try {
-    console.log("hr 2e");
 
     KeyWord = KeyWord || "";
     Sector = Sector || "";
@@ -26,7 +24,6 @@ const callOffresApi = async (
     }
 
     const token = await tokenManager.getToken();
-    //console.log("🔑 Token récupéré :", token);
 
     const response = await fetch(
      url,
@@ -39,7 +36,6 @@ const callOffresApi = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log("hr 3e");
 
     console.error("❌ Erreur API :", error.message);
     throw error;

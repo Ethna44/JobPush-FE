@@ -16,10 +16,7 @@ export default function CandidaturesEnCours({ navigation }) {
         // 1. Récupérer le profil utilisateur pour avoir les IDs des favoris
         const res = await fetch(`${EXPO_IP}/users/profile/${token}`);
         const data = await res.json();
-        //console.log("indata", data);
         if (data.result && data.favorites && data.favorites.length > 0) {
-          //console.log(data.favorites);
-          //console.log(JSON.stringify({ ids: data.favorites }));
           // 2. Récupérer les détails des offres favorites
           const offersRes = await fetch(`${EXPO_IP}/offers/byIds`, {
             method: "POST",
@@ -27,7 +24,6 @@ export default function CandidaturesEnCours({ navigation }) {
             body: JSON.stringify({ ids: data.favorites }),
           });
           const offersData = await offersRes.json();
-          //console.log("offersData dssataa", offersData);
           setFavorites(offersData.offers || []);
         } else {
           setFavorites([]);

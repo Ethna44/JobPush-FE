@@ -39,7 +39,6 @@ export default function TabScreen1({ navigation }) {
         }
       });
   };
-  console.log("preferences Redux :", preferences);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Mon compte</Text>
