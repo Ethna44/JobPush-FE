@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import AppStyles from "../AppStyles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector, useDispatch } from "react-redux";
-import { use } from "react";
 import { removePreference } from "../reducers/user";
 
 export default function PreferencesCard(props) {
@@ -13,6 +12,17 @@ export default function PreferencesCard(props) {
 
   const { jobTitle, sector, contractType, cityJob, region, remote, _id } =
     props;
+
+  // Créer une description lisible de la préférence pour l'accessibilité
+  const preferenceDescription = [
+    jobTitle,
+    sector,
+    contractType,
+    cityJob,
+    region,
+    remote
+  ].filter(Boolean).join(", "); //Boolean convertit une valeur en true ou false (undifined, "", null = false et string = true)
+
   const handleDeletePreference = async () => {
     const response = await fetch(`${EXPO_IP}/users/preference/remove`, {
       method: "PUT",
@@ -36,22 +46,64 @@ export default function PreferencesCard(props) {
   };
 
   return (
-    <View style={styles.card}>
-      <TouchableOpacity onPress={() => handleDeletePreference()}>
+    <View 
+    style={styles.card}
+    accessible={true}
+    accessibilityRole="button"
+    accessibilityLabel={`Préférence d'emploi: ${preferenceDescription}`}
+      accessibilityHint="Contient les critères de recherche d'emploi">
+      <TouchableOpacity 
+      onPress={() => handleDeletePreference()}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`Supprimer la préférence ${preferenceDescription}`}
+      accessibilityHint="Appuyez pour supprimer cette préférence de recherche d'emploi"
+      >
         <FontAwesome
           name="close"
           size={25}
           color={AppStyles.color.text}
           style={{ position: "absolute", right: 0 }}
+          accessible={false}
         />
       </TouchableOpacity>
       <View style={styles.textContainer}>
-        {jobTitle && <Text style={styles.text}>{jobTitle}</Text>}
-        {sector && <Text style={styles.text}>{sector}</Text>}
-        {contractType && <Text style={styles.text}>{contractType}</Text>}
-        {cityJob && <Text style={styles.text}>{cityJob}</Text>}
-        {region && <Text style={styles.text}>{region}</Text>}
-        {remote && <Text style={styles.text}>{remote}</Text>}
+        {jobTitle && 
+        <Text 
+        style={styles.text}
+        accessible={true}
+        accessibilityLabel={`Poste: ${jobTitle}`}
+        >{jobTitle}</Text>}
+        {sector && 
+        <Text 
+        style={styles.text}
+        accessible={true}
+        accessibilityLabel={`Secteur: ${sector}`}
+        >{sector}</Text>}
+        {contractType && 
+        <Text 
+        style={styles.text}
+        accessible={true}
+        accessibilityLabel={`Type de contrat: ${contractType}`}
+        >{contractType}</Text>}
+        {cityJob && 
+        <Text 
+        style={styles.text}
+        accessible={true}
+        accessibilityLabel={`Ville: ${cityJob}`}
+        >{cityJob}</Text>}
+        {region && 
+        <Text 
+        style={styles.text}
+        accessible={true}
+        accessibilityLabel={`Région: ${region}`}
+        >{region}</Text>}
+        {remote && 
+        <Text 
+        style={styles.text}
+        accessible={true}
+        accessibilityLabel={`Télétravail: ${remote}`}
+        >{remote}</Text>}
       </View>
     </View>
   );

@@ -48,6 +48,9 @@ const CustomTabBarButton = (props) => {
       {...props}
       style={styles.customTabBarButton}
       activeOpacity={0.8}
+      accessible={true}
+      accessibilityLabel="Ajouter une préférence"
+      accessibilityHint="Créer de nouveaux critères de recherche"
     >
       <View style={styles.customTabBarButtonInner}>
         <FontAwesome name="plus" size={35} color="#F9F1F1" />

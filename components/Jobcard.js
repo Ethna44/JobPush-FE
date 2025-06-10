@@ -91,15 +91,21 @@ export default function JobCard(props) {
     elevation: 3,
   };
 
-  const favoritePress = (
-    <TouchableOpacity>
-      <FontAwesome
-        name={favorites?.includes(_id) ? "heart" : "heart-o"}
-        onPress={() => handleLikeOffer()}
-        style={heartIconStyle}
-      />
-    </TouchableOpacity>
-  );
+  // const favoritePress = (
+  //   <TouchableOpacity>
+  //     <FontAwesome
+  //       name={favorites?.includes(_id) ? "heart" : "heart-o"}
+  //       onPress={() => handleLikeOffer()}
+  //       style={heartIconStyle}
+  //     />
+  //   </TouchableOpacity>
+  // );
+
+  // Création du label accessible pour les étoiles
+  const getStarRating = () => {
+    const rating = Math.round(grade); //évite les nombres à virgule
+    return `Note: ${rating} étoile${rating > 1 ? 's' : ''} sur 5`;
+  };
 
   const stars = [];                                                  
   for (let i = 0; i < 5; i++) {                     
@@ -115,6 +121,15 @@ export default function JobCard(props) {
     month: "long",
     day: "numeric",
   });
+
+  // Label accessible pour le bouton favoris
+  const favoriteLabel = favorites?.includes(_id) 
+    ? `Retirer ${title} des favoris` 
+    : `Ajouter ${title} aux favoris`;
+
+  // Label accessible pour la carte complète
+  const cardLabel = `Offre d'emploi: ${title}, ${contractType} chez ${compagny} à ${city}. ${getStarRating()}. Publié le ${dateFormatted}. Appuyez pour voir les détails.`;
+
 
   return (
     <TouchableOpacity
@@ -137,26 +152,69 @@ export default function JobCard(props) {
         })
       }
       style={styles.card}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={cardLabel}
+      accessibilityHint="Appuyez pour voir les détails de cette offre d'emploi"
     >
       <View style={styles.photoContainer}>
         <Image
           source={require("../assets/logoJobPush-Photoroom.jpg")}
           style={styles.logo}
+          accessible={true}
+          accessibilityRole="image"
+          accessibilityLabel={`Logo de ${compagny}`}
         ></Image>
-        {favoritePress}
+        <TouchableOpacity
+          onPress={handleLikeOffer}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={favoriteLabel}
+          accessibilityHint={favorites?.includes(_id) 
+            ? "Appuyez pour retirer cette offre de vos favoris" 
+            : "Appuyez pour ajouter cette offre à vos favoris"
+          }
+          accessibilityState={{ selected: favorites?.includes(_id) }}
+        >
+          <FontAwesome
+            name={favorites?.includes(_id) ? "heart" : "heart-o"}
+            style={heartIconStyle}
+            accessible={false} // L'icône n'est pas accessible car le TouchableOpacity parent l'est
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.info}>
-        <Text style={styles.headline}>
+        <Text 
+        style={styles.headline}
+        accessible={true}
+        accessibilityRole="header">
           {props.title} | {props.contractType}
         </Text>
-        <View style={styles.inlineInfos}>
+        <View 
+        style={styles.inlineInfos}
+        accessible={true}
+        accessibilityLabel={`Entreprise: ${compagny}, Ville: ${city}`}>
           <Text style={styles.textInfo}>
             {props.compagny} | {props.city}
           </Text>
         </View>
-        <View style={styles.rating}>{stars}</View>
-        <Text style={styles.source}>{props.source}</Text>
-        <Text style={styles.textInfo}>Publié le : {dateFormatted}</Text>
+        <View 
+        style={styles.rating}
+        accessible={true}
+        accessibilityLabel={getStarRating()}
+        accessibilityRole="text">
+          {stars}
+        </View>
+        <Text 
+        style={styles.source}
+        accessible={true}
+        accessibilityLabel={`Source: ${source}`}>
+          {props.source}
+        </Text>
+        <Text 
+        style={styles.textInfo}
+        accessible={true}
+        accessibilityLabel={`Date de publication: ${dateFormatted}`}>Publié le : {dateFormatted}</Text>
       </View>
     </TouchableOpacity>
   );

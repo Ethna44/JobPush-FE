@@ -3,9 +3,14 @@ import React from "react";
 import AppStyles from "../AppStyles";
 const { width } = Dimensions.get('window');
 
-export default function Articles({ title, description, icon,onPress }) {
+export default function Articles({ title, description, icon, onPress }) {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity 
+    style={styles.container}
+    accessible={true}
+    accessibilityLabel="Accéder aux articles"
+    accessibilityHint={`Le sujet est ${title} et voici la description ${description}`}
+    onPress={onPress}>
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
