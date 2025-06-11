@@ -17,7 +17,7 @@ const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 const options = {
   option1: "Notifications en temps réel",
   option2: "Notification une fois par jour",
-  option3: "Alerte par mail en temps réel",
+  option3: "Alerte par mail une fois par jour",
 };
 const getOptionKey = (alertValue) => {
   return (
