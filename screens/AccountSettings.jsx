@@ -101,7 +101,7 @@ export default function ParametresCompte({ navigation }) {
                   return;
                 }
 
-                navigation.navigate("Accueil");
+                navigation.navigate("HomePage");
               });
           },
         },
@@ -257,7 +257,7 @@ export default function ParametresCompte({ navigation }) {
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => {
-          navigation.navigate("Compte");
+          navigation.navigate("Account");
         }}
       >
         <FontAwesome name="arrow-left" size={20} color="#fff" />

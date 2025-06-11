@@ -103,9 +103,9 @@ const clearSearch = () => {
             description={article.description}
             icon={article.icon}
             onPress={() =>
-            navigation.navigate("SubAstuces", {
+            navigation.navigate("ArticlesList", {
             title: article.title,
-            iconName: article.iconName, //au lieu de faire passer icon, on fait passer iconName en params de navigation et on reconstruit l'icone dans SubAstuces
+            iconName: article.iconName, //au lieu de faire passer icon, on fait passer iconName en params de navigation et on reconstruit l'icone dans ArticlesList
             })
           }/>
         ))}

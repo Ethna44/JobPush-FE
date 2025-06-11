@@ -10,56 +10,71 @@ import {
 } from "react-native";
 import AppStyles from "../AppStyles";
 import { useState } from "react";
-import { updateToken, updateUser } from "../reducers/user";
+import { updateUser, updateToken, signup } from "../reducers/user";
 import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { setKeepConnected } from "../reducers/user";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-export default function LogIn({ navigation }) {
-  const dispatch = useDispatch();
+export default function SignUpPage({ navigation }) {
   const [focusedField, setFocusedField] = useState(null);
   const [email, setEmail] = useState("");
   const [checkMail, setCheckMail] = useState(false);
-  const [password, setPassword] = useState("");
+  const [password, setCheckPassword] = useState("");
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
-    const { keepConnected } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.profile.email);
+  const dispatch = useDispatch();
+
+  function handleSubmit() {
+    if (validateEmail(email)) {
+      setCheckMail(false);
+      // dispatch(updateUser(email));
+    } else {
+      setCheckMail(true);
+    }
+  }
+
+  function validateEmail(email) {
+    var emailReg = new RegExp(
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i
+    );
+    return emailReg.test(email);
+  }
 
   const handleRegister = () => {
-    fetch(`${EXPO_IP}/users/signin`, {
+    setErrorMessage("");
+    handleSubmit(); // vérifie l'email et fait le dispatch
+
+    // if (checkMail) {
+    //   return; // stoppe ici si l'email est invalide
+    // }
+
+    fetch(`${EXPO_IP}/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email,
         password: password,
+        confirmPassword: passwordConfirm,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data.result) {
+          dispatch(updateToken(data.token));
+          dispatch(signup());
+          setCheckMail("");
+          setCheckPassword("");
+          setPasswordConfirm("");
+          navigation.navigate("Profile");
+        }
         if (!data.result) {
           setErrorMessage(data.error || "An error occurred. Please try again.");
           return;
         }
-
-        dispatch(updateToken(data.token));
-        dispatch(
-          updateUser({
-            email: data.email,
-            token: data.token,
-            firstName: data.firstName,
-            name: data.name,
-            phoneNumber: data.phoneNumber,
-            address: data.address,
-            preferences: data.preferences,
-            alerts: data.alerts,
-            favorites: data.favorites,
-            applications: data.applications,
-          })
-        );
-
-        navigation.navigate("TabNavigator");
       });
   };
 
@@ -68,7 +83,11 @@ export default function LogIn({ navigation }) {
   };
 
   const clearPassword = () => {
-    setPassword("");
+    setCheckPassword("");
+  };
+
+  const clearConfirmPassword = () => {
+    setPasswordConfirm("");
   };
 
   return (
@@ -83,7 +102,7 @@ export default function LogIn({ navigation }) {
         ></Image>
       </View>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Connexion</Text>
+        <Text style={styles.title}>Inscription</Text>
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.row}>
@@ -106,6 +125,9 @@ export default function LogIn({ navigation }) {
           </TouchableOpacity>
         </View>
 
+        {/* {checkMail && (
+        <Text style={{ color: "red", marginTop: 4 }}>{errorMessage}</Text>
+        )} */}
         <View style={styles.row}>
           <TextInput
             style={[
@@ -118,7 +140,7 @@ export default function LogIn({ navigation }) {
             autoCapitalize="none"
             onFocus={() => setFocusedField("password")}
             onBlur={() => setFocusedField(null)}
-            onChangeText={(value) => setPassword(value)}
+            onChangeText={(value) => setCheckPassword(value)}
             value={password}
           />
           <TouchableOpacity style={styles.cross} onPress={clearPassword}>
@@ -137,46 +159,62 @@ export default function LogIn({ navigation }) {
             />
           </TouchableOpacity>
         </View>
+
+        <View style={styles.row}>
+          <TextInput
+            style={[
+              styles.input,
+              focusedField === "confirm" && styles.inputFocused,
+            ]}
+            placeholder="confirmer mot de passe"
+            placeholderTextColor="#999"
+            secureTextEntry={isPasswordSecure}
+            autoCapitalize="none"
+            onFocus={() => setFocusedField("confirm")}
+            onBlur={() => setFocusedField(null)}
+            onChangeText={(value) => setPasswordConfirm(value)}
+            value={passwordConfirm}
+          />
+          <TouchableOpacity style={styles.cross} onPress={clearConfirmPassword}>
+            <FontAwesome name="close" color="grey" size={18} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.eye}>
+            <FontAwesome
+              name="eye"
+              color="grey"
+              size={18}
+              onPress={() => {
+                isPasswordSecure
+                  ? setIsPasswordSecure(false)
+                  : setIsPasswordSecure(true);
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.errorMessageContainer}>
           {errorMessage && (
             <Text style={styles.errorMessage}>{errorMessage}</Text>
           )}
         </View>
       </View>
-      
       <View style={styles.buttonAndTextContainer}>
-              <BouncyCheckbox
-            onPress={() => dispatch(setKeepConnected(!keepConnected))}
-            text="Rester connecté ? "
-            size={25}
-            fillColor="#F72C03"
-            unFillColor="#F9F1F1"
-            iconStyle={{ borderColor: "#F72C03" }}
-            innerIconStyle={{ borderWidth: 2 }}
-            textStyle={{
-              fontFamily: "Poppins_400Regular",
-              textDecorationLine: "none",
-            }}
-            style={styles.checkbox}
-          />
-         
         <TouchableOpacity
           onPress={() => {
+            // navigation.navigate("Profil") //contournement des check-out pour travailler sur Profil
             handleRegister();
           }}
           style={styles.button}
         >
-   
-
           <Text style={styles.buttonText}>LET'S GO !</Text>
         </TouchableOpacity>
         <View style={styles.textContainer}>
-          <Text style={styles.body}>Vous n'avez pas de compte ? </Text>
+          <Text style={styles.body}>Vous avez déjà un compte ? </Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Inscription")}
+            onPress={() => navigation.navigate("SignInPage")}
             style={styles.link}
           >
-            <Text style={styles.linkText}>Inscrivez-vous</Text>
+            <Text style={styles.linkText}>Connectez-vous</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -231,7 +269,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: "16%",
+    height: "25%",
     justifyContent: "space-between",
     // borderColor: "green",
     // borderWidth: 1,
@@ -272,16 +310,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     // borderColor: "blue",
     // borderWidth: 1,
-  },  checkbox: {
-  width: "100%",
-
-  justifyContent:"center",
-  paddingHorizontal: 100,
-  marginBottom: 20,
-  // borderColor : "Blue",
-  // borderWidth : 1,
-}
-
-
-  
+  },
 });

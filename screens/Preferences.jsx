@@ -27,7 +27,7 @@ import { FontAwesome } from "@expo/vector-icons";
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
-export default function Recherche({ navigation }) {
+export default function Preferences({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user);

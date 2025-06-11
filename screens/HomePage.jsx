@@ -13,7 +13,7 @@ import AppStyles from "../AppStyles";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-export default function StackScreen1({ navigation }) {
+export default function HomePage({ navigation }) {
   const { token,keepConnected } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function StackScreen1({ navigation }) {
       </View>
       <View style={styles.redButtonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Inscription")}
+          onPress={() => navigation.navigate("SignUpPage")}
           style={styles.button}
         >
           <Text style={styles.buttonText}>S'INSCRIRE</Text>
@@ -44,7 +44,7 @@ export default function StackScreen1({ navigation }) {
       <Text style={styles.body}>OU</Text>
       <View style={styles.redButtonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Connexion")}
+          onPress={() => navigation.navigate("SignInPage")}
           style={styles.button}
         >
           <Text style={styles.buttonText}>SE CONNECTER</Text>

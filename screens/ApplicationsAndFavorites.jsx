@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import EnCours from "./CandidaturesEnCours";
-import Favoris from "./Favoris";
+import JobApplications from "./JobApplications";
+import Favorites from "./Favorites";
 import { FontAwesome } from "@expo/vector-icons";
 import { View, TouchableOpacity, Text } from "react-native";
 
@@ -40,11 +40,11 @@ function MyTabBar({ state, descriptors, navigation}) {
   );
 }
 
-export default function Candidatures() {
+export default function ApplicationsAndFavorites() {
   return (
     <TopTab.Navigator tabBar={props => <MyTabBar {...props} />}>
-      <TopTab.Screen name="Mes candidatures" component={EnCours} />
-      <TopTab.Screen name="Mes favoris" component={Favoris} />
+      <TopTab.Screen name="Mes candidatures" component={JobApplications} />
+      <TopTab.Screen name="Mes favoris" component={Favorites} />
     </TopTab.Navigator>
   );
 }

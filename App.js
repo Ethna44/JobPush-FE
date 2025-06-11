@@ -6,19 +6,19 @@ import { StatusBar } from "expo-status-bar";
 import { TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
-import Accueil from "./screens/Accueil";
-import Inscription from "./screens/Inscription";
-import Connexion from "./screens/Connexion";
-import Offres from "./screens/Offres";
-import Candidatures from "./screens/Candidatures";
-import Category from "./screens/Category";
-import Compte from "./screens/Compte";
+import HomePage from "./screens/HomePage";
+import SignUpPage from "./screens/SignUpPage";
+import SignInPage from "./screens/SignInPage";
+import JobOffers from "./screens/JobOffers";
+import ApplicationsAndFavorites from "./screens/ApplicationsAndFavorites";
+import ArticlesCategories from "./screens/ArticlesCategories";
+import Account from "./screens/Account";
 import Header from "./components/Header";
-import SubAstuces from "./screens/SubAstuces";
-import Profil from "./screens/Profil";
-import Alerte from "./screens/Alerte";
+import ArticlesList from "./screens/ArticlesList";
+import Profile from "./screens/Profile";
+import Alerts from "./screens/Alerts";
 import OfferDetails from "./screens/OfferDetails";
-import Recherche from "./screens/Recherche";
+import Preferences from "./screens/Preferences";
 import ArticleDetails from "./screens/ArticleDetails";
 import AccountSettings from "./screens/AccountSettings";
 import { Platform } from "react-native";
@@ -92,7 +92,7 @@ const TabNavigator = () => {
               return (
                 <FontAwesome name={"user-circle"} size={size} color={color} />
               );
-            case "Recherche":
+            case "Preferences":
               return (
                 <FontAwesome name={"plus-circle"} size={size} color={color} />
               );
@@ -112,18 +112,18 @@ const TabNavigator = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Offres" component={Offres} />
-      <Tab.Screen name="Candidatures" component={Candidatures} />
+      <Tab.Screen name="Offres" component={JobOffers} />
+      <Tab.Screen name="Candidatures" component={ApplicationsAndFavorites} />
       <Tab.Screen
-        name="Recherche"
-        component={Recherche}
+        name="Preferences"
+        component={Preferences}
         options={{
           tabBarButton: (props) => <CustomTabBarButton {...props} />,
           tabBarIcon: ({ color, size }) => null, // On supprime l'icône par défaut car nous utilisons un bouton personnalisé
         }}
       />
-      <Tab.Screen name="Astuces" component={Category} />
-      <Tab.Screen name="Compte" component={Compte} />
+      <Tab.Screen name="Astuces" component={ArticlesCategories} />
+      <Tab.Screen name="Compte" component={Account} />
     </Tab.Navigator>
   );
 };
@@ -185,17 +185,17 @@ export default function App() {
           <Header />
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Accueil" component={Accueil} />
-              <Stack.Screen name="Inscription" component={Inscription} />
-              <Stack.Screen name="Connexion" component={Connexion} />
-              <Stack.Screen name="Profil" component={Profil} />
-              <Stack.Screen name="Alerte" component={Alerte} />
+              <Stack.Screen name="HomePage" component={HomePage} />
+              <Stack.Screen name="SignUpPage" component={SignUpPage} />
+              <Stack.Screen name="SignInPage" component={SignInPage} />
+              <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="Alerts" component={Alerts} />
               <Stack.Screen name="Annonce" component={OfferDetails} />
               <Stack.Screen
                 name="ParametresCompte"
                 component={AccountSettings}
               />
-              <Stack.Screen name="SubAstuces" component={SubAstuces} />
+              <Stack.Screen name="ArticlesList" component={ArticlesList} />
               <Stack.Screen name="ArticleDetails" component={ArticleDetails} />
               <Stack.Screen name="TabNavigator" component={TabNavigator} />
             </Stack.Navigator>

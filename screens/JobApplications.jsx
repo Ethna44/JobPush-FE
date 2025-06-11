@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL;
 
-export default function CandidaturesEnCours({ navigation }) {
+export default function JobApplications({ navigation }) {
   const token = useSelector((state) => state.user.token);
   const [applicationsData, setApplicationsData] = useState([]);
 

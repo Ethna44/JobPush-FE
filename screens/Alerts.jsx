@@ -25,7 +25,7 @@ const getOptionKey = (alertValue) => {
   );
 };
 
-export default function Alerte({ navigation, route }) {
+export default function Alerts({ navigation, route }) {
   const [selectedValue, setSelectedValue] = useState(
     route.params.origin === "signup" ? "option1" : getOptionKey(alerts)
   );
@@ -74,7 +74,7 @@ export default function Alerte({ navigation, route }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          navigation.navigate("Compte");
+          navigation.navigate("Account");
           dispatch(updateUser({ alerts: data.alerts }));
         } else {
         }

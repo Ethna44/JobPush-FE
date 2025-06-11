@@ -20,7 +20,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const LIMIT_OFFER = 20;
 
-export default function TabScreen1({ navigation }) {
+export default function JobOffers({ navigation }) {
   const token = useSelector((state) => state.user.token);
   const [search, setSearch] = useState("");
   const [startIndex, setStartIndex] = useState(0);

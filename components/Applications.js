@@ -16,6 +16,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL;
+
 export default function Applications({ navigation, ...props }) {
   const token = useSelector((state) => state.user.token);
   const [showModal, setShowModal] = useState(false);
@@ -105,7 +106,7 @@ export default function Applications({ navigation, ...props }) {
       <View 
       style={styles.modal}
       accessible={true}
-      accessibilityRole="dialog"
+      accessibilityRole="none"
       accessibilityLabel="Fenêtre de todo list">
         <View style={styles.todo}>
           <Text 
@@ -358,7 +359,7 @@ export default function Applications({ navigation, ...props }) {
       <View 
       style={styles.modal}
       accessible={true}
-      accessibilityRole="dialog"
+      accessibilityRole="none"
       accessibilityLabel="Fenêtre de prise de notes">
         <View 
         style={[styles.todo, { height: 500 }]}
@@ -412,7 +413,7 @@ export default function Applications({ navigation, ...props }) {
     onRequestClose={() => setShowCalendarModal(false)}>
       <View style={styles.modal}
       accessible={true}
-      accessibilityRole="dialog"
+      accessibilityRole="none"
       accessibilityLabel="Fenêtre d'ajout à Google Agenda">
         <View style={[styles.todo, { height: "auto" }]}>
           <Text 

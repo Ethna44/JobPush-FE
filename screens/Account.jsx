@@ -17,7 +17,7 @@ import { updateToken } from "../reducers/user";
 import { setKeepConnected } from "../reducers/user";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function TabScreen1({ navigation }) {
+export default function Account({ navigation }) {
   const preferences = useSelector((state) => state.user.profile.preferences);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const dispatch = useDispatch();
@@ -75,14 +75,14 @@ export default function TabScreen1({ navigation }) {
         <Text style={styles.body}>Ajoutez nouvelle recherche</Text>
         <TouchableOpacity
           style={styles.plusButton}
-          onPress={() => navigation.navigate("Recherche")}
+          onPress={() => navigation.navigate("Preferences")}
         >
           <Text style={styles.plusText}>+</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Alerte", { origin: "account" })}
+        onPress={() => navigation.navigate("Alerts", { origin: "account" })}
       >
         <Text style={styles.buttonText}>ALERTES</Text>
         <FontAwesome name="bell" size={20} color="#F9F1F1" />
@@ -99,7 +99,7 @@ export default function TabScreen1({ navigation }) {
         onPress={() => {
           handleLogout();
           dispatch(setKeepConnected(!keepConnected));
-          navigation.navigate("Connexion");
+          navigation.navigate("SignInPage");
         }}
       >
         <Text style={styles.buttonText}>SE DÉCONNECTER</Text>

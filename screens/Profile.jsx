@@ -25,7 +25,7 @@ const { width } = Dimensions.get("window");
 
 const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
-export default function Profil({ navigation }) {
+export default function Profile({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const [name, setName] = useState(null);
@@ -134,7 +134,7 @@ export default function Profil({ navigation }) {
               
             })
           );
-          navigation.navigate("Alerte", { origin: "signup" });
+          navigation.navigate("Alerts", { origin: "signup" });
         } else {
           setErrorMessage(
             data.message || "Une erreur est survenue. Veuillez réessayer."

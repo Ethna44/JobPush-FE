@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import JobCard from "../components/Jobcard";
 import { useFocusEffect } from "@react-navigation/native";
 
-export default function CandidaturesEnCours({ navigation }) {
+export default function Favorites({ navigation }) {
   const token = useSelector((state) => state.user.token);
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
   const [favorites, setFavorites] = useState([]);

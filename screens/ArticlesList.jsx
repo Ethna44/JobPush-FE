@@ -6,7 +6,7 @@ import Articles from "../components/Articles";
 import FontAwesome from "react-native-vector-icons/FontAwesome"; // https://oblador.github.io/react-native-vector-icons/#FontAwesome
 const { width } = Dimensions.get('window');
 
-export default function TabScreen1({ navigation }) {
+export default function ArticlesList({ navigation }) {
   const route = useRoute();
   const [subCategories, setSubCategories] = useState([]);
   const { title, iconName } = route.params;
