@@ -28,6 +28,17 @@
     "plugins": [
       "expo-font",
       "expo-web-browser"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "521ad8ed-153e-4e04-af70-3afb2a07d28d"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/521ad8ed-153e-4e04-af70-3afb2a07d28d"
+    }
   }
 }
