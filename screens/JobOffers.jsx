@@ -41,7 +41,7 @@ export default function JobOffers({ navigation }) {
     setLoading(true);
     try {
       const response = await fetch(
-        `${EXPO_IP}/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`
+        `https://job-push-be.vercel.app/offers?offset=${startIndex}&limit=${LIMIT_OFFER}&userToken=${token}`
       );
       const data = await response.json();
       setOffersData((prev) => [...prev, ...data.offers]);
@@ -57,7 +57,7 @@ export default function JobOffers({ navigation }) {
   };
 
   const updateProfile = async () => {
-    fetch(`${EXPO_IP}/users/profile/${token}`)
+    fetch(`https://job-push-be.vercel.app/users/profile/${token}`)
       .then((response) => response.json())
       .then((data) => {
         //recupere les préférences utilisateurs et boucle dessus afin de recuperer toutes les offres qui correspondent a toutes les préférences utilisateur
@@ -84,7 +84,7 @@ export default function JobOffers({ navigation }) {
               ).then((address) => {
                 const grade = Math.floor(Math.random() * 5) + 1;
 
-                fetch(`${EXPO_IP}/offers/add`, {
+                fetch(`https://job-push-be.vercel.app/offers/add`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({

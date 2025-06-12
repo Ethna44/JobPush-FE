@@ -38,7 +38,7 @@ export default function ParametresCompte({ navigation }) {
   );
 
   const handleEdit = () => {
-    fetch(`${EXPO_IP}/users`, {
+    fetch(`https://job-push-be.vercel.app/users`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -90,7 +90,7 @@ export default function ParametresCompte({ navigation }) {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            fetch(`${EXPO_IP}/users/${userToken}`, {
+            fetch(`https://job-push-be.vercel.app/users/${userToken}`, {
               method: "DELETE",
               headers: { "Content-Type": "application/json" },
             })

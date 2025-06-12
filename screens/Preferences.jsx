@@ -51,7 +51,7 @@ export default function Preferences({ navigation }) {
   );
 
   const handleSubmit = async () => {
-    const response = await fetch(`${EXPO_IP}/users/addPreferences`, {
+    const response = await fetch(`https://job-push-be.vercel.app/users/addPreferences`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

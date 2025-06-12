@@ -43,7 +43,7 @@ export default function OfferDetails({ navigation }) {
   } = route.params;
 
   const handleApply = async () => {
-    const response = await fetch(`${EXPO_IP}/offers/applications`, {
+    const response = await fetch(`https://job-push-be.vercel.app/offers/applications`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -70,7 +70,7 @@ export default function OfferDetails({ navigation }) {
 
   const handleLikeOffer = () => {
     fetch(
-      `${EXPO_IP}/users/favorites${favorites?.includes(_id) ? "/remove" : "/"}`,
+      `https://job-push-be.vercel.app/users/favorites${favorites?.includes(_id) ? "/remove" : "/"}`,
       {
         method: favorites?.includes(_id) ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },

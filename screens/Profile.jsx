@@ -84,7 +84,7 @@ export default function Profile({ navigation }) {
     }
     // Si le code postal existe et n'est pas composé de 5 chiffres, on affiche un message d'erreur et on arrête la soumission.
 
-    fetch(`${EXPO_IP}/users`, {
+    fetch(`https://job-push-be.vercel.app/users`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

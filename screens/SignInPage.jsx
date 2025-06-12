@@ -28,7 +28,7 @@ export default function SignInPage({ navigation }) {
     const { keepConnected } = useSelector((state) => state.user);
 
   const handleRegister = () => {
-    fetch(`${EXPO_IP}/users/signin`, {
+    fetch(`https://job-push-be.vercel.app/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

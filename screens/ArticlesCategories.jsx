@@ -55,7 +55,7 @@ export default function TabScreen1({ navigation }) {
       return;
     }
     const tags = search.split(" ").filter(Boolean).join(",");
-    const response = await fetch(`${EXPO_IP}/articles/byTags?tags=${tags}`);
+    const response = await fetch(`https://job-push-be.vercel.app/articles/byTags?tags=${tags}`);
     const data = await response.json();
     if (data.result) {
       setFilteredArticles(

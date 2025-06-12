@@ -52,7 +52,7 @@ export default function SignUpPage({ navigation }) {
     //   return; // stoppe ici si l'email est invalide
     // }
 
-    fetch(`${EXPO_IP}/users/signup`, {
+    fetch(`https://job-push-be.vercel.app/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -13,7 +13,7 @@ export default function JobApplications({ navigation }) {
 
   const fetchApplications = async () => {
     const response = await fetch(
-      `${EXPO_IP}/applications?token=${token}`
+      `https://job-push-be.vercel.app/applications?token=${token}`
     );
     const data = await response.json();
     setApplicationsData(data.applications);

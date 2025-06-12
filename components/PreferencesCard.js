@@ -24,7 +24,7 @@ export default function PreferencesCard(props) {
   ].filter(Boolean).join(", "); //Boolean convertit une valeur en true ou false (undifined, "", null = false et string = true)
 
   const handleDeletePreference = async () => {
-    const response = await fetch(`${EXPO_IP}/users/preference/remove`, {
+    const response = await fetch(`https://job-push-be.vercel.app/users/preference/remove`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

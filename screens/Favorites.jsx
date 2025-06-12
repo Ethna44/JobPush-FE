@@ -14,11 +14,11 @@ export default function Favorites({ navigation }) {
     useCallback(() => {
       const getFavorites = async () => {
         // 1. Récupérer le profil utilisateur pour avoir les IDs des favoris
-        const res = await fetch(`${EXPO_IP}/users/profile/${token}`);
+        const res = await fetch(`https://job-push-be.vercel.app/users/profile/${token}`);
         const data = await res.json();
         if (data.result && data.favorites && data.favorites.length > 0) {
           // 2. Récupérer les détails des offres favorites
-          const offersRes = await fetch(`${EXPO_IP}/offers/byIds`, {
+          const offersRes = await fetch(`https://job-push-be.vercel.app/offers/byIds`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ids: data.favorites }),

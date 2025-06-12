@@ -25,7 +25,7 @@ export default function Account({ navigation }) {
   const { keepConnected } = useSelector((state) => state.user);
 
   const handleLogout = () => {
-    fetch(`${EXPO_IP}/logout`, {
+    fetch(`https://job-push-be.vercel.app/logout`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

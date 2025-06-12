@@ -41,7 +41,7 @@ export default function Alerts({ navigation, route }) {
   }, [alerts]);
 
   const handleSubmit = () => {
-    fetch(`${EXPO_IP}/users/alerts`, {
+    fetch(`https://job-push-be.vercel.app/users/alerts`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -63,7 +63,7 @@ export default function Alerts({ navigation, route }) {
   };
 
   const handleSubmitProfile = () => {
-    fetch(`${EXPO_IP}/users/alerts`, {
+    fetch(`https://job-push-be.vercel.app/users/alerts`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

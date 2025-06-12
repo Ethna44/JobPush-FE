@@ -58,7 +58,7 @@ export default function Applications({ navigation, ...props }) {
 
   const updateTodo = () => {
     fetch(
-      `${EXPO_IP}/applications/todo?offerId=${props.offerId._id}&token=${token}`,
+      `https://job-push-be.vercel.app/applications/todo?offerId=${props.offerId._id}&token=${token}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

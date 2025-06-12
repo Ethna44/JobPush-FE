@@ -13,7 +13,7 @@ export default function ArticlesList({ navigation }) {
   const EXPO_IP = process.env.EXPO_PUBLIC_BACKEND_URL || "localhost";
 
   useEffect(() => {
-    fetch(`${EXPO_IP}/articles/byCategory/${title}`)
+    fetch(`https://job-push-be.vercel.app/articles/byCategory/${title}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.result) setSubCategories(data.articles);
